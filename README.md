@@ -1,36 +1,75 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Finalizing High-Performance Portfolio Engineering
 
-## Getting Started
+A premium, production-grade, Next.js 15 developer portfolio engineered specifically for a high-impact **Backend Engineer & AI Systems Developer**. Featuring a custom design system, physics-driven interaction layers, and rich visual architecture panels.
 
-First, run the development server:
+Live at: [yuvraj-dev.vercel.app](https://yuvraj-dev.vercel.app)
 
+---
+
+## ⚙️ Core Engineering Pillars & Interactivity
+
+The frontend of this portfolio was built from the ground up to reflect the same level of care, telemetry, and robustness required for complex backend microservices.
+
+### 1. Electric Vertical Experience Timeline (`src/components/sections/Experience.tsx`)
+*   **Scroll-Driven Glow:** Replaced standard grids with a custom `ElectricTimeline` container. A **40px glowing gradient charge** (`transparent` → `#00FFC2` → `transparent`) travels along the timeline relative to scroll progress using Framer Motion `useScroll` and `useTransform`.
+*   **Active company Dot Pulsing:** Dot markers automatically transition from default status to scale-glow state. The current active role (**Revolt Motors**) indicator runs an organic, breathing CSS pulse keyframe at all times.
+*   **Revolt Motors (Dual SWE + SDET Track):** Stacks both the Backend SWE track and the Test Infrastructure track side-by-side on desktop, collapsing to an interactive mobile-tab layout.
+*   **TLE Eliminators (Terminal Log panel):** Redesigned the competitive programming achievements as a monospaced terminal logs stream (`qa-log.sh`) styled with scanlines and stagger-typed log lines (`[PASS]`, `[LOAD]`, `[AUTO]`).
+
+### 2. Physics-Driven "Skill Constellation" Graph (`src/components/sections/Skills.tsx`)
+*   **Node Graph Architecture:** Replaces standard grid lists on desktop with a node-graph-inspired layout mapping critical skills around a central **Yuvraj** node.
+*   **Dynamic Data Cables:** Solid SVG cables connect orbiting sub-clusters (Backend, Test Infra, AI & Tools) to the center, displaying animated **data-pulse particles** traveling along their SVG paths using `stroke-dashoffset`.
+*   **Interactive Spring Badges:** Hovering over individual skill pills triggers a 1.1x spring enlargement, active border glow, and dynamically illuminates the connection wire back to the sub-cluster node.
+
+### 3. Smooth Portal Preview System (`src/components/sections/Projects.tsx`)
+*   **Zero-Clipping Portals:** Employs React `createPortal` to render project hover previews directly at the root of `document.body` to avoid container clipping from parent `overflow: hidden` contexts.
+*   **RAF LERP Follower:** The preview panel tracks the mouse pointer smoothly using a LERP (Linear Interpolation) loop driven by `requestAnimationFrame` (`position += (target - position) * 0.1`) rather than heavy state re-renders.
+*   **Custom Preview cards:** Hovering over *JobHermes* dynamically types out mock system logs in real-time. Hovering over *Poshible.ai* renders a mock JSON REST API response card with active syntax highlighting.
+
+### 4. Typographic manifesto (`src/components/sections/EngineeringMindset.tsx`)
+*   Inspired by high-end editorial structures like *hashgraphvc.com*.
+*   Features a generous, high-contrast grid centered on typographic rows instead of cards or panels.
+*   **Visual Highlights:** Monospace labels, huge ghosted numbers, scroll-triggered horizontal separators that draw themselves from `width: 0% ➔ 100%` using an optimized `IntersectionObserver`, and word-by-word scroll fade animations.
+
+---
+
+## 🛠️ The Tech Stack
+
+*   **Framework:** Next.js 15 (App Router, static site rendering)
+*   **Styling & UI:** Tailwind CSS v4, Lucide React, Tabler Icons (`react-icons/tb`)
+*   **Animation Engine:** Framer Motion (Spring-based transforms, Scroll Layouts, AnimatePresence)
+*   **Languages:** TypeScript, TSX, modern ESNext
+*   **Deployment:** Vercel (CI/CD pipeline integrated on push)
+
+---
+
+## 🚀 Getting Started
+
+### Installation
+
+Clone the repository:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/yuvrajsingh2428/yuvraj-dev.git
+cd yuvraj-dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Install production and developer dependencies:
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Local Development
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Launch the hot-reloading development server:
+```bash
+npm run dev
+```
+Open [http://localhost:3000](http://localhost:3000) in your browser to view the application.
 
-## Learn More
+### Build & Compilation
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Verify TypeScript typing, clean-code linting, and compile the optimized production bundle locally:
+```bash
+npm run build
+```
+The static compiler will create optimized HTML/CSS assets in the `.next/` directory ready for target deployments.
