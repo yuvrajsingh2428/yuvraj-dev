@@ -21,6 +21,8 @@ export const metadata: Metadata = {
   description: "Building scalable backend systems, AI-powered applications, and automation-driven infrastructure.",
 };
 
+import { SmoothScrollProvider } from "@/components/ui/SmoothScroll";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -32,9 +34,11 @@ export default function RootLayout({
         <PageLoader />
         <ElectricWire />
         <Navigation />
-        <main className="max-w-5xl mx-auto px-6 w-full flex-1 pt-16 md:pt-20">
-          {children}
-        </main>
+        <SmoothScrollProvider>
+          <main className="max-w-5xl mx-auto px-6 w-full flex-1 pt-16 md:pt-20">
+            {children}
+          </main>
+        </SmoothScrollProvider>
         <Footer />
       </body>
     </html>
