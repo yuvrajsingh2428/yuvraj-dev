@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { Navigation } from "@/components/layout/Navigation";
+import { Footer } from "@/components/layout/Footer";
+import { ElectricWire } from "@/components/ui/ElectricWire";
+import { PageLoader } from "@/components/PageLoader";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -17,8 +21,6 @@ export const metadata: Metadata = {
   description: "Building scalable backend systems, AI-powered applications, and automation-driven infrastructure.",
 };
 
-import { PageLoader } from "@/components/PageLoader";
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -28,7 +30,12 @@ export default function RootLayout({
     <html lang="en" className={`dark ${geistSans.variable} ${geistMono.variable} scroll-smooth antialiased`}>
       <body className="min-h-screen bg-background text-foreground font-sans flex flex-col selection:bg-primary/30">
         <PageLoader />
-        {children}
+        <ElectricWire />
+        <Navigation />
+        <main className="max-w-5xl mx-auto px-6 w-full flex-1 pt-16 md:pt-20">
+          {children}
+        </main>
+        <Footer />
       </body>
     </html>
   );
