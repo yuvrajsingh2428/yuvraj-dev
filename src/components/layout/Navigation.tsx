@@ -1,65 +1,21 @@
 "use client";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import { X } from "lucide-react";
 
-// ─── Custom Active Section Hook ───────────────────────────────────────────────
-
-export function useActiveSection(sectionIds: string[]) {
-  const [activeSection, setActiveSection] = useState("");
-
-  useEffect(() => {
-    const observerOptions = {
-      root: null,
-      rootMargin: "-40% 0px -45% 0px", // Trigger when section occupies the sweet spot of viewport
-      threshold: 0,
-    };
-
-    const handleIntersection = (entries: IntersectionObserverEntry[]) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          setActiveSection(entry.target.id);
-        }
-      });
-    };
-
-    const observer = new IntersectionObserver(handleIntersection, observerOptions);
-
-    sectionIds.forEach((id) => {
-      const element = document.getElementById(id);
-      if (element) {
-        observer.observe(element);
-      }
-    });
-
-    return () => {
-      sectionIds.forEach((id) => {
-        const element = document.getElementById(id);
-        if (element) {
-          observer.unobserve(element);
-        }
-      });
-    };
-  }, [sectionIds]);
-
-  return activeSection;
-}
-
-// ─── Main Navigation Redesign ──────────────────────────────────────────────────
-
 const NAV_LINKS = [
-  { label: "About", id: "hero" },
-  { label: "Experience", id: "experience" },
-  { label: "Projects", id: "projects" },
-  { label: "Contact", id: "contact" },
+  { label: "Home", href: "/" },
+  { label: "Projects", href: "/projects" },
+  { label: "About & Contact", href: "/about" },
 ];
 
 export function Navigation() {
   const [scrollY, setScrollY] = useState(0);
   const [showPill, setShowPill] = useState(true);
   const [shouldAnimate, setShouldAnimate] = useState(false);
-
-  const activeSection = useActiveSection(["hero", "experience", "projects", "contact"]);
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -70,26 +26,22 @@ export function Navigation() {
   }, []);
 
   useEffect(() => {
-    // Delay animation only on first page load
-    const hasLoaded = sessionStorage.getItem("hasLoaded");
-    const delay = hasLoaded ? 0 : 2200;
     const timer = setTimeout(() => {
       setShouldAnimate(true);
-    }, delay);
+    }, 100);
     return () => clearTimeout(timer);
   }, []);
 
   const isAtTop = scrollY < 20;
   const isScrolledFar = scrollY > 80;
 
-  // Layout states mapped to dynamic CSS classes
   const headerHeightClass = isScrolledFar ? "h-[52px]" : "h-[64px]";
   const headerBgClass = isAtTop
     ? "bg-transparent border-transparent"
-    : "bg-[#050505]/70 border-white/[0.06] backdrop-blur-[20px] backdrop-saturate-[180%]";
+    : "bg-[#050505]/80 border-white/[0.08] backdrop-blur-[20px] backdrop-saturate-[180%]";
   const monogramScaleClass = isScrolledFar ? "scale-[0.9]" : "scale-100";
   const linkFontSizeClass = isScrolledFar ? "text-[12px]" : "text-[13px]";
-  const linkOpacityClass = isAtTop ? "opacity-50 hover:opacity-100" : "opacity-100";
+  const linkOpacityClass = isAtTop ? "opacity-70 hover:opacity-100" : "opacity-100";
 
   const navContainerVariants: Variants = {
     hidden: { y: "-100%", opacity: 0 },
@@ -97,10 +49,9 @@ export function Navigation() {
       y: 0,
       opacity: 1,
       transition: {
-        duration: 0.5,
+        duration: 0.4,
         ease: [0.16, 1, 0.3, 1],
         staggerChildren: 0.05,
-        delayChildren: 0.1,
       }
     }
   };
@@ -126,53 +77,53 @@ export function Navigation() {
           >
             <div className="max-w-5xl mx-auto px-6 w-full flex items-center justify-between">
               
-              {/* LEFT: YS Monogram Logo */}
+              {/* LEFT: Monogram Logo */}
               <motion.div variants={navItemVariants}>
-                <a
-                  href="#hero"
-                  className={`flex items-center justify-center w-8 h-8 rounded-sm border border-white/15 bg-transparent text-white font-mono font-medium text-[13px] tracking-wider transition-all duration-300 hover:border-[#00FFC2] hover:text-[#00FFC2] ${monogramScaleClass}`}
+                <Link
+                  href="/"
+                  className={`flex items-center justify-center w-8 h-8 rounded-md border border-white/20 bg-background/50 text-white font-mono font-medium text-[13px] tracking-wider transition-all duration-300 hover:border-[#00FFC2] hover:text-[#00FFC2] hover:shadow-[0_0_12px_rgba(0,255,194,0.3)] ${monogramScaleClass}`}
                 >
                   YS
-                </a>
+                </Link>
               </motion.div>
 
-              {/* CENTER: Nav links (staggered & active scroll matched) */}
-              <nav className="hidden md:flex items-center gap-8 font-medium font-mono">
+              {/* CENTER: Multi-Page Route Links */}
+              <nav className="flex items-center gap-6 sm:gap-8 font-medium font-mono">
                 {NAV_LINKS.map((link) => {
-                  const isActive = activeSection === link.id;
+                  const isActive = pathname === link.href || (link.href !== "/" && pathname?.startsWith(link.href));
                   return (
-                    <motion.div key={link.id} variants={navItemVariants} className="relative py-1">
-                      <a
-                        href={`#${link.id}`}
-                        className={`transition-all duration-300 tracking-wide hover:text-white/95 relative block ${linkFontSizeClass} ${linkOpacityClass} ${
-                          isActive ? "text-white font-semibold" : "text-white/50"
+                    <motion.div key={link.href} variants={navItemVariants} className="relative py-1">
+                      <Link
+                        href={link.href}
+                        className={`transition-all duration-300 tracking-wide relative block ${linkFontSizeClass} ${linkOpacityClass} ${
+                          isActive ? "text-[#00FFC2] font-semibold" : "text-white/60 hover:text-white"
                         }`}
                       >
                         {link.label}
                         
-                        {/* Underline LayoutId Animation */}
+                        {/* Active Underline */}
                         {isActive && (
                           <motion.div
-                            layoutId="activeUnderline"
-                            className="absolute left-0 right-0 bottom-[-4px] h-[1px] bg-white"
+                            layoutId="activeNavUnderline"
+                            className="absolute left-0 right-0 bottom-[-4px] h-[2px] bg-[#00FFC2] shadow-[0_0_8px_#00FFC2]"
                             transition={{ type: "spring", stiffness: 380, damping: 30 }}
                           />
                         )}
-                      </a>
+                      </Link>
                     </motion.div>
                   );
                 })}
               </nav>
 
-              {/* RIGHT: Actions */}
-              <motion.div variants={navItemVariants} className="flex items-center gap-4">
+              {/* RIGHT: Status & Resume */}
+              <motion.div variants={navItemVariants} className="flex items-center gap-3 sm:gap-4">
                 <AvailabilityPill show={showPill} onClose={() => setShowPill(false)} />
 
                 <a
-                  href="/resume.pdf"
+                  href="https://drive.google.com/uc?export=download&id=18ozkViRciZPbM-1pCSg03Kc7b2eVIoXO"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-[12px] font-mono font-medium px-3.5 py-1.5 rounded-[6px] border border-white/20 bg-transparent text-white transition-all duration-150 ease-in-out hover:bg-white hover:text-black hover:border-white shrink-0"
+                  className="hidden sm:inline-flex text-[12px] font-mono font-medium px-3.5 py-1.5 rounded-[6px] border border-white/20 bg-white/5 text-white transition-all duration-150 ease-in-out hover:bg-white hover:text-black hover:border-white shrink-0"
                 >
                   Resume
                 </a>

@@ -6,16 +6,36 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { TerminalHeading } from "@/components/ui/TerminalHeading";
-import { Database, Zap, Network, Code2, Bot, ArrowRight } from "lucide-react";
+import { Database, Zap, Network, Code2, Bot, ArrowRight, ExternalLink, Cpu, Hammer } from "lucide-react";
+import { TbBrandGithub } from "react-icons/tb";
 import { FloatingPreview, useProjectPreview } from "@/components/ui/FloatingPreview";
 
 const HighlightChip = ({ children }: { children: React.ReactNode }) => (
-  <span className="inline-flex items-center px-1.5 py-0.5 mx-0.5 rounded-md bg-gradient-to-r from-amber-500/10 to-cyan-500/10 border border-amber-500/20 text-amber-600 dark:text-amber-400 font-mono text-[0.85em] font-bold shadow-[0_0_8px_rgba(245,158,11,0.15)] whitespace-nowrap">
+  <span className="inline-flex items-center px-1.5 py-0.5 mx-0.5 rounded-md bg-gradient-to-r from-cyan-500/10 to-emerald-500/10 border border-[#00FFC2]/30 text-[#00FFC2] font-mono text-[0.85em] font-bold shadow-[0_0_8px_rgba(0,255,194,0.15)] whitespace-nowrap">
     {children}
   </span>
 );
 
 const projects = [
+  {
+    title: "OpenForge ⚒️ — AI Open-Source Intelligence Platform",
+    challenge: "The challenge: Contributing to open-source software has a steep learning curve. The challenge was building an intelligent platform that evaluates GitHub repositories, scores issues on a 5-factor scale, and provides hybrid local/cloud AI mentorship.",
+    icon: <Hammer className="w-5 h-5 text-[#00FFC2]" />,
+    tech: ["TypeScript", "Next.js 16", "Turborepo", "Ollama", "OpenRouter", "GitHub GraphQL", "Playwright"],
+    oneLiner: "Monorepo developer platform with 5-factor issue scoring & hybrid AI mentorship (Ollama + OpenRouter)",
+    details: [
+      <>Monorepo Architecture: <HighlightChip>9 domain packages</HighlightChip> + Next.js 16 App Router orchestrated via Turborepo & npm workspaces</>,
+      <>Hybrid AI Engine: Pluggable dual layer supporting <HighlightChip>Ollama (qwen3:8b)</HighlightChip> for local zero-cost dev and <HighlightChip>OpenRouter (deepseek-v3)</HighlightChip> for cloud</>,
+      <>5-Factor Deterministic Scorer: Ranks issues on <HighlightChip>0–100 scale</HighlightChip> measuring Learning Impact, AI Relevance, Maintainer Friendliness, Impact & Merge Probability</>,
+      <>Repository Intelligence & Knowledge Graphs: Maps module dependencies, architectural patterns, and project health signals</>,
+      <>Interactive AI Onboarding Mentor: Generates automated contribution roadmaps, file walkthroughs, and risk assessments</>,
+      <>Validation & Quality: Enforced strict runtime environment validation via <HighlightChip>Zod</HighlightChip> & E2E suite via <HighlightChip>Playwright</HighlightChip></>
+    ],
+    hasArchitecture: true,
+    engineeringNote: "Built a pluggable provider abstraction switching seamlessly between Ollama for offline zero-cost dev and OpenRouter for cloud inference with structured Zod runtime schema validation.",
+    pipelineNodes: ["GitHub GraphQL", "Repo Intelligence", "5-Factor Scorer", "Hybrid LLM (Ollama/OpenRouter)", "AI Contribution Roadmap"],
+    githubUrl: "https://github.com/yuvrajsingh2428",
+  },
   {
     title: "JobHermes — AI Job Hunting Agent",
     challenge: "The challenge: Job hunting is unstructured noise. The challenge was building a system that could filter hundreds of listings down to ranked opportunities with zero manual effort daily.",
@@ -41,6 +61,7 @@ const projects = [
     ],
     hasArchitecture: false,
     pipelineNodes: ["Scraper","GPT Filter","Scorer","SQLite","Report","Resume/CL"],
+    githubUrl: "https://github.com/yuvrajsingh2428",
   },
   {
     title: "Poshible.ai — POSH Act Q&A Platform",
@@ -56,6 +77,7 @@ const projects = [
     ],
     hasArchitecture: true,
     engineeringNote: "Used OpenSearch for vector storage instead of a managed service — kept infra costs near zero while maintaining 90% retrieval precision at this query volume.",
+    githubUrl: "https://github.com/yuvrajsingh2428",
   },
   {
     title: "Dealership Recommendation Engine",
@@ -69,6 +91,7 @@ const projects = [
       "Dramatically improved the end-user booking flow."
     ],
     hasArchitecture: true,
+    githubUrl: "https://github.com/yuvrajsingh2428",
   },
   {
     title: "Dynamic QR Campaign Platform",
@@ -81,6 +104,7 @@ const projects = [
       "Designed fault-tolerant campaign workflows to handle traffic spikes."
     ],
     hasArchitecture: false,
+    githubUrl: "https://github.com/yuvrajsingh2428",
   },
 ];
 
@@ -242,13 +266,28 @@ function ProjectCard({ project, index }: { project: any; index: number }) {
                           <div className="flex flex-wrap items-center gap-2">
                             {project.pipelineNodes.map((node: string, i: number, arr: string[]) => (
                               <div key={node} className="flex items-center gap-2">
-                                <div className={`px-3 py-1.5 text-xs font-mono rounded-lg border ${i === arr.length - 1 ? "border-cyan-500/50 text-primary font-bold shadow-[0_0_12px_rgba(0,255,194,0.12)]" : "border-cyan-500/30 text-foreground"} bg-background`}>
+                                <div className={`px-3 py-1.5 text-xs font-mono rounded-lg border ${i === arr.length - 1 ? "border-cyan-500/50 text-[#00FFC2] font-bold shadow-[0_0_12px_rgba(0,255,194,0.12)]" : "border-cyan-500/30 text-foreground"} bg-background`}>
                                   {node}
                                 </div>
-                                {i < arr.length - 1 && <ArrowRight className="w-3.5 h-3.5 text-primary/40 shrink-0" />}
+                                {i < arr.length - 1 && <ArrowRight className="w-3.5 h-3.5 text-[#00FFC2]/40 shrink-0" />}
                               </div>
                             ))}
                           </div>
+                        </div>
+                      )}
+
+                      {/* External Action Links */}
+                      {project.githubUrl && (
+                        <div className="flex flex-wrap items-center gap-3 pt-4 border-t border-border/50">
+                          <a
+                            href={project.githubUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-secondary/60 hover:bg-secondary border border-border/60 text-xs font-mono text-foreground font-medium transition-all"
+                          >
+                            <TbBrandGithub className="w-4 h-4" />
+                            View Code on GitHub
+                          </a>
                         </div>
                       )}
 
