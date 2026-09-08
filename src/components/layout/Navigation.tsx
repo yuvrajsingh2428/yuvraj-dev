@@ -22,11 +22,11 @@ export function Navigation() {
             href="/"
             className="flex items-center gap-1.5 text-white hover:text-neutral-400 transition-colors font-bold"
           >
-            <span className="text-neutral-500">yuvraj@box:</span>
+            <span className="text-neutral-500">yuvraj@dev:</span>
             <span>~$</span>
           </Link>
-          <span className="hidden sm:inline-block text-[10px] text-neutral-600 border border-neutral-800 px-1.5 py-0.2">
-            pts/0
+          <span className="hidden sm:inline-block text-[10px] text-neutral-500 border border-neutral-800 px-1.5 py-0.2">
+            git:(main)
           </span>
         </div>
 
@@ -54,7 +54,7 @@ export function Navigation() {
           })}
         </nav>
 
-        {/* Right: Quick CLI actions */}
+        {/* Right: Quick developer actions */}
         <div className="flex items-center gap-2">
           <a
             href="https://drive.google.com/uc?export=download&id=18ozkViRciZPbM-1pCSg03Kc7b2eVIoXO"
@@ -66,7 +66,7 @@ export function Navigation() {
           </a>
           <span className="inline-flex items-center gap-1 text-[10px] text-neutral-400 border border-neutral-800 px-1.5 py-0.5">
             <span className="w-1.5 h-1.5 bg-neutral-200"></span>
-            <span className="hidden md:inline">online</span>
+            <span className="hidden md:inline">available</span>
           </span>
         </div>
       </div>

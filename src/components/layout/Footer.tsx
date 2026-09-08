@@ -10,8 +10,8 @@ export function Footer() {
         {/* Left: Terminal status & identity */}
         <div className="space-y-1">
           <div className="flex items-center gap-2 text-white">
-            <span className="text-neutral-500">host:</span>
-            <span className="font-bold">yuvraj.systems</span>
+            <span className="text-neutral-500">dev:</span>
+            <span className="font-bold">yuvraj-singh</span>
             <span className="text-neutral-600">|</span>
             <span className="text-neutral-400">Software Engineer</span>
           </div>

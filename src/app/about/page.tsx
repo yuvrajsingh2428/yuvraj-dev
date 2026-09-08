@@ -14,7 +14,7 @@ export default function AboutPage() {
       {/* Header Banner */}
       <div className="border border-neutral-800 bg-[#0a0a0a] p-4 sm:p-6 space-y-3">
         <div className="text-xs text-neutral-500">
-          yuvraj@systems:~$ cat /etc/yuvraj/engineering_profile.md
+          yuvraj@dev:~$ cat profile.md
         </div>
         <h1 className="text-2xl sm:text-3xl font-bold text-white">
           Engineering Philosophy & Background
@@ -37,7 +37,7 @@ export default function AboutPage() {
       {/* Experience Timeline */}
       <section className="space-y-4">
         <div className="border-b border-neutral-800 pb-2">
-          <div className="text-white font-bold text-sm">$ journalctl -u career.service --all</div>
+          <div className="text-white font-bold text-sm">$ git log --career</div>
           <div className="text-xs text-neutral-500">Career progression and engineering milestones</div>
         </div>
 
@@ -71,8 +71,8 @@ export default function AboutPage() {
       {/* Skills Matrix */}
       <section className="space-y-4">
         <div className="border-b border-neutral-800 pb-2">
-          <div className="text-white font-bold text-sm">$ sysctl -a --skills-matrix</div>
-          <div className="text-xs text-neutral-500">5-stage technical competencies and technology stack</div>
+          <div className="text-white font-bold text-sm">$ cat skills.json</div>
+          <div className="text-xs text-neutral-500">Technical competencies and technology stack</div>
         </div>
 
         <div className="space-y-3">
@@ -103,8 +103,8 @@ export default function AboutPage() {
       {/* Contact Node */}
       <section className="border border-neutral-800 bg-[#0a0a0a] p-6 text-center space-y-4">
         <div className="space-y-1">
-          <div className="text-xs text-neutral-500">[INITIALIZE CONNECTION]</div>
-          <h2 className="text-xl font-bold text-white">$ ping yuvraj@systems.dev</h2>
+          <div className="text-xs text-neutral-500">[CONNECT]</div>
+          <h2 className="text-xl font-bold text-white">$ npx contact-yuvraj</h2>
         </div>
 
         <div className="flex flex-wrap items-center justify-center gap-2 pt-1">

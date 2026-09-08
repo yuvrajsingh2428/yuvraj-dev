@@ -24,16 +24,14 @@ export default function Home() {
     let response = "";
     switch (cmd) {
       case "help":
-        response = "Available commands: help, bio, ascii, projects, systems, exp, skills, contact, resume, clear";
+        response = "Available commands: help, bio, projects, systems, exp, skills, contact, resume, clear";
         break;
       case "bio":
       case "about":
         response = BIO_TEXT;
         break;
-      case "ascii":
-      case "avatar":
       case "whoami":
-        response = "Rendered ASCII profile portrait above in hero terminal node [yuvraj.ascii].";
+        response = "Yuvraj Singh — Backend Systems & AI Platforms Engineer @ Revolt Motors";
         break;
       case "projects":
       case "ls":
@@ -48,6 +46,7 @@ export default function Home() {
         response = EXPERIENCE_TIMELINE.map(e => `${e.company} (${e.role}, ${e.period})`).join("\n");
         break;
       case "skills":
+      case "stack":
         response = SKILL_STAGES.map(s => `${s.title}: ${s.skills.join(", ")}`).join("\n");
         break;
       case "contact":
@@ -68,14 +67,14 @@ export default function Home() {
         response = `zsh: command not found: ${cmd}. Type 'help' for available commands.`;
     }
 
-    setCliOutput(prev => [...prev, `yuvraj@systems:~$ ${cmd}`, response]);
+    setCliOutput(prev => [...prev, `yuvraj@dev:~$ ${cmd}`, response]);
     setCliInput("");
   };
 
   return (
     <div className="space-y-12 font-mono text-neutral-300">
       
-      {/* ─── TERMINAL HERO WINDOW WITH ASCII PORTRAIT ───────────────────── */}
+      {/* ─── TERMINAL HERO WINDOW ───────────────────────────────────────── */}
       <section className="border border-neutral-800 bg-[#0a0a0a]">
         {/* Terminal Title Bar */}
         <div className="flex items-center justify-between px-3 py-2 border-b border-neutral-800 bg-[#121212] text-xs text-neutral-400 select-none">
@@ -83,10 +82,10 @@ export default function Home() {
             <span className="inline-block w-2.5 h-2.5 rounded-full bg-neutral-600"></span>
             <span className="inline-block w-2.5 h-2.5 rounded-full bg-neutral-700"></span>
             <span className="inline-block w-2.5 h-2.5 rounded-full bg-neutral-800"></span>
-            <span className="ml-2 text-neutral-300 font-bold">bash - 80x24</span>
+            <span className="ml-2 text-neutral-300 font-bold">Terminal — zsh</span>
           </div>
           <div className="text-[11px] text-neutral-500 hidden sm:block">
-            yuvraj@systems-v2 (x86_64-linux)
+            git:(main) · Node.js & TypeScript
           </div>
         </div>
 
@@ -99,7 +98,7 @@ export default function Home() {
               {/* CLI Prompt Line 1 */}
               <div className="space-y-1">
                 <div className="text-neutral-500 flex items-center gap-2 text-xs">
-                  <span className="text-white font-bold">yuvraj@systems:~$</span>
+                  <span className="text-white font-bold">yuvraj@dev:~$</span>
                   <span>whoami</span>
                 </div>
                 <div className="pl-3 text-white font-bold text-lg sm:text-xl">
@@ -110,11 +109,11 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* CLI Prompt Line 2: System Spec */}
+              {/* CLI Prompt Line 2: Tech Stack */}
               <div className="space-y-2">
                 <div className="text-neutral-500 flex items-center gap-2 text-xs">
-                  <span className="text-white font-bold">yuvraj@systems:~$</span>
-                  <span>uname -a --core-competencies</span>
+                  <span className="text-white font-bold">yuvraj@dev:~$</span>
+                  <span>cat tech_stack.json</span>
                 </div>
                 <div className="pl-3 grid grid-cols-1 gap-1.5 text-xs text-neutral-300 border-l border-neutral-800 ml-1 py-1">
                   <div><span className="text-neutral-500">• Systems:</span> Distributed Backends, RAG Architectures, Microservices</div>
@@ -124,10 +123,10 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* Quick Metrics ASCII Matrix */}
+              {/* Quick Metrics Matrix */}
               <div className="border border-neutral-800 bg-black p-3 space-y-1 text-xs">
                 <div className="text-neutral-400 font-bold border-b border-neutral-900 pb-1 mb-2">
-                  [SYSTEM_TELEMETRY]
+                  [SYSTEM_METRICS]
                 </div>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center sm:text-left">
                   <div>
@@ -155,13 +154,13 @@ export default function Home() {
                   href="/work"
                   className="border border-white bg-white text-black px-3 py-1 text-xs font-bold hover:bg-neutral-200 transition-colors"
                 >
-                  $ view_production_work
+                  $ view_projects
                 </Link>
                 <Link
                   href="/systems"
                   className="border border-neutral-700 bg-neutral-900 text-white px-3 py-1 text-xs hover:border-neutral-400 transition-colors"
                 >
-                  $ inspect_architectures
+                  $ view_architecture
                 </Link>
                 <a
                   href="https://drive.google.com/uc?export=download&id=18ozkViRciZPbM-1pCSg03Kc7b2eVIoXO"
@@ -192,7 +191,7 @@ export default function Home() {
 
         {/* Quick helper buttons */}
         <div className="flex flex-wrap gap-1.5 text-[11px]">
-          {["help", "bio", "ascii", "projects", "systems", "exp", "skills", "contact", "resume", "clear"].map((cmd) => (
+          {["help", "bio", "projects", "systems", "exp", "skills", "contact", "resume", "clear"].map((cmd) => (
             <button
               key={cmd}
               onClick={() => {
@@ -211,7 +210,7 @@ export default function Home() {
             {cliOutput.map((line, idx) => (
               <div
                 key={idx}
-                className={line.startsWith("yuvraj@systems") ? "text-white font-bold" : "text-neutral-400 whitespace-pre-line"}
+                className={line.startsWith("yuvraj@dev") ? "text-white font-bold" : "text-neutral-400 whitespace-pre-line"}
               >
                 {line}
               </div>
@@ -221,12 +220,12 @@ export default function Home() {
 
         {/* Cli input line */}
         <form onSubmit={handleCommand} className="flex items-center gap-2 text-xs">
-          <span className="text-white font-bold shrink-0">yuvraj@systems:~$</span>
+          <span className="text-white font-bold shrink-0">yuvraj@dev:~$</span>
           <input
             type="text"
             value={cliInput}
             onChange={(e) => setCliInput(e.target.value)}
-            placeholder="Type 'help', 'bio', 'ascii', 'projects', 'contact'..."
+            placeholder="Type 'help', 'bio', 'projects', 'contact'..."
             className="flex-1 bg-transparent border-none outline-none text-white font-mono placeholder:text-neutral-700"
           />
           <button type="submit" className="border border-neutral-700 px-2 py-0.5 text-[10px] text-neutral-400 hover:text-white">
@@ -240,7 +239,7 @@ export default function Home() {
         <div className="flex items-center justify-between border-b border-neutral-800 pb-2">
           <div className="flex items-center gap-2">
             <span className="text-white font-bold text-sm">$ ls -la ./projects/</span>
-            <span className="text-xs text-neutral-500">({PROJECTS_DATA.length} systems registered)</span>
+            <span className="text-xs text-neutral-500">({PROJECTS_DATA.length} systems)</span>
           </div>
           <Link href="/work" className="text-xs text-neutral-400 hover:text-white">
             [view full specs -&gt;]
@@ -276,7 +275,7 @@ export default function Home() {
                   </a>
                 ) : (
                   <span className="self-start sm:self-auto border border-neutral-800 px-2 py-0.5 text-[11px] text-neutral-500">
-                    [prod_internal]
+                    [production_system]
                   </span>
                 )}
               </div>
@@ -342,7 +341,7 @@ export default function Home() {
       {/* ─── SECTION 3: CAREER LOGS ─────────────────────────────────────── */}
       <section className="space-y-4">
         <div className="border-b border-neutral-800 pb-2">
-          <div className="text-white font-bold text-sm">$ journalctl -u career.service --reverse</div>
+          <div className="text-white font-bold text-sm">$ git log --career</div>
           <div className="text-xs text-neutral-500">Professional experience and engineering timeline</div>
         </div>
 
@@ -370,11 +369,11 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ─── SECTION 4: CONTACT & SSH NODE ──────────────────────────────── */}
+      {/* ─── SECTION 4: CONTACT NODE ────────────────────────────────────── */}
       <section className="border border-neutral-800 bg-[#0a0a0a] p-6 text-center space-y-4">
         <div className="space-y-1">
-          <div className="text-neutral-500 text-xs">[SSH CONNECT PROTOCOL]</div>
-          <h2 className="text-xl font-bold text-white">$ ssh yuvraj@systems.dev</h2>
+          <div className="text-neutral-500 text-xs">[CONNECT]</div>
+          <h2 className="text-xl font-bold text-white">$ npx contact-yuvraj</h2>
           <p className="text-xs text-neutral-400 max-w-lg mx-auto">
             Available for Systems Engineering, Backend Architecture, and Distributed AI Consulting.
           </p>

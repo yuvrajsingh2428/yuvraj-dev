@@ -95,7 +95,7 @@ export default function SystemsPage() {
       {/* Header Banner */}
       <div className="border border-neutral-800 bg-[#0a0a0a] p-4 sm:p-6 space-y-3">
         <div className="text-xs text-neutral-500">
-          yuvraj@systems:~$ ./inspect_architectures.sh --interactive
+          yuvraj@dev:~$ node inspect_systems.js
         </div>
         <h1 className="text-2xl sm:text-3xl font-bold text-white">
           Interactive System Architecture Pipelines

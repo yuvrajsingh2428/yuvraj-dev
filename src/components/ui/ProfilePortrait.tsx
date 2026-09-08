@@ -10,7 +10,7 @@ export function ProfilePortrait() {
     <div className="border border-neutral-800 bg-[#050505] p-2.5 sm:p-3 select-none group relative max-w-[240px] sm:max-w-[260px] mx-auto w-full">
       {/* Top terminal frame bar */}
       <div className="flex items-center justify-between text-[10px] text-neutral-500 border-b border-neutral-900 pb-1.5 mb-2 font-mono">
-        <span className="text-neutral-400 font-bold">$ view yuvraj.png</span>
+        <span className="text-neutral-400 font-bold">$ view profile.png</span>
         <button
           onClick={() => setIsColor(!isColor)}
           className="text-neutral-500 hover:text-white transition-colors border border-neutral-800 px-1.5 py-0.2 bg-neutral-950 text-[9px]"
@@ -38,8 +38,8 @@ export function ProfilePortrait() {
 
       {/* Bottom meta tag */}
       <div className="flex items-center justify-between text-[9px] text-neutral-600 border-t border-neutral-900 pt-1.5 mt-2 font-mono">
-        <span>PORTRAIT :: 24-BIT</span>
-        <span className="text-neutral-500">ISOLATED</span>
+        <span>PROFILE :: DEV</span>
+        <span className="text-neutral-500">YUVRAJ SINGH</span>
       </div>
     </div>
   );
