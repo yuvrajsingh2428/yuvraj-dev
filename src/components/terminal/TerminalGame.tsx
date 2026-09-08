@@ -27,8 +27,12 @@ export function TerminalGame({ onExitToGui }: { onExitToGui: () => void }) {
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // Initialize with a clean single-line welcome prompt
+  // Stiff terminal setup: lock body scroll and jump to top instantly
   useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "instant" });
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
     setHistory([
       {
         id: "init",
@@ -46,9 +50,17 @@ export function TerminalGame({ onExitToGui }: { onExitToGui: () => void }) {
         ),
       },
     ]);
+
+    setTimeout(() => {
+      inputRef.current?.focus();
+    }, 50);
+
+    return () => {
+      document.body.style.overflow = prevOverflow;
+    };
   }, []);
 
-  // Auto-scroll to bottom as new commands are entered
+  // Auto-scroll log stream as commands execute
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [history]);
@@ -57,7 +69,7 @@ export function TerminalGame({ onExitToGui }: { onExitToGui: () => void }) {
     inputRef.current?.focus();
   };
 
-  // Grep helper: search across all portfolio content
+  // Grep search helper across portfolio content
   const performGrep = (query: string): React.ReactNode => {
     if (!query) {
       return <div className="text-neutral-500 text-xs">Usage: grep &lt;keyword&gt; (e.g. grep redis, grep python, grep rag)</div>;
@@ -135,7 +147,6 @@ export function TerminalGame({ onExitToGui }: { onExitToGui: () => void }) {
     const parts = raw.split(/\s+/);
     const cmd = parts[0].toLowerCase();
     const arg = parts.slice(1).join(" ").trim();
-    const subArg = parts[1]?.toLowerCase() || "";
 
     let output: React.ReactNode = null;
     let nextCwd = cwd;
@@ -258,7 +269,7 @@ export function TerminalGame({ onExitToGui }: { onExitToGui: () => void }) {
                   <button
                     key={p.id}
                     onClick={() => executeCommand(`cat projects/${p.id}.md`)}
-                    className="flex items-center justify-between text-left p-2 border border-neutral-800 hover:border-neutral-500 bg-neutral-950 transition-colors"
+                    className="flex items-center justify-between text-left p-2 border border-neutral-800 hover:border-neutral-500 bg-neutral-950 transition-colors cursor-pointer"
                   >
                     <span className="text-white font-bold">📄 {p.id}.md</span>
                     <span className="text-[10px] text-neutral-400 uppercase">{p.categoryTag}</span>
@@ -276,25 +287,25 @@ export function TerminalGame({ onExitToGui }: { onExitToGui: () => void }) {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
                 <button
                   onClick={() => executeCommand("cat systems/01-poshible-rag-pipeline.arch")}
-                  className="p-2 border border-neutral-800 hover:border-neutral-500 text-left bg-neutral-950"
+                  className="p-2 border border-neutral-800 hover:border-neutral-500 text-left bg-neutral-950 cursor-pointer"
                 >
                   <span className="text-white font-bold">⚙️ 01-poshible-rag-pipeline.arch</span>
                 </button>
                 <button
                   onClick={() => executeCommand("cat systems/02-openforge-dual-router.arch")}
-                  className="p-2 border border-neutral-800 hover:border-neutral-500 text-left bg-neutral-950"
+                  className="p-2 border border-neutral-800 hover:border-neutral-500 text-left bg-neutral-950 cursor-pointer"
                 >
                   <span className="text-white font-bold">⚙️ 02-openforge-dual-router.arch</span>
                 </button>
                 <button
                   onClick={() => executeCommand("cat systems/03-jobhermes-agent-loop.arch")}
-                  className="p-2 border border-neutral-800 hover:border-neutral-500 text-left bg-neutral-950"
+                  className="p-2 border border-neutral-800 hover:border-neutral-500 text-left bg-neutral-950 cursor-pointer"
                 >
                   <span className="text-white font-bold">⚙️ 03-jobhermes-agent-loop.arch</span>
                 </button>
                 <button
                   onClick={() => executeCommand("cat systems/04-geospatial-routing.arch")}
-                  className="p-2 border border-neutral-800 hover:border-neutral-500 text-left bg-neutral-950"
+                  className="p-2 border border-neutral-800 hover:border-neutral-500 text-left bg-neutral-950 cursor-pointer"
                 >
                   <span className="text-white font-bold">⚙️ 04-geospatial-routing.arch</span>
                 </button>
@@ -310,7 +321,7 @@ export function TerminalGame({ onExitToGui }: { onExitToGui: () => void }) {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
                 <button
                   onClick={() => executeCommand("cd projects")}
-                  className="p-2.5 border border-neutral-800 bg-neutral-950 hover:border-neutral-500 text-left transition-colors space-y-1"
+                  className="p-2.5 border border-neutral-800 bg-neutral-950 hover:border-neutral-500 text-left transition-colors space-y-1 cursor-pointer"
                 >
                   <div className="text-white font-bold">📁 projects/</div>
                   <div className="text-[11px] text-neutral-400">6 production systems (cd projects | ls projects)</div>
@@ -318,7 +329,7 @@ export function TerminalGame({ onExitToGui }: { onExitToGui: () => void }) {
 
                 <button
                   onClick={() => executeCommand("cd systems")}
-                  className="p-2.5 border border-neutral-800 bg-neutral-950 hover:border-neutral-500 text-left transition-colors space-y-1"
+                  className="p-2.5 border border-neutral-800 bg-neutral-950 hover:border-neutral-500 text-left transition-colors space-y-1 cursor-pointer"
                 >
                   <div className="text-white font-bold">📁 systems/</div>
                   <div className="text-[11px] text-neutral-400">4 architecture pipelines (cd systems | ls systems)</div>
@@ -326,7 +337,7 @@ export function TerminalGame({ onExitToGui }: { onExitToGui: () => void }) {
 
                 <button
                   onClick={() => executeCommand("cat experience.md")}
-                  className="p-2.5 border border-neutral-800 bg-neutral-950 hover:border-neutral-500 text-left transition-colors space-y-1"
+                  className="p-2.5 border border-neutral-800 bg-neutral-950 hover:border-neutral-500 text-left transition-colors space-y-1 cursor-pointer"
                 >
                   <div className="text-white font-bold">📄 experience.md</div>
                   <div className="text-[11px] text-neutral-400">Career progression (cat experience.md)</div>
@@ -334,7 +345,7 @@ export function TerminalGame({ onExitToGui }: { onExitToGui: () => void }) {
 
                 <button
                   onClick={() => executeCommand("cat skills.json")}
-                  className="p-2.5 border border-neutral-800 bg-neutral-950 hover:border-neutral-500 text-left transition-colors space-y-1"
+                  className="p-2.5 border border-neutral-800 bg-neutral-950 hover:border-neutral-500 text-left transition-colors space-y-1 cursor-pointer"
                 >
                   <div className="text-white font-bold">📄 skills.json</div>
                   <div className="text-[11px] text-neutral-400">5-stage competency matrix (cat skills.json)</div>
@@ -342,7 +353,7 @@ export function TerminalGame({ onExitToGui }: { onExitToGui: () => void }) {
 
                 <button
                   onClick={() => executeCommand("cat bio.txt")}
-                  className="p-2.5 border border-neutral-800 bg-neutral-950 hover:border-neutral-500 text-left transition-colors space-y-1"
+                  className="p-2.5 border border-neutral-800 bg-neutral-950 hover:border-neutral-500 text-left transition-colors space-y-1 cursor-pointer"
                 >
                   <div className="text-white font-bold">📄 bio.txt</div>
                   <div className="text-[11px] text-neutral-400">Developer background (cat bio.txt | whoami)</div>
@@ -350,7 +361,7 @@ export function TerminalGame({ onExitToGui }: { onExitToGui: () => void }) {
 
                 <button
                   onClick={() => executeCommand("cat contact.sh")}
-                  className="p-2.5 border border-neutral-800 bg-neutral-950 hover:border-neutral-500 text-left transition-colors space-y-1"
+                  className="p-2.5 border border-neutral-800 bg-neutral-950 hover:border-neutral-500 text-left transition-colors space-y-1 cursor-pointer"
                 >
                   <div className="text-white font-bold">⚙️ contact.sh</div>
                   <div className="text-[11px] text-neutral-400">Email &amp; LinkedIn (cat contact.sh | ./contact.sh)</div>
@@ -358,7 +369,7 @@ export function TerminalGame({ onExitToGui }: { onExitToGui: () => void }) {
 
                 <button
                   onClick={() => executeCommand("cat resume.pdf")}
-                  className="p-2.5 border border-neutral-800 bg-neutral-950 hover:border-neutral-500 text-left transition-colors space-y-1"
+                  className="p-2.5 border border-neutral-800 bg-neutral-950 hover:border-neutral-500 text-left transition-colors space-y-1 cursor-pointer"
                 >
                   <div className="text-white font-bold">📦 resume.pdf</div>
                   <div className="text-[11px] text-neutral-400">Official PDF resume download</div>
@@ -366,7 +377,7 @@ export function TerminalGame({ onExitToGui }: { onExitToGui: () => void }) {
 
                 <button
                   onClick={() => executeCommand("play")}
-                  className="p-2.5 border border-neutral-700 bg-neutral-950 hover:border-white text-left transition-colors space-y-1"
+                  className="p-2.5 border border-neutral-700 bg-neutral-950 hover:border-white text-left transition-colors space-y-1 cursor-pointer"
                 >
                   <div className="text-white font-bold">🎮 quiz.exe</div>
                   <div className="text-[11px] text-neutral-300">Systems architecture challenge game</div>
@@ -380,7 +391,6 @@ export function TerminalGame({ onExitToGui }: { onExitToGui: () => void }) {
       case "grep":
       case "search":
       case "find":
-        // Handle flags like `grep -i <term>`
         const cleanQuery = parts
           .slice(1)
           .filter((p) => !p.startsWith("-"))
@@ -716,10 +726,10 @@ export function TerminalGame({ onExitToGui }: { onExitToGui: () => void }) {
   return (
     <div
       onClick={handleContainerClick}
-      className="min-h-[85vh] border border-neutral-800 bg-black font-mono text-neutral-300 p-4 sm:p-6 select-text flex flex-col justify-start"
+      className="fixed inset-0 z-[999] bg-black text-neutral-300 font-mono p-4 sm:p-6 md:p-8 flex flex-col justify-between overflow-hidden select-text"
     >
       {/* Top clean terminal title bar */}
-      <div className="flex items-center justify-between border-b border-neutral-800 pb-2.5 mb-4 text-xs select-none">
+      <div className="flex items-center justify-between border-b border-neutral-800 pb-3 mb-3 text-xs select-none shrink-0">
         <div className="flex items-center gap-2">
           <span className="w-2.5 h-2.5 rounded-full bg-neutral-600"></span>
           <span className="w-2.5 h-2.5 rounded-full bg-neutral-700"></span>
@@ -729,14 +739,14 @@ export function TerminalGame({ onExitToGui }: { onExitToGui: () => void }) {
 
         <button
           onClick={onExitToGui}
-          className="text-xs border border-neutral-700 px-2.5 py-0.5 text-neutral-300 hover:text-white hover:border-white transition-colors bg-neutral-950"
+          className="text-xs border border-neutral-700 px-3 py-1 text-neutral-300 hover:text-white hover:border-white transition-colors bg-neutral-950 cursor-pointer"
         >
           [exit to portfolio]
         </button>
       </div>
 
-      {/* Terminal History Log Stream (Flows naturally downward) */}
-      <div className="space-y-4 text-xs sm:text-sm">
+      {/* Terminal History Log Stream (Flows naturally downward, internal scroll) */}
+      <div className="flex-1 overflow-y-auto space-y-4 text-xs sm:text-sm pr-2 my-2 scrollbar-thin">
         {history.map((entry) => (
           <div key={entry.id} className="space-y-1.5">
             <div className="flex items-center gap-2">
@@ -746,10 +756,11 @@ export function TerminalGame({ onExitToGui }: { onExitToGui: () => void }) {
             {entry.output && <div className="pl-0 pt-0.5">{entry.output}</div>}
           </div>
         ))}
+        <div ref={bottomRef} className="h-2" />
       </div>
 
       {/* Active Input Prompt at the bottom of the log stream */}
-      <div className="pt-3 flex items-center gap-2 text-xs sm:text-sm">
+      <div className="pt-3 border-t border-neutral-800 flex items-center gap-2 text-xs sm:text-sm shrink-0">
         <span className="text-neutral-500 font-bold shrink-0">yuvraj@dev:{cwd}$</span>
         <input
           ref={inputRef}
@@ -761,8 +772,6 @@ export function TerminalGame({ onExitToGui }: { onExitToGui: () => void }) {
           className="flex-1 bg-transparent border-none outline-none text-white font-mono placeholder:text-neutral-700 caret-white"
         />
       </div>
-
-      <div ref={bottomRef} className="h-4" />
     </div>
   );
 }

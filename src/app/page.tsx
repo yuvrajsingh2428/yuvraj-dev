@@ -31,6 +31,9 @@ export default function Home() {
   }, []);
 
   const handleSelectMode = (selected: "gui" | "cli") => {
+    if (typeof window !== "undefined") {
+      window.scrollTo({ top: 0, behavior: "instant" });
+    }
     setMode(selected);
     setIsBootModalOpen(false);
     sessionStorage.setItem("selected_mode", selected);
