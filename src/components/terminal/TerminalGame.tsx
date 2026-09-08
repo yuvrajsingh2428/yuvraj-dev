@@ -745,8 +745,8 @@ export function TerminalGame({ onExitToGui }: { onExitToGui: () => void }) {
         </button>
       </div>
 
-      {/* Terminal History Log Stream (Flows naturally downward, internal scroll) */}
-      <div className="flex-1 overflow-y-auto space-y-4 text-xs sm:text-sm pr-2 my-2 scrollbar-thin">
+      {/* Terminal History Log Stream with Inline Active Input Prompt */}
+      <div className="flex-1 overflow-y-auto space-y-4 text-xs sm:text-sm pr-2 my-1 scrollbar-thin">
         {history.map((entry) => (
           <div key={entry.id} className="space-y-1.5">
             <div className="flex items-center gap-2">
@@ -756,21 +756,22 @@ export function TerminalGame({ onExitToGui }: { onExitToGui: () => void }) {
             {entry.output && <div className="pl-0 pt-0.5">{entry.output}</div>}
           </div>
         ))}
-        <div ref={bottomRef} className="h-2" />
-      </div>
 
-      {/* Active Input Prompt at the bottom of the log stream */}
-      <div className="pt-3 border-t border-neutral-800 flex items-center gap-2 text-xs sm:text-sm shrink-0">
-        <span className="text-neutral-500 font-bold shrink-0">yuvraj@dev:{cwd}$</span>
-        <input
-          ref={inputRef}
-          type="text"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          onKeyDown={handleKeyDown}
-          autoFocus
-          className="flex-1 bg-transparent border-none outline-none text-white font-mono placeholder:text-neutral-700 caret-white"
-        />
+        {/* Active Input Prompt directly below last command output */}
+        <div className="pt-1 flex items-center gap-2 text-xs sm:text-sm">
+          <span className="text-neutral-500 font-bold shrink-0">yuvraj@dev:{cwd}$</span>
+          <input
+            ref={inputRef}
+            type="text"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            onKeyDown={handleKeyDown}
+            autoFocus
+            className="flex-1 bg-transparent border-none outline-none text-white font-mono placeholder:text-neutral-700 caret-white"
+          />
+        </div>
+
+        <div ref={bottomRef} className="h-4" />
       </div>
     </div>
   );
