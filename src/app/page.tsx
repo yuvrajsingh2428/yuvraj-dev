@@ -95,7 +95,7 @@ export default function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
             
             {/* Left Column: CLI Spec & Telemetry */}
-            <div className="lg:col-span-7 space-y-5">
+            <div className="lg:col-span-8 space-y-5">
               {/* CLI Prompt Line 1 */}
               <div className="space-y-1">
                 <div className="text-neutral-500 flex items-center gap-2 text-xs">
@@ -175,7 +175,7 @@ export default function Home() {
             </div>
 
             {/* Right Column: Profile Portrait */}
-            <div className="lg:col-span-5 flex flex-col justify-center">
+            <div className="lg:col-span-4 flex flex-col justify-center items-center">
               <ProfilePortrait />
             </div>
 
