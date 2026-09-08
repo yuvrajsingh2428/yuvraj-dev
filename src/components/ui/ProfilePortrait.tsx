@@ -5,7 +5,7 @@ import Image from "next/image";
 
 export function ProfilePortrait() {
   return (
-    <div className="border border-neutral-800 bg-[#050505] p-2 select-none group relative max-w-[210px] sm:max-w-[230px] mx-auto w-full">
+    <div className="border border-neutral-800 bg-[#050505] p-2 select-none group relative max-w-[200px] sm:max-w-[220px] mx-auto w-full">
       {/* Top terminal frame bar */}
       <div className="flex items-center justify-between text-[10px] text-neutral-500 border-b border-neutral-900 pb-1 mb-1.5 font-mono">
         <span className="text-neutral-400 font-bold">$ view profile.png</span>
@@ -13,13 +13,13 @@ export function ProfilePortrait() {
       </div>
 
       {/* Portrait Image Frame */}
-      <div className="relative w-full aspect-[4/5] max-h-[220px] overflow-hidden bg-black flex items-center justify-center border border-neutral-900">
+      <div className="relative w-full aspect-[4/5] max-h-[200px] sm:max-h-[220px] overflow-hidden bg-black flex items-center justify-center border border-neutral-900">
         <Image
           src="/yuvraj_nobg.jpg"
           alt="Yuvraj Singh - Backend Systems Engineer"
           fill
           priority
-          sizes="(max-width: 768px) 210px, 230px"
+          sizes="(max-width: 768px) 200px, 220px"
           className="object-cover object-top transition-all duration-300 grayscale contrast-115 brightness-95 group-hover:contrast-120"
         />
         
