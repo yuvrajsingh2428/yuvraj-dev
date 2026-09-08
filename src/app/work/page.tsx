@@ -75,20 +75,34 @@ export default function WorkPage() {
                 </h2>
               </div>
 
-              {project.repoUrl ? (
-                <a
-                  href={project.repoUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="self-start sm:self-auto border border-neutral-700 bg-neutral-900 px-3.5 py-1.5 text-xs text-neutral-200 hover:bg-white hover:text-black hover:border-white transition-all"
-                >
-                  [git repo -&gt;]
-                </a>
-              ) : (
-                <span className="self-start sm:self-auto border border-neutral-800 px-3 py-1 text-xs text-neutral-500 bg-neutral-950">
-                  [production_system]
-                </span>
-              )}
+              <div className="flex items-center gap-2">
+                {project.liveUrl && (
+                  <a
+                    href={project.liveUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="border border-white bg-white text-black px-3.5 py-1.5 text-xs font-bold hover:bg-neutral-200 transition-all"
+                  >
+                    [live demo -&gt;]
+                  </a>
+                )}
+                {project.repoUrl ? (
+                  <a
+                    href={project.repoUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="border border-neutral-700 bg-neutral-900 px-3.5 py-1.5 text-xs text-neutral-200 hover:bg-white hover:text-black hover:border-white transition-all"
+                  >
+                    [git repo -&gt;]
+                  </a>
+                ) : (
+                  !project.liveUrl && (
+                    <span className="border border-neutral-800 px-3 py-1 text-xs text-neutral-500 bg-neutral-950">
+                      [production_system]
+                    </span>
+                  )
+                )}
+              </div>
             </div>
 
             {/* Tech Stack Stream */}

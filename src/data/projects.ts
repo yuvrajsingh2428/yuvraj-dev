@@ -28,6 +28,7 @@ export const PROJECTS: Project[] = [
     ],
     engineeringNote: "Built a pluggable provider abstraction switching seamlessly between Ollama for offline zero-cost dev and OpenRouter for cloud inference with structured Zod runtime schema validation.",
     githubUrl: "https://github.com/yuvrajsingh2428",
+    liveUrl: "https://openforge-dev.vercel.app/",
     category: "ai",
     featured: true,
   },

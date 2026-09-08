@@ -327,20 +327,34 @@ export default function Home() {
                       </h3>
                     </div>
 
-                    {proj.repoUrl ? (
-                      <a
-                        href={proj.repoUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="self-start sm:self-auto border border-neutral-700 px-3 py-1 text-xs text-neutral-200 hover:bg-white hover:text-black hover:border-white transition-all"
-                      >
-                        [git clone]
-                      </a>
-                    ) : (
-                      <span className="self-start sm:self-auto border border-neutral-800 px-2.5 py-1 text-[11px] text-neutral-500 bg-neutral-950">
-                        [production_system]
-                      </span>
-                    )}
+                    <div className="flex items-center gap-2">
+                      {proj.liveUrl && (
+                        <a
+                          href={proj.liveUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="border border-white bg-white text-black px-3 py-1 text-xs font-bold hover:bg-neutral-200 transition-all"
+                        >
+                          [live demo -&gt;]
+                        </a>
+                      )}
+                      {proj.repoUrl ? (
+                        <a
+                          href={proj.repoUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="border border-neutral-700 px-3 py-1 text-xs text-neutral-200 hover:bg-white hover:text-black hover:border-white transition-all"
+                        >
+                          [git clone]
+                        </a>
+                      ) : (
+                        !proj.liveUrl && (
+                          <span className="border border-neutral-800 px-2.5 py-1 text-[11px] text-neutral-500 bg-neutral-950">
+                            [production_system]
+                          </span>
+                        )
+                      )}
+                    </div>
                   </div>
 
                   {/* Tech Badges */}

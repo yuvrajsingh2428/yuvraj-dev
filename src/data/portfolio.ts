@@ -42,7 +42,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
       "Reliability & Testing: Enforced strict runtime environment validation with Zod and end-to-end testing via Playwright & Vitest.",
     ],
     repoUrl: undefined,
-    liveUrl: undefined,
+    liveUrl: "https://openforge-dev.vercel.app/",
   },
   {
     id: "poshible",

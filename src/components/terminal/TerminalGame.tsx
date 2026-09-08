@@ -521,20 +521,34 @@ export function TerminalGame({ onExitToGui }: { onExitToGui: () => void }) {
                     <div className="text-[11px] text-neutral-500 uppercase font-semibold">{matchProj.categoryTag}</div>
                     <div className="text-white font-bold text-base">{matchProj.title}</div>
                   </div>
-                  {matchProj.repoUrl ? (
-                    <a
-                      href={matchProj.repoUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="border border-neutral-700 bg-neutral-900 px-3 py-1 text-xs text-white hover:bg-white hover:text-black"
-                    >
-                      [repo]
-                    </a>
-                  ) : (
-                    <span className="text-[11px] text-neutral-500 border border-neutral-800 px-2 py-0.5">
-                      [internal_prod]
-                    </span>
-                  )}
+                  <div className="flex items-center gap-2">
+                    {matchProj.liveUrl && (
+                      <a
+                        href={matchProj.liveUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="border border-white bg-white text-black px-2.5 py-0.5 text-xs font-bold hover:bg-neutral-200"
+                      >
+                        [live demo -&gt;]
+                      </a>
+                    )}
+                    {matchProj.repoUrl ? (
+                      <a
+                        href={matchProj.repoUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="border border-neutral-700 bg-neutral-900 px-3 py-0.5 text-xs text-white hover:bg-white hover:text-black"
+                      >
+                        [repo]
+                      </a>
+                    ) : (
+                      !matchProj.liveUrl && (
+                        <span className="text-[11px] text-neutral-500 border border-neutral-800 px-2 py-0.5">
+                          [internal_prod]
+                        </span>
+                      )
+                    )}
+                  </div>
                 </div>
                 <div className="flex flex-wrap gap-1.5">
                   {matchProj.tech.map((t) => (
