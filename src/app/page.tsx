@@ -111,117 +111,102 @@ export default function Home() {
       {mode === "cli" ? (
         <TerminalGame onExitToGui={() => handleSelectMode("gui")} />
       ) : (
-        <div className="space-y-14 font-mono text-neutral-300">
+        <div className="space-y-10 font-mono text-neutral-300">
           
-          {/* Top Gamification Prompt Banner */}
-          <div className="border border-neutral-800 bg-[#080808] p-3 sm:p-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
-            <div className="flex items-center gap-2.5">
-              <span className="w-2 h-2 rounded-full bg-white"></span>
-              <span className="text-white font-bold">GAMIFIED CLI MODE AVAILABLE</span>
-              <span className="text-neutral-500 hidden md:inline">| Explore via terminal commands, live REPL &amp; quizzes</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <button
-                onClick={() => handleSelectMode("cli")}
-                className="border border-white bg-white text-black px-3 py-1 font-bold hover:bg-neutral-200 transition-colors text-xs"
-              >
-                🎮 Wanna Play? Launch CLI
-              </button>
-              <button
-                onClick={() => setIsBootModalOpen(true)}
-                className="border border-neutral-800 px-2 py-1 text-neutral-400 hover:text-white transition-colors bg-neutral-950 text-xs"
-                title="Open Boot Menu"
-              >
-                [MODE]
-              </button>
-            </div>
-          </div>
-
-          {/* ─── TERMINAL HERO WINDOW ───────────────────────────────────── */}
+          {/* ─── TERMINAL HERO WINDOW (COMPACT & FIT WITHIN VIEWPORT) ────────── */}
           <section className="border border-neutral-800 bg-[#0a0a0a]">
             {/* Terminal Title Bar */}
-            <div className="flex items-center justify-between px-4 py-2.5 border-b border-neutral-800 bg-[#121212] text-xs text-neutral-400 select-none">
+            <div className="flex items-center justify-between px-3.5 py-2 border-b border-neutral-800 bg-[#121212] text-xs text-neutral-400 select-none">
               <div className="flex items-center gap-2">
                 <span className="inline-block w-2.5 h-2.5 rounded-full bg-neutral-600"></span>
                 <span className="inline-block w-2.5 h-2.5 rounded-full bg-neutral-700"></span>
                 <span className="inline-block w-2.5 h-2.5 rounded-full bg-neutral-800"></span>
-                <span className="ml-2 text-neutral-200 font-bold">Terminal — zsh</span>
+                <span className="ml-1 text-neutral-200 font-bold">Terminal — yuvraj@dev</span>
               </div>
-              <div className="text-[11px] text-neutral-500 hidden sm:block">
-                git:(main)
+              
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => handleSelectMode("cli")}
+                  className="border border-white bg-white text-black px-2 py-0.5 font-bold hover:bg-neutral-200 transition-colors text-[11px] flex items-center gap-1"
+                >
+                  <span>🎮 Wanna Play?</span>
+                </button>
+                <span className="text-[11px] text-neutral-500 hidden sm:inline">
+                  git:(main)
+                </span>
               </div>
             </div>
 
             {/* Terminal Body */}
-            <div className="p-5 sm:p-7">
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            <div className="p-4 sm:p-5">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
                 
                 {/* Left Column: CLI Spec & Telemetry */}
-                <div className="lg:col-span-8 space-y-6">
+                <div className="lg:col-span-8 space-y-4">
                   {/* CLI Prompt Line 1 */}
-                  <div className="space-y-1.5">
+                  <div className="space-y-1">
                     <div className="text-neutral-500 flex items-center gap-2 text-xs">
                       <span className="text-white font-bold">yuvraj@dev:~$</span>
                       <span>whoami</span>
                     </div>
-                    <div className="pl-3 text-white font-bold text-xl sm:text-2xl tracking-tight">
+                    <div className="pl-2 text-white font-bold text-xl sm:text-2xl tracking-tight">
                       Yuvraj Singh
                     </div>
-                    <div className="pl-3 text-neutral-300 text-sm leading-relaxed">
-                      Backend Systems & AI Platforms Engineer · Revolt Motors
+                    <div className="pl-2 text-neutral-300 text-xs sm:text-sm">
+                      Backend Systems &amp; AI Platforms Engineer · Revolt Motors
                     </div>
                   </div>
 
                   {/* CLI Prompt Line 2: Tech Stack */}
-                  <div className="space-y-2.5">
+                  <div className="space-y-1.5">
                     <div className="text-neutral-500 flex items-center gap-2 text-xs">
                       <span className="text-white font-bold">yuvraj@dev:~$</span>
                       <span>cat tech_stack.json</span>
                     </div>
-                    <div className="pl-3 grid grid-cols-1 gap-2 text-xs sm:text-sm text-neutral-300 border-l border-neutral-800 ml-1 py-1 leading-relaxed">
-                      <div><span className="text-neutral-500">• Systems:</span> Distributed Backends, RAG Architectures, Microservices</div>
+                    <div className="pl-2 grid grid-cols-1 sm:grid-cols-2 gap-1.5 text-xs text-neutral-300 border-l border-neutral-800 ml-1 py-0.5 leading-relaxed">
+                      <div><span className="text-neutral-500">• Systems:</span> Distributed Backends, RAG, Microservices</div>
                       <div><span className="text-neutral-500">• Languages:</span> TypeScript, Node.js, Python, Java, SQL</div>
-                      <div><span className="text-neutral-500">• Databases:</span> PostgreSQL, Redis, OpenSearch Vector DB, SQLite WAL</div>
-                      <div><span className="text-neutral-500">• Testing & QA:</span> Playwright (POM), Selenium, GitHub Actions CI/CD</div>
+                      <div><span className="text-neutral-500">• Databases:</span> PostgreSQL, Redis, OpenSearch, SQLite</div>
+                      <div><span className="text-neutral-500">• Testing:</span> Playwright (POM), Selenium, CI/CD</div>
                     </div>
                   </div>
 
                   {/* Quick Metrics Matrix */}
-                  <div className="border border-neutral-800 bg-black p-4 space-y-2 text-xs">
-                    <div className="text-neutral-400 font-bold border-b border-neutral-900 pb-1.5 mb-2">
+                  <div className="border border-neutral-800 bg-black p-3 space-y-1.5 text-xs">
+                    <div className="text-neutral-400 font-bold border-b border-neutral-900 pb-1 text-[11px]">
                       [SYSTEM_METRICS]
                     </div>
-                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center sm:text-left">
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center sm:text-left">
                       <div className="space-y-0.5">
                         <div className="text-[10px] text-neutral-500">QUERY PRECISION</div>
-                        <div className="text-white font-bold text-sm">90% RAG ACC</div>
+                        <div className="text-white font-bold text-xs sm:text-sm">90% RAG ACC</div>
                       </div>
                       <div className="space-y-0.5">
                         <div className="text-[10px] text-neutral-500">TEST SUITE</div>
-                        <div className="text-white font-bold text-sm">83+ E2E/API</div>
+                        <div className="text-white font-bold text-xs sm:text-sm">83+ E2E/API</div>
                       </div>
                       <div className="space-y-0.5">
                         <div className="text-[10px] text-neutral-500">SERVER LOAD</div>
-                        <div className="text-white font-bold text-sm">-60% OPTIMIZED</div>
+                        <div className="text-white font-bold text-xs sm:text-sm">-60% OPTIMIZED</div>
                       </div>
                       <div className="space-y-0.5">
                         <div className="text-[10px] text-neutral-500">LATENCY PROFILE</div>
-                        <div className="text-white font-bold text-sm">&lt;15ms p99</div>
+                        <div className="text-white font-bold text-xs sm:text-sm">&lt;15ms p99</div>
                       </div>
                     </div>
                   </div>
 
                   {/* Action Buttons */}
-                  <div className="flex flex-wrap gap-2.5 pt-2 border-t border-neutral-900 text-xs">
+                  <div className="flex flex-wrap items-center gap-2 pt-1 border-t border-neutral-900 text-xs">
                     <Link
                       href="/work"
-                      className="border border-white bg-white text-black px-3.5 py-1.5 font-bold hover:bg-neutral-200 transition-colors"
+                      className="border border-white bg-white text-black px-3 py-1 font-bold hover:bg-neutral-200 transition-colors"
                     >
                       $ view_projects
                     </Link>
                     <Link
                       href="/systems"
-                      className="border border-neutral-700 bg-neutral-900 text-white px-3.5 py-1.5 hover:border-neutral-400 transition-colors"
+                      className="border border-neutral-700 bg-neutral-900 text-white px-3 py-1 hover:border-neutral-400 transition-colors"
                     >
                       $ view_architecture
                     </Link>
@@ -229,7 +214,7 @@ export default function Home() {
                       href="https://drive.google.com/uc?export=download&id=18ozkViRciZPbM-1pCSg03Kc7b2eVIoXO"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="border border-neutral-700 bg-neutral-900 text-neutral-300 px-3.5 py-1.5 hover:border-neutral-400 transition-colors"
+                      className="border border-neutral-700 bg-neutral-900 text-neutral-300 px-3 py-1 hover:border-neutral-400 transition-colors"
                     >
                       $ curl -O resume.pdf
                     </a>
