@@ -1,19 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { TextReveal } from "@/components/ui/TextReveal";
-import { Card3D } from "@/components/ui/Card3D";
-import { Badge } from "@/components/ui/badge";
-import {
-  ArrowRight,
-  Sparkles,
-  Zap,
-  CheckCircle2,
-  Layers,
-  Server,
-  Activity,
-} from "lucide-react";
 
 interface FlowNode {
   id: string;
@@ -72,7 +59,7 @@ const DIAGRAMS: ArchitectureDiagram[] = [
       { id: "scraper", label: "TinyFetch Scraper", sublabel: "3 Concurrent Max", tech: "Playwright", deepDive: "HTTP client with retry logic, rate limiting (3 concurrent, 1.5s delay) to avoid anti-bot blocks." },
       { id: "scorer", label: "6-D Match Scorer", sublabel: "Weighted Ranking", tech: "GPT-4o API", deepDive: "Scores 6 dimensions: Skill (30), Title (20), Location (15), Experience (15), Salary (10), Prestige (10)." },
       { id: "storage", label: "WAL Storage", sublabel: "Local DB Persistence", tech: "SQLite WAL", deepDive: "High-concurrency SQLite WAL-mode database storing application logs and candidate scores." },
-      { id: "reports", label: "HTML Pack", sublabel: "Tailored Resumes", tech: "Dark-Theme Report", deepDive: "Generates dark-themed HTML score charts and on-demand GPT-4o ATS-customized resumes." },
+      { id: "reports", label: "HTML Pack", sublabel: "Tailored Resumes", tech: "CLI Report", deepDive: "Generates dark-themed HTML score charts and on-demand GPT-4o ATS-customized resumes." },
     ],
   },
   {
@@ -104,34 +91,23 @@ export default function SystemsPage() {
   };
 
   return (
-    <div className="py-8 md:py-12 space-y-16">
+    <div className="space-y-10 font-mono text-neutral-300">
       {/* Header Banner */}
-      <section className="space-y-4">
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4 }}
-          className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-xs text-cyan-300 font-mono shadow-[0_0_16px_rgba(0,242,254,0.15)]"
-        >
-          <Sparkles className="w-3.5 h-3.5 text-[#00f2fe]" />
-          <span>Interactive Architecture Streams</span>
-        </motion.div>
-
-        <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight">
-          <span className="text-white">Interactive System </span>
-          <span className="bg-gradient-to-r from-[#00f2fe] via-[#38bdf8] to-[#c084fc] bg-clip-text text-transparent drop-shadow-[0_0_30px_rgba(0,242,254,0.3)]">
-            Architecture Pipelines
-          </span>
+      <div className="border border-neutral-800 bg-[#0a0a0a] p-4 sm:p-6 space-y-3">
+        <div className="text-xs text-neutral-500">
+          yuvraj@systems:~$ ./inspect_architectures.sh --interactive
+        </div>
+        <h1 className="text-2xl sm:text-3xl font-bold text-white">
+          Interactive System Architecture Pipelines
         </h1>
-
-        <p className="text-slate-300 text-sm md:text-base max-w-2xl leading-relaxed">
-          Click any node in the flow diagrams below to inspect technical implementation details,
-          tradeoff rationales, and runtime data movement specifications.
+        <p className="text-xs sm:text-sm text-neutral-400 max-w-2xl leading-relaxed">
+          Select any pipeline node below to inspect data movement specifications, runtime tech stacks,
+          and engineering tradeoff rationales.
         </p>
-      </section>
+      </div>
 
-      {/* Diagrams Display with Interactive Nodes (Card-Free Fluid Stream) */}
-      <section className="space-y-12">
+      {/* Diagrams */}
+      <div className="space-y-8">
         {DIAGRAMS.map((diag) => {
           const selectedNodeId = selectedNodes[diag.id] || diag.flow[0].id;
           const activeNodeData = diag.flow.find((n) => n.id === selectedNodeId) || diag.flow[0];
@@ -139,80 +115,49 @@ export default function SystemsPage() {
           return (
             <div
               key={diag.id}
-              className="relative p-6 md:p-8 rounded-3xl bg-white/[0.025] hover:bg-white/[0.04] border border-white/[0.07] backdrop-blur-xl shadow-2xl space-y-6 transition-all duration-300"
+              className="border border-neutral-800 bg-[#0a0a0a] p-5 sm:p-6 space-y-5 hover:border-neutral-700 transition-colors"
             >
-              {/* Header */}
-              <div className="space-y-2">
-                <div className="flex flex-wrap items-center justify-between gap-3">
-                  <h2 className="text-xl md:text-2xl font-bold tracking-tight text-foreground">
+              {/* Diagram Title & Badge */}
+              <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 border-b border-neutral-900 pb-3">
+                <div>
+                  <h2 className="text-lg sm:text-xl font-bold text-white">
                     {diag.title}
                   </h2>
-                  <Badge
-                    variant="outline"
-                    className="bg-cyan-500/10 text-cyan-300 border-cyan-500/30 font-mono text-xs py-1"
-                  >
-                    {diag.badge}
-                  </Badge>
+                  <p className="text-xs text-neutral-400 mt-1">
+                    {diag.description}
+                  </p>
                 </div>
-
-                <p className="text-sm text-slate-300 leading-relaxed">
-                  {diag.description}
-                </p>
+                <span className="self-start sm:self-auto border border-neutral-800 bg-neutral-950 px-2 py-0.5 text-[11px] text-neutral-400">
+                  {diag.badge}
+                </span>
               </div>
 
-              {/* Interactive Flow Chain */}
-              <div className="py-2 overflow-x-auto no-scrollbar">
-                <div className="flex items-center gap-3 min-w-[700px]">
+              {/* Step Chain Selector */}
+              <div className="overflow-x-auto pb-2">
+                <div className="flex items-center gap-2 min-w-max">
                   {diag.flow.map((node, nIdx) => {
                     const isLast = nIdx === diag.flow.length - 1;
                     const isSelected = selectedNodeId === node.id;
 
                     return (
                       <React.Fragment key={node.id}>
-                        <motion.button
-                          whileHover={{ scale: 1.04 }}
-                          whileTap={{ scale: 0.98 }}
+                        <button
                           onClick={() => handleStepClick(diag.id, node.id)}
-                          className={`flex flex-col items-center gap-1.5 p-4 rounded-2xl border text-center transition-all duration-300 min-w-[140px] cursor-pointer ${
+                          className={`p-3 text-left border transition-all text-xs min-w-[150px] ${
                             isSelected
-                              ? "bg-cyan-500/15 border-[#00f2fe] shadow-[0_0_20px_rgba(0,242,254,0.35)]"
-                              : "bg-white/[0.03] border-white/[0.08] hover:border-cyan-500/40 hover:bg-white/[0.05]"
+                              ? "bg-white text-black border-white font-bold"
+                              : "bg-neutral-950 text-neutral-400 border-neutral-800 hover:border-neutral-600 hover:text-white"
                           }`}
                         >
-                          <span
-                            className={`font-mono text-[10px] uppercase tracking-wider font-semibold ${
-                              isSelected ? "text-[#00f2fe]" : "text-cyan-400/70"
-                            }`}
-                          >
-                            Step {nIdx + 1}
-                          </span>
-                          <span className="font-bold text-xs md:text-sm text-foreground">
-                            {node.label}
-                          </span>
-                          <span className="font-mono text-[10px] text-slate-400">
-                            {node.sublabel}
-                          </span>
-                          <Badge
-                            variant="secondary"
-                            className={`font-mono text-[10px] mt-1 ${
-                              isSelected
-                                ? "bg-cyan-500/25 text-cyan-200 border-cyan-500/40"
-                                : "bg-white/[0.04] text-slate-300 border-white/[0.06]"
-                            }`}
-                          >
-                            {node.tech}
-                          </Badge>
-                        </motion.button>
+                          <div className="text-[10px] opacity-60">STEP 0{nIdx + 1}</div>
+                          <div className="font-bold text-xs mt-0.5">{node.label}</div>
+                          <div className="text-[10px] opacity-80">{node.tech}</div>
+                        </button>
 
                         {!isLast && (
-                          <div className="flex items-center text-cyan-400 shrink-0">
-                            <motion.div
-                              animate={{ x: [0, 4, 0] }}
-                              transition={{ duration: 1.5, repeat: Infinity }}
-                            >
-                              <ArrowRight className="w-5 h-5 text-cyan-400/70" />
-                            </motion.div>
-                          </div>
+                          <span className="text-neutral-600 text-xs px-1">
+                            ---&gt;
+                          </span>
                         )}
                       </React.Fragment>
                     );
@@ -220,35 +165,28 @@ export default function SystemsPage() {
                 </div>
               </div>
 
-              {/* Active Step Deep-Dive Box */}
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={activeNodeData.id}
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -8 }}
-                  transition={{ duration: 0.25 }}
-                  className="p-5 rounded-2xl bg-white/[0.03] border border-cyan-500/30 space-y-2 shadow-[0_0_16px_rgba(0,242,254,0.1)]"
-                >
-                  <div className="flex items-center gap-2 text-xs font-mono text-[#00f2fe] font-bold uppercase tracking-wider">
-                    <Activity className="w-3.5 h-3.5 text-[#00f2fe]" />
-                    <span>[{activeNodeData.label} — Deep-Dive Specification]</span>
-                  </div>
-                  <p className="text-xs md:text-sm text-slate-200 leading-relaxed font-normal">
-                    {activeNodeData.deepDive}
-                  </p>
-                </motion.div>
-              </AnimatePresence>
+              {/* Active Step Details Terminal Box */}
+              <div className="border border-neutral-800 bg-black p-4 space-y-2 text-xs">
+                <div className="flex items-center justify-between text-[11px] border-b border-neutral-900 pb-1.5">
+                  <span className="text-white font-bold">
+                    [NODE SPEC]: {activeNodeData.label} ({activeNodeData.tech})
+                  </span>
+                  <span className="text-neutral-500">{activeNodeData.sublabel}</span>
+                </div>
+                <p className="text-neutral-300 leading-relaxed text-xs sm:text-sm pt-1">
+                  {activeNodeData.deepDive}
+                </p>
+              </div>
 
-              {/* Engineering Tradeoff Note */}
-              <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.06] text-xs md:text-sm text-slate-300 flex items-start gap-3 font-mono">
-                <span className="text-violet-400 font-bold shrink-0">[Tradeoff & Rationale]:</span>
-                <span className="leading-relaxed">{diag.tradeoffNote}</span>
+              {/* Tradeoff Rationale Note */}
+              <div className="border-l-2 border-neutral-700 pl-3 py-1 text-xs text-neutral-400">
+                <span className="text-white font-bold">[Tradeoff & Rationale]:</span>{" "}
+                {diag.tradeoffNote}
               </div>
             </div>
           );
         })}
-      </section>
+      </div>
     </div>
   );
 }
