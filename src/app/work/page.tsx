@@ -23,15 +23,15 @@ export default function WorkPage() {
 
   return (
     <div className="space-y-12 font-mono text-neutral-300">
-      {/* Header Banner */}
-      <div className="border border-neutral-800 bg-[#0a0a0a] p-5 sm:p-7 space-y-3.5">
+      {/* Header Banner - Clean open terminal layout without enclosing box */}
+      <div className="space-y-2 border-b border-neutral-800 pb-4">
         <div className="text-xs text-neutral-500">
           yuvraj@dev:~$ cat production_work.md
         </div>
-        <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
-          Production Systems & Engineered Work
+        <h1 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
+          Production Systems &amp; Engineered Work
         </h1>
-        <p className="text-sm text-neutral-400 max-w-2xl leading-relaxed">
+        <p className="text-xs sm:text-sm text-neutral-400 max-w-2xl leading-relaxed">
           Full-lifecycle software engineering implementations across RAG pipelines, autonomous agents,
           deterministic scoring algorithms, and distributed microservices.
         </p>

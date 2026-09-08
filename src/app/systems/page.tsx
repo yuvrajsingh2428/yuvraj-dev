@@ -92,9 +92,9 @@ export default function SystemsPage() {
 
   return (
     <div className="space-y-8 font-mono text-neutral-300">
-      {/* Header Banner */}
-      <div className="border border-neutral-800 bg-[#0a0a0a] p-4 sm:p-5 space-y-2.5">
-        <div className="flex items-center justify-between text-xs text-neutral-500 border-b border-neutral-900 pb-2">
+      {/* Header - Clean open terminal layout without enclosing box */}
+      <div className="space-y-2 border-b border-neutral-800 pb-4">
+        <div className="flex items-center justify-between text-xs text-neutral-500">
           <span>yuvraj@dev:~$ node inspect_systems.js</span>
           <span className="text-[11px] text-neutral-400 font-bold">[4 PRODUCTION PIPELINES]</span>
         </div>

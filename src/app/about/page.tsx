@@ -81,9 +81,9 @@ export default function AboutPage() {
   return (
     <div className="space-y-10 font-mono text-neutral-300">
       
-      {/* ─── HEADER BANNER & PHILOSOPHY HERO ──────────────────────────── */}
-      <div className="border border-neutral-800 bg-[#0a0a0a] p-5 sm:p-7 space-y-4">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-neutral-900 pb-3">
+      {/* ─── HEADER BANNER & PHILOSOPHY HERO (OPEN TERMINAL LAYOUT) ─────── */}
+      <div className="space-y-3.5 border-b border-neutral-800 pb-6">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
           <div className="text-xs text-neutral-500">
             yuvraj@dev:~$ cat engineering_manifesto.md
           </div>
@@ -93,7 +93,7 @@ export default function AboutPage() {
           </div>
         </div>
 
-        <div className="space-y-2">
+        <div className="space-y-1.5">
           <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
             I build systems end-to-end and own them past &apos;it works.&apos;
           </h1>
@@ -102,21 +102,21 @@ export default function AboutPage() {
           </p>
         </div>
 
-        {/* Quick telemetry badge strip */}
+        {/* Quick telemetry badge strip - Open minimal dividers */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
-          <div className="border border-neutral-800 bg-black p-3 space-y-0.5">
+          <div className="border-l-2 border-neutral-800 pl-3 py-1 space-y-0.5">
             <div className="text-[10px] text-neutral-500 uppercase">Primary Focus</div>
             <div className="text-white font-bold text-xs sm:text-sm">Backend &amp; AI Systems</div>
           </div>
-          <div className="border border-neutral-800 bg-black p-3 space-y-0.5">
+          <div className="border-l-2 border-neutral-800 pl-3 py-1 space-y-0.5">
             <div className="text-[10px] text-neutral-500 uppercase">RAG Precision</div>
             <div className="text-white font-bold text-xs sm:text-sm">90% Vector Accuracy</div>
           </div>
-          <div className="border border-neutral-800 bg-black p-3 space-y-0.5">
+          <div className="border-l-2 border-neutral-800 pl-3 py-1 space-y-0.5">
             <div className="text-[10px] text-neutral-500 uppercase">Regression Reduction</div>
             <div className="text-white font-bold text-xs sm:text-sm">-60% Manual Effort</div>
           </div>
-          <div className="border border-neutral-800 bg-black p-3 space-y-0.5">
+          <div className="border-l-2 border-neutral-800 pl-3 py-1 space-y-0.5">
             <div className="text-[10px] text-neutral-500 uppercase">Upstream Impact</div>
             <div className="text-white font-bold text-xs sm:text-sm">Microsoft · Apify</div>
           </div>
@@ -170,18 +170,18 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ─── SECTION 2: ENGINEERING TENETS ─────────────────────────────── */}
-      <section className="space-y-4">
+      {/* ─── SECTION 2: ENGINEERING TENETS (CLEAN 3-COLUMNS, NO BOXES) ──── */}
+      <section className="space-y-3">
         <div className="border-b border-neutral-800 pb-2.5">
           <div className="text-white font-bold text-sm sm:text-base">$ cat engineering_tenets.json</div>
           <div className="text-xs text-neutral-500 mt-0.5">Principles governing how I design, architect, and ship software</div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 pt-1">
           {TENETS.map((tenet) => (
             <div
               key={tenet.code}
-              className="border border-neutral-800 bg-[#0a0a0a] p-4 sm:p-5 space-y-2 hover:border-neutral-600 transition-colors"
+              className="border-l-2 border-neutral-800 pl-3.5 py-1 space-y-1.5"
             >
               <div className="text-[10px] font-bold text-neutral-500">{tenet.code}</div>
               <h3 className="text-sm font-bold text-white">{tenet.title}</h3>
@@ -229,28 +229,29 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ─── SECTION 4: TECHNICAL SKILLS MATRIX ────────────────────────── */}
-      <section className="space-y-4">
+      {/* ─── SECTION 4: TECHNICAL SKILLS MATRIX (OPEN TERMINAL LIST) ────── */}
+      <section className="space-y-3">
         <div className="border-b border-neutral-800 pb-2.5">
           <div className="text-white font-bold text-sm sm:text-base">$ cat skills.json</div>
           <div className="text-xs text-neutral-500 mt-0.5">Core technical competencies and production tools</div>
         </div>
 
-        <div className="space-y-3">
+        <div className="divide-y divide-neutral-900 font-mono text-xs sm:text-sm">
           {SKILL_STAGES.map((stage) => (
             <div
               key={stage.title}
-              className="border border-neutral-800 bg-[#0a0a0a] p-4 flex flex-col md:flex-row md:items-center justify-between gap-3 text-xs sm:text-sm"
+              className="py-3 flex flex-col md:flex-row md:items-baseline gap-2 md:gap-6"
             >
-              <div className="font-bold text-white shrink-0">
-                {stage.title}
+              <div className="text-neutral-400 font-semibold md:w-48 shrink-0 flex items-center gap-1.5">
+                <span className="text-neutral-600">&gt;</span>
+                <span className="text-white">{stage.title}</span>
               </div>
 
               <div className="flex flex-wrap gap-1.5">
                 {stage.skills.map((skill) => (
                   <span
                     key={skill}
-                    className="border border-neutral-800 bg-neutral-950 px-2.5 py-1 text-neutral-300 text-xs hover:border-neutral-500 transition-colors"
+                    className="border border-neutral-800 bg-neutral-950 px-2.5 py-1 text-neutral-300 text-xs hover:border-neutral-500 hover:text-white transition-colors"
                   >
                     {skill}
                   </span>
@@ -261,8 +262,8 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ─── SECTION 5: CONTACT NODE ───────────────────────────────────── */}
-      <section className="border border-neutral-800 bg-[#0a0a0a] p-6 sm:p-7 text-center space-y-4">
+      {/* ─── SECTION 5: CONTACT NODE (CLEAN TERMINAL SECTION) ───────────── */}
+      <section className="border-t border-b border-neutral-800 py-8 text-center space-y-4">
         <div className="space-y-1.5">
           <div className="text-xs text-neutral-500 font-semibold">[CONNECT]</div>
           <h2 className="text-xl sm:text-2xl font-bold text-white">$ npx contact-yuvraj</h2>
