@@ -10,9 +10,9 @@ import {
   CONTACT_INFO,
   BIO_TEXT,
 } from "@/data/portfolio";
+import { AsciiPortrait } from "@/components/ui/AsciiPortrait";
 
 export default function Home() {
-  const [activeTab, setActiveTab] = useState<"overview" | "projects" | "systems" | "experience" | "contact">("overview");
   const [cliInput, setCliInput] = useState("");
   const [cliOutput, setCliOutput] = useState<string[]>([]);
 
@@ -24,11 +24,16 @@ export default function Home() {
     let response = "";
     switch (cmd) {
       case "help":
-        response = "Available commands: help, bio, projects, systems, exp, skills, contact, resume, clear";
+        response = "Available commands: help, bio, ascii, projects, systems, exp, skills, contact, resume, clear";
         break;
       case "bio":
       case "about":
         response = BIO_TEXT;
+        break;
+      case "ascii":
+      case "avatar":
+      case "whoami":
+        response = "Rendered ASCII profile portrait above in hero terminal node [yuvraj.ascii].";
         break;
       case "projects":
       case "ls":
@@ -70,7 +75,7 @@ export default function Home() {
   return (
     <div className="space-y-12 font-mono text-neutral-300">
       
-      {/* ─── TERMINAL HERO WINDOW ───────────────────────────────────────── */}
+      {/* ─── TERMINAL HERO WINDOW WITH ASCII PORTRAIT ───────────────────── */}
       <section className="border border-neutral-800 bg-[#0a0a0a]">
         {/* Terminal Title Bar */}
         <div className="flex items-center justify-between px-3 py-2 border-b border-neutral-800 bg-[#121212] text-xs text-neutral-400 select-none">
@@ -86,82 +91,94 @@ export default function Home() {
         </div>
 
         {/* Terminal Body */}
-        <div className="p-4 sm:p-6 space-y-6 text-xs sm:text-sm">
-          {/* CLI Prompt Line 1 */}
-          <div className="space-y-1">
-            <div className="text-neutral-500 flex items-center gap-2">
-              <span className="text-white font-bold">yuvraj@systems:~$</span>
-              <span>whoami</span>
-            </div>
-            <div className="pl-4 text-white font-bold text-base sm:text-lg">
-              Yuvraj Singh
-            </div>
-            <div className="pl-4 text-neutral-400">
-              Backend Systems & AI Platforms Engineer · Revolt Motors
-            </div>
-          </div>
+        <div className="p-4 sm:p-6">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+            
+            {/* Left Column: CLI Spec & Telemetry */}
+            <div className="lg:col-span-7 space-y-5">
+              {/* CLI Prompt Line 1 */}
+              <div className="space-y-1">
+                <div className="text-neutral-500 flex items-center gap-2 text-xs">
+                  <span className="text-white font-bold">yuvraj@systems:~$</span>
+                  <span>whoami</span>
+                </div>
+                <div className="pl-3 text-white font-bold text-lg sm:text-xl">
+                  Yuvraj Singh
+                </div>
+                <div className="pl-3 text-neutral-400 text-xs sm:text-sm">
+                  Backend Systems & AI Platforms Engineer · Revolt Motors
+                </div>
+              </div>
 
-          {/* CLI Prompt Line 2: System Spec */}
-          <div className="space-y-2">
-            <div className="text-neutral-500 flex items-center gap-2">
-              <span className="text-white font-bold">yuvraj@systems:~$</span>
-              <span>uname -a --core-competencies</span>
-            </div>
-            <div className="pl-4 grid grid-cols-1 md:grid-cols-2 gap-2 text-xs text-neutral-300 border-l border-neutral-800 ml-1 py-1">
-              <div><span className="text-neutral-500">• Systems:</span> Distributed Backends, RAG Architectures, Microservices</div>
-              <div><span className="text-neutral-500">• Languages:</span> TypeScript, Node.js, Python, Java, SQL</div>
-              <div><span className="text-neutral-500">• Databases:</span> PostgreSQL, Redis, OpenSearch Vector DB, SQLite WAL</div>
-              <div><span className="text-neutral-500">• Testing & QA:</span> Playwright (POM), Selenium, GitHub Actions CI/CD</div>
-            </div>
-          </div>
+              {/* CLI Prompt Line 2: System Spec */}
+              <div className="space-y-2">
+                <div className="text-neutral-500 flex items-center gap-2 text-xs">
+                  <span className="text-white font-bold">yuvraj@systems:~$</span>
+                  <span>uname -a --core-competencies</span>
+                </div>
+                <div className="pl-3 grid grid-cols-1 gap-1.5 text-xs text-neutral-300 border-l border-neutral-800 ml-1 py-1">
+                  <div><span className="text-neutral-500">• Systems:</span> Distributed Backends, RAG Architectures, Microservices</div>
+                  <div><span className="text-neutral-500">• Languages:</span> TypeScript, Node.js, Python, Java, SQL</div>
+                  <div><span className="text-neutral-500">• Databases:</span> PostgreSQL, Redis, OpenSearch Vector DB, SQLite WAL</div>
+                  <div><span className="text-neutral-500">• Testing & QA:</span> Playwright (POM), Selenium, GitHub Actions CI/CD</div>
+                </div>
+              </div>
 
-          {/* Quick Metrics ASCII Matrix */}
-          <div className="border border-neutral-800 bg-black p-3 space-y-1 text-xs">
-            <div className="text-neutral-400 font-bold border-b border-neutral-900 pb-1 mb-2">
-              [SYSTEM_TELEMETRY]
-            </div>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center sm:text-left">
-              <div>
-                <div className="text-[10px] text-neutral-500">QUERY PRECISION</div>
-                <div className="text-white font-bold">90% RAG ACC</div>
+              {/* Quick Metrics ASCII Matrix */}
+              <div className="border border-neutral-800 bg-black p-3 space-y-1 text-xs">
+                <div className="text-neutral-400 font-bold border-b border-neutral-900 pb-1 mb-2">
+                  [SYSTEM_TELEMETRY]
+                </div>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center sm:text-left">
+                  <div>
+                    <div className="text-[10px] text-neutral-500">QUERY PRECISION</div>
+                    <div className="text-white font-bold">90% RAG ACC</div>
+                  </div>
+                  <div>
+                    <div className="text-[10px] text-neutral-500">TEST SUITE</div>
+                    <div className="text-white font-bold">83+ E2E/API</div>
+                  </div>
+                  <div>
+                    <div className="text-[10px] text-neutral-500">SERVER LOAD</div>
+                    <div className="text-white font-bold">-60% OPTIMIZED</div>
+                  </div>
+                  <div>
+                    <div className="text-[10px] text-neutral-500">LATENCY PROFILE</div>
+                    <div className="text-white font-bold">&lt;15ms p99</div>
+                  </div>
+                </div>
               </div>
-              <div>
-                <div className="text-[10px] text-neutral-500">TEST SUITE</div>
-                <div className="text-white font-bold">83+ E2E/API</div>
-              </div>
-              <div>
-                <div className="text-[10px] text-neutral-500">SERVER LOAD</div>
-                <div className="text-white font-bold">-60% OPTIMIZED</div>
-              </div>
-              <div>
-                <div className="text-[10px] text-neutral-500">LATENCY PROFILE</div>
-                <div className="text-white font-bold">&lt;15ms p99 CACHED</div>
-              </div>
-            </div>
-          </div>
 
-          {/* Action Prompt */}
-          <div className="flex flex-wrap gap-2 pt-2 border-t border-neutral-800">
-            <Link
-              href="/work"
-              className="border border-white bg-white text-black px-3 py-1 text-xs font-bold hover:bg-neutral-200 transition-colors"
-            >
-              $ view_production_work --all
-            </Link>
-            <Link
-              href="/systems"
-              className="border border-neutral-700 bg-neutral-900 text-white px-3 py-1 text-xs hover:border-neutral-400 transition-colors"
-            >
-              $ inspect_system_architectures
-            </Link>
-            <a
-              href="https://drive.google.com/uc?export=download&id=18ozkViRciZPbM-1pCSg03Kc7b2eVIoXO"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="border border-neutral-700 bg-neutral-900 text-neutral-300 px-3 py-1 text-xs hover:border-neutral-400 transition-colors"
-            >
-              $ curl -O resume.pdf
-            </a>
+              {/* Action Buttons */}
+              <div className="flex flex-wrap gap-2 pt-2 border-t border-neutral-900">
+                <Link
+                  href="/work"
+                  className="border border-white bg-white text-black px-3 py-1 text-xs font-bold hover:bg-neutral-200 transition-colors"
+                >
+                  $ view_production_work
+                </Link>
+                <Link
+                  href="/systems"
+                  className="border border-neutral-700 bg-neutral-900 text-white px-3 py-1 text-xs hover:border-neutral-400 transition-colors"
+                >
+                  $ inspect_architectures
+                </Link>
+                <a
+                  href="https://drive.google.com/uc?export=download&id=18ozkViRciZPbM-1pCSg03Kc7b2eVIoXO"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="border border-neutral-700 bg-neutral-900 text-neutral-300 px-3 py-1 text-xs hover:border-neutral-400 transition-colors"
+                >
+                  $ curl -O resume.pdf
+                </a>
+              </div>
+            </div>
+
+            {/* Right Column: ASCII Art Portrait */}
+            <div className="lg:col-span-5 flex flex-col justify-center">
+              <AsciiPortrait />
+            </div>
+
           </div>
         </div>
       </section>
@@ -175,7 +192,7 @@ export default function Home() {
 
         {/* Quick helper buttons */}
         <div className="flex flex-wrap gap-1.5 text-[11px]">
-          {["help", "bio", "projects", "systems", "exp", "skills", "contact", "resume", "clear"].map((cmd) => (
+          {["help", "bio", "ascii", "projects", "systems", "exp", "skills", "contact", "resume", "clear"].map((cmd) => (
             <button
               key={cmd}
               onClick={() => {
@@ -209,7 +226,7 @@ export default function Home() {
             type="text"
             value={cliInput}
             onChange={(e) => setCliInput(e.target.value)}
-            placeholder="Type 'help', 'bio', 'projects', 'contact'..."
+            placeholder="Type 'help', 'bio', 'ascii', 'projects', 'contact'..."
             className="flex-1 bg-transparent border-none outline-none text-white font-mono placeholder:text-neutral-700"
           />
           <button type="submit" className="border border-neutral-700 px-2 py-0.5 text-[10px] text-neutral-400 hover:text-white">
