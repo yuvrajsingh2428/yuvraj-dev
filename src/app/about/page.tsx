@@ -141,6 +141,14 @@ export default function AboutPage() {
           >
             [linkedin: yuvrajsingh024]
           </a>
+          <a
+            href={CONTACT_INFO.twitter}
+            target="_blank"
+            rel="noreferrer"
+            className="border border-neutral-700 bg-neutral-900 text-neutral-200 px-4 py-2 text-xs hover:border-neutral-400 transition-all"
+          >
+            [x.com: itsyuvrajx]
+          </a>
         </div>
       </section>
     </div>

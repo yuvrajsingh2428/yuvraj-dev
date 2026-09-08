@@ -73,7 +73,7 @@ export default function Home() {
         response = SKILL_STAGES.map(s => `${s.title}: ${s.skills.join(", ")}`).join("\n");
         break;
       case "contact":
-        response = `Email: ${CONTACT_INFO.email} | GitHub: ${CONTACT_INFO.github} | LinkedIn: ${CONTACT_INFO.linkedin}`;
+        response = `Email: ${CONTACT_INFO.email} | GitHub: ${CONTACT_INFO.github} | LinkedIn: ${CONTACT_INFO.linkedin} | X: ${CONTACT_INFO.twitter}`;
         break;
       case "play":
       case "game":
@@ -393,18 +393,30 @@ export default function Home() {
                   key={oss.id}
                   className="border border-neutral-800 bg-[#0a0a0a] p-5 space-y-3 hover:border-neutral-600 transition-colors text-xs sm:text-sm leading-relaxed"
                 >
-                  <div className="flex items-center justify-between">
+                  <div className="flex items-center justify-between gap-2">
                     <a
                       href={oss.repoUrl}
                       target="_blank"
                       rel="noreferrer"
-                      className="font-bold text-white hover:underline text-sm"
+                      className="font-bold text-white hover:underline text-sm truncate"
                     >
                       {oss.repo}
                     </a>
-                    <span className="text-[10px] text-neutral-400 border border-neutral-800 px-2 py-0.5 bg-neutral-950">
-                      MERGED
-                    </span>
+                    <div className="flex items-center gap-2 shrink-0">
+                      {oss.prUrl && (
+                        <a
+                          href={oss.prUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="border border-white bg-white text-black px-2.5 py-0.5 text-xs font-bold hover:bg-neutral-200 transition-all"
+                        >
+                          [view pr -&gt;]
+                        </a>
+                      )}
+                      <span className="text-[10px] text-neutral-400 border border-neutral-800 px-2 py-0.5 bg-neutral-950">
+                        MERGED
+                      </span>
+                    </div>
                   </div>
                   <p className="text-neutral-300">{oss.whatYouDid}</p>
                   <div className="text-xs text-neutral-400 pt-2 border-t border-neutral-900">
@@ -478,6 +490,14 @@ export default function Home() {
                 className="border border-neutral-700 bg-neutral-900 text-neutral-200 px-4 py-2 text-xs hover:border-neutral-400 transition-all"
               >
                 [linkedin/in/yuvrajsingh024]
+              </a>
+              <a
+                href={CONTACT_INFO.twitter}
+                target="_blank"
+                rel="noreferrer"
+                className="border border-neutral-700 bg-neutral-900 text-neutral-200 px-4 py-2 text-xs hover:border-neutral-400 transition-all"
+              >
+                [x.com/itsyuvrajx]
               </a>
             </div>
           </section>

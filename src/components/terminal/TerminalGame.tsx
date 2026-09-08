@@ -468,13 +468,25 @@ export function TerminalGame({ onExitToGui }: { onExitToGui: () => void }) {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 {OSS_CONTRIBUTIONS.map((oss) => (
                   <div key={oss.id} className="border border-neutral-800 bg-[#0a0a0a] p-4 space-y-2">
-                    <div className="flex justify-between items-center">
-                      <a href={oss.repoUrl} target="_blank" rel="noreferrer" className="text-white font-bold hover:underline">
+                    <div className="flex justify-between items-center gap-2">
+                      <a href={oss.repoUrl} target="_blank" rel="noreferrer" className="text-white font-bold hover:underline truncate">
                         {oss.repo}
                       </a>
-                      <span className="text-[10px] text-neutral-400 border border-neutral-800 px-1.5 py-0.2 bg-neutral-950">
-                        MERGED
-                      </span>
+                      <div className="flex items-center gap-2 shrink-0">
+                        {oss.prUrl && (
+                          <a
+                            href={oss.prUrl}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="border border-white bg-white text-black px-2 py-0.5 text-xs font-bold hover:bg-neutral-200"
+                          >
+                            [view pr -&gt;]
+                          </a>
+                        )}
+                        <span className="text-[10px] text-neutral-400 border border-neutral-800 px-1.5 py-0.5 bg-neutral-950">
+                          MERGED
+                        </span>
+                      </div>
                     </div>
                     <p className="text-neutral-300">{oss.whatYouDid}</p>
                     <div className="text-neutral-500 text-xs border-t border-neutral-900 pt-1">
@@ -490,7 +502,7 @@ export function TerminalGame({ onExitToGui }: { onExitToGui: () => void }) {
             <div className="border border-neutral-800 bg-[#0a0a0a] p-5 space-y-3 text-xs sm:text-sm">
               <div className="text-white font-bold text-base">[CONTACT PROTOCOL]</div>
               <p className="text-neutral-300">Available for Systems Engineering, Backend Architecture &amp; AI Consulting:</p>
-              <div className="flex flex-wrap gap-3 pt-2">
+              <div className="flex flex-wrap gap-2.5 pt-2">
                 <a href={`mailto:${CONTACT_INFO.email}`} className="border border-white bg-white text-black px-3.5 py-1.5 font-bold hover:bg-neutral-200">
                   ✉️ {CONTACT_INFO.email}
                 </a>
@@ -499,6 +511,9 @@ export function TerminalGame({ onExitToGui }: { onExitToGui: () => void }) {
                 </a>
                 <a href={CONTACT_INFO.linkedin} target="_blank" rel="noreferrer" className="border border-neutral-700 bg-neutral-900 text-neutral-200 px-3.5 py-1.5 hover:border-neutral-400">
                   LinkedIn: yuvrajsingh024
+                </a>
+                <a href={CONTACT_INFO.twitter} target="_blank" rel="noreferrer" className="border border-neutral-700 bg-neutral-900 text-neutral-200 px-3.5 py-1.5 hover:border-neutral-400">
+                  X / Twitter: itsyuvrajx
                 </a>
               </div>
             </div>

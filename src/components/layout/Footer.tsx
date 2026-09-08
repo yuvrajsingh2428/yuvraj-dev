@@ -28,7 +28,7 @@ export function Footer() {
         </div>
 
         {/* Right: Quick CLI Links */}
-        <div className="flex items-center gap-3 text-xs">
+        <div className="flex items-center gap-2.5 text-xs">
           <a
             href={CONTACT_INFO.github}
             target="_blank"
@@ -44,6 +44,14 @@ export function Footer() {
             className="text-neutral-400 hover:text-white border border-neutral-800 px-2 py-0.5 hover:border-neutral-500 transition-colors"
           >
             [linkedin]
+          </a>
+          <a
+            href={CONTACT_INFO.twitter}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-neutral-400 hover:text-white border border-neutral-800 px-2 py-0.5 hover:border-neutral-500 transition-colors"
+          >
+            [x / twitter]
           </a>
           <a
             href={`mailto:${CONTACT_INFO.email}`}

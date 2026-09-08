@@ -12,9 +12,10 @@ export interface OssContribution {
   id: string;
   repo: string;
   repoUrl: string;
+  prUrl?: string;
   whatYouDid: string;
   whyItMattered: string;
-  prLinkPlaceholder: string;
+  prLinkPlaceholder?: string;
 }
 
 export interface ExperienceItem {
@@ -117,33 +118,37 @@ export const OSS_CONTRIBUTIONS: OssContribution[] = [
     id: "microsoft-agent-gov",
     repo: "microsoft/agent-governance-toolkit",
     repoUrl: "https://github.com/microsoft/agent-governance-toolkit",
+    prUrl: "https://github.com/microsoft/agent-governance-toolkit/pulls?q=is%3Apr+author%3Ayuvrajsingh2428",
     whatYouDid: "Contributed an audit-trail capability to the TypeScript SDK (+243/−4 diff).",
     whyItMattered: "Added verifiable traceability for AI agent actions in enterprise governance workflows.",
-    prLinkPlaceholder: "[PR link: FILL IN]",
+    prLinkPlaceholder: "microsoft/agent-governance-toolkit#pr",
   },
   {
     id: "apify-crawlee",
     repo: "apify/crawlee",
     repoUrl: "https://github.com/apify/crawlee",
+    prUrl: "https://github.com/apify/crawlee/pulls?q=is%3Apr+author%3Ayuvrajsingh2428",
     whatYouDid: "Refactored BrowserCrawler internal request handling.",
     whyItMattered: "Improved execution structure and error handling in a widely used web scraping framework.",
-    prLinkPlaceholder: "[PR link: FILL IN]",
+    prLinkPlaceholder: "apify/crawlee#pr",
   },
   {
     id: "mljar-mercury",
     repo: "mljar/mercury",
     repoUrl: "https://github.com/mljar/mercury",
+    prUrl: "https://github.com/mljar/mercury/pulls?q=is%3Apr+author%3Ayuvrajsingh2428",
     whatYouDid: "Built a customized theme for the authentication and login interface.",
     whyItMattered: "Enhanced visual hierarchy, responsiveness, and styling flexibility.",
-    prLinkPlaceholder: "[PR link: FILL IN]",
+    prLinkPlaceholder: "mljar/mercury#pr",
   },
   {
     id: "modsetter-surfsense",
     repo: "MODSetter/SurfSense",
     repoUrl: "https://github.com/MODSetter/SurfSense",
+    prUrl: "https://github.com/MODSetter/SurfSense/pulls?q=is%3Apr+author%3Ayuvrajsingh2428",
     whatYouDid: "Added automated unit test coverage for async_retry logic.",
     whyItMattered: "Hardened reliability and resilience of asynchronous retry routines.",
-    prLinkPlaceholder: "[PR link: FILL IN]",
+    prLinkPlaceholder: "MODSetter/SurfSense#pr",
   },
 ];
 
@@ -219,6 +224,7 @@ export const CONTACT_INFO = {
   email: "yuvrajsingh.connect@gmail.com",
   linkedin: "https://linkedin.com/in/yuvrajsingh024",
   github: "https://github.com/yuvrajsingh2428",
+  twitter: "https://x.com/itsyuvrajx",
   badges: [
     "SWE @ Revolt Motors",
     "@agentrust-io",
