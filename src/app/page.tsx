@@ -10,7 +10,7 @@ import {
   CONTACT_INFO,
   BIO_TEXT,
 } from "@/data/portfolio";
-import { AsciiPortrait } from "@/components/ui/AsciiPortrait";
+import { ProfilePortrait } from "@/components/ui/ProfilePortrait";
 
 export default function Home() {
   const [cliInput, setCliInput] = useState("");
@@ -174,9 +174,9 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Right Column: ASCII Art Portrait */}
+            {/* Right Column: Profile Portrait */}
             <div className="lg:col-span-5 flex flex-col justify-center">
-              <AsciiPortrait />
+              <ProfilePortrait />
             </div>
 
           </div>
