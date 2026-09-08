@@ -111,36 +111,36 @@ export default function SystemsPage() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
-          className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-xs text-emerald-400 font-mono"
+          className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-xs text-cyan-300 font-mono shadow-[0_0_16px_rgba(0,242,254,0.15)]"
         >
-          <Sparkles className="w-3.5 h-3.5" />
-          <span>Interactive 3D Visualizer</span>
+          <Sparkles className="w-3.5 h-3.5 text-[#00f2fe]" />
+          <span>Interactive Architecture Streams</span>
         </motion.div>
 
-        <TextReveal
-          lines={["Interactive System Architecture Diagrams"]}
-          lineClassName="text-3xl md:text-5xl font-bold tracking-tight text-foreground"
-          delay={0.1}
-        />
+        <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight">
+          <span className="text-white">Interactive System </span>
+          <span className="bg-gradient-to-r from-[#00f2fe] via-[#38bdf8] to-[#c084fc] bg-clip-text text-transparent drop-shadow-[0_0_30px_rgba(0,242,254,0.3)]">
+            Architecture Pipelines
+          </span>
+        </h1>
 
-        <TextReveal
-          lines={[
-            "Click any node in the flow diagrams below to inspect technical implementation details,",
-            "tradeoff rationales, and data movement specifications.",
-          ]}
-          lineClassName="text-muted-foreground text-sm md:text-base max-w-2xl leading-relaxed"
-          delay={0.25}
-        />
+        <p className="text-slate-300 text-sm md:text-base max-w-2xl leading-relaxed">
+          Click any node in the flow diagrams below to inspect technical implementation details,
+          tradeoff rationales, and runtime data movement specifications.
+        </p>
       </section>
 
-      {/* Diagrams Display with Interactive Nodes */}
+      {/* Diagrams Display with Interactive Nodes (Card-Free Fluid Stream) */}
       <section className="space-y-12">
         {DIAGRAMS.map((diag) => {
           const selectedNodeId = selectedNodes[diag.id] || diag.flow[0].id;
           const activeNodeData = diag.flow.find((n) => n.id === selectedNodeId) || diag.flow[0];
 
           return (
-            <Card3D key={diag.id} maxTilt={4} className="space-y-6">
+            <div
+              key={diag.id}
+              className="relative p-6 md:p-8 rounded-3xl bg-white/[0.025] hover:bg-white/[0.04] border border-white/[0.07] backdrop-blur-xl shadow-2xl space-y-6 transition-all duration-300"
+            >
               {/* Header */}
               <div className="space-y-2">
                 <div className="flex flex-wrap items-center justify-between gap-3">
@@ -149,7 +149,7 @@ export default function SystemsPage() {
                   </h2>
                   <Badge
                     variant="outline"
-                    className="bg-emerald-500/10 text-emerald-400 border-emerald-500/30 font-mono text-xs py-1"
+                    className="bg-cyan-500/10 text-cyan-300 border-cyan-500/30 font-mono text-xs py-1"
                   >
                     {diag.badge}
                   </Badge>
@@ -170,18 +170,18 @@ export default function SystemsPage() {
                     return (
                       <React.Fragment key={node.id}>
                         <motion.button
-                          whileHover={{ scale: 1.05 }}
+                          whileHover={{ scale: 1.04 }}
                           whileTap={{ scale: 0.98 }}
                           onClick={() => handleStepClick(diag.id, node.id)}
-                          className={`flex flex-col items-center gap-1.5 p-3.5 rounded-xl border text-center transition-all duration-300 min-w-[140px] cursor-pointer ${
+                          className={`flex flex-col items-center gap-1.5 p-4 rounded-2xl border text-center transition-all duration-300 min-w-[140px] cursor-pointer ${
                             isSelected
-                              ? "bg-emerald-500/15 border-emerald-400 shadow-[0_0_16px_rgba(16,185,129,0.35)]"
-                              : "bg-slate-950/80 border-white/10 hover:border-emerald-500/40"
+                              ? "bg-cyan-500/15 border-[#00f2fe] shadow-[0_0_20px_rgba(0,242,254,0.35)]"
+                              : "bg-white/[0.03] border-white/[0.08] hover:border-cyan-500/40 hover:bg-white/[0.05]"
                           }`}
                         >
                           <span
                             className={`font-mono text-[10px] uppercase tracking-wider font-semibold ${
-                              isSelected ? "text-emerald-300" : "text-emerald-400/70"
+                              isSelected ? "text-[#00f2fe]" : "text-cyan-400/70"
                             }`}
                           >
                             Step {nIdx + 1}
@@ -195,7 +195,9 @@ export default function SystemsPage() {
                           <Badge
                             variant="secondary"
                             className={`font-mono text-[10px] mt-1 ${
-                              isSelected ? "bg-emerald-500/20 text-emerald-300 border-emerald-500/40" : "bg-slate-800 text-slate-300"
+                              isSelected
+                                ? "bg-cyan-500/25 text-cyan-200 border-cyan-500/40"
+                                : "bg-white/[0.04] text-slate-300 border-white/[0.06]"
                             }`}
                           >
                             {node.tech}
@@ -203,12 +205,12 @@ export default function SystemsPage() {
                         </motion.button>
 
                         {!isLast && (
-                          <div className="flex items-center text-emerald-400 shrink-0">
+                          <div className="flex items-center text-cyan-400 shrink-0">
                             <motion.div
                               animate={{ x: [0, 4, 0] }}
                               transition={{ duration: 1.5, repeat: Infinity }}
                             >
-                              <ArrowRight className="w-5 h-5 text-emerald-400/80" />
+                              <ArrowRight className="w-5 h-5 text-cyan-400/70" />
                             </motion.div>
                           </div>
                         )}
@@ -226,10 +228,10 @@ export default function SystemsPage() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -8 }}
                   transition={{ duration: 0.25 }}
-                  className="p-4 md:p-5 rounded-xl bg-slate-950/90 border border-emerald-500/30 space-y-2"
+                  className="p-5 rounded-2xl bg-white/[0.03] border border-cyan-500/30 space-y-2 shadow-[0_0_16px_rgba(0,242,254,0.1)]"
                 >
-                  <div className="flex items-center gap-2 text-xs font-mono text-emerald-400 font-bold uppercase tracking-wider">
-                    <Activity className="w-3.5 h-3.5" />
+                  <div className="flex items-center gap-2 text-xs font-mono text-[#00f2fe] font-bold uppercase tracking-wider">
+                    <Activity className="w-3.5 h-3.5 text-[#00f2fe]" />
                     <span>[{activeNodeData.label} — Deep-Dive Specification]</span>
                   </div>
                   <p className="text-xs md:text-sm text-slate-200 leading-relaxed font-normal">
@@ -239,11 +241,11 @@ export default function SystemsPage() {
               </AnimatePresence>
 
               {/* Engineering Tradeoff Note */}
-              <div className="p-4 rounded-xl bg-slate-950/70 border border-white/5 text-xs md:text-sm text-slate-300 flex items-start gap-2.5 font-mono">
-                <span className="text-emerald-400 font-bold shrink-0">[Tradeoff & Rationale]:</span>
+              <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.06] text-xs md:text-sm text-slate-300 flex items-start gap-3 font-mono">
+                <span className="text-violet-400 font-bold shrink-0">[Tradeoff & Rationale]:</span>
                 <span className="leading-relaxed">{diag.tradeoffNote}</span>
               </div>
-            </Card3D>
+            </div>
           );
         })}
       </section>

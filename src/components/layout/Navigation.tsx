@@ -39,10 +39,10 @@ export function Navigation() {
   const headerHeightClass = isScrolledFar ? "h-[52px]" : "h-[64px]";
   const headerBgClass = isAtTop
     ? "bg-transparent border-transparent"
-    : "bg-[#050505]/80 border-white/[0.08] backdrop-blur-[20px] backdrop-saturate-[180%]";
+    : "bg-[#070913]/75 border-white/[0.07] backdrop-blur-[24px] backdrop-saturate-[180%]";
   const monogramScaleClass = isScrolledFar ? "scale-[0.9]" : "scale-100";
   const linkFontSizeClass = isScrolledFar ? "text-[12px]" : "text-[13px]";
-  const linkOpacityClass = isAtTop ? "opacity-70 hover:opacity-100" : "opacity-100";
+  const linkOpacityClass = isAtTop ? "opacity-75 hover:opacity-100" : "opacity-100";
 
   const navContainerVariants: Variants = {
     hidden: { y: "-100%", opacity: 0 },
@@ -82,7 +82,7 @@ export function Navigation() {
               <motion.div variants={navItemVariants}>
                 <Link
                   href="/"
-                  className={`flex items-center justify-center w-8 h-8 rounded-md border border-white/20 bg-background/50 text-white font-mono font-medium text-[13px] tracking-wider transition-all duration-300 hover:border-[#00FFC2] hover:text-[#00FFC2] hover:shadow-[0_0_12px_rgba(0,255,194,0.3)] ${monogramScaleClass}`}
+                  className={`flex items-center justify-center w-8 h-8 rounded-lg border border-white/15 bg-white/[0.04] text-white font-mono font-medium text-[13px] tracking-wider transition-all duration-300 hover:border-[#00f2fe] hover:text-[#00f2fe] hover:shadow-[0_0_16px_rgba(0,242,254,0.4)] ${monogramScaleClass}`}
                 >
                   YS
                 </Link>
@@ -97,7 +97,7 @@ export function Navigation() {
                       <Link
                         href={link.href}
                         className={`transition-all duration-300 tracking-wide relative block ${linkFontSizeClass} ${linkOpacityClass} ${
-                          isActive ? "text-[#00FFC2] font-semibold" : "text-white/60 hover:text-white"
+                          isActive ? "text-[#00f2fe] font-semibold" : "text-white/60 hover:text-white"
                         }`}
                       >
                         {link.label}
@@ -106,7 +106,7 @@ export function Navigation() {
                         {isActive && (
                           <motion.div
                             layoutId="activeNavUnderline"
-                            className="absolute left-0 right-0 bottom-[-4px] h-[2px] bg-[#00FFC2] shadow-[0_0_8px_#00FFC2]"
+                            className="absolute left-0 right-0 bottom-[-4px] h-[2px] bg-gradient-to-r from-[#00f2fe] to-[#8b5cf6] shadow-[0_0_10px_#00f2fe]"
                             transition={{ type: "spring", stiffness: 380, damping: 30 }}
                           />
                         )}
@@ -124,7 +124,7 @@ export function Navigation() {
                   href="https://drive.google.com/uc?export=download&id=18ozkViRciZPbM-1pCSg03Kc7b2eVIoXO"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hidden sm:inline-flex text-[12px] font-mono font-medium px-3.5 py-1.5 rounded-[6px] border border-white/20 bg-white/5 text-white transition-all duration-150 ease-in-out hover:bg-white hover:text-black hover:border-white shrink-0"
+                  className="hidden sm:inline-flex text-[12px] font-mono font-medium px-3.5 py-1.5 rounded-lg border border-cyan-500/30 bg-cyan-500/10 text-cyan-200 transition-all duration-200 ease-in-out hover:bg-cyan-500/20 hover:border-cyan-400 hover:text-white hover:shadow-[0_0_14px_rgba(0,242,254,0.3)] shrink-0"
                 >
                   Resume
                 </a>
@@ -158,17 +158,17 @@ function AvailabilityPill({ show, onClose }: { show: boolean; onClose: () => voi
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: `
-        @keyframes pulse-green {
-          0%, 100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4); }
-          50% { box-shadow: 0 0 0 5px rgba(34, 197, 94, 0); }
+        @keyframes pulse-cyan {
+          0%, 100% { box-shadow: 0 0 0 0 rgba(0, 242, 254, 0.4); }
+          50% { box-shadow: 0 0 0 5px rgba(0, 242, 254, 0); }
         }
         @keyframes attention-shake {
           0%, 100% { transform: scale(1) translateX(0); }
           25% { transform: scale(1) translateX(3px); }
           75% { transform: scale(1) translateX(-3px); }
         }
-        .pulse-dot {
-          animation: pulse-green 2s ease infinite;
+        .pulse-dot-cyan {
+          animation: pulse-cyan 2s ease infinite;
         }
         .attention-shake {
           animation: attention-shake 0.4s ease-in-out;
@@ -185,12 +185,12 @@ function AvailabilityPill({ show, onClose }: { show: boolean; onClose: () => voi
             onMouseLeave={() => setIsHovered(false)}
             onAnimationEnd={() => setShouldShake(false)}
             className={`group relative flex items-center gap-2 pl-3 pr-3 py-1.5 rounded-full border text-[11px] font-mono cursor-default overflow-visible shrink-0
-                       border-green-500/20 bg-green-500/[0.06] transition-all duration-150 ease-out hover:border-green-500/50 hover:bg-green-500/10 hover:scale-[1.02]
+                       border-cyan-500/30 bg-cyan-500/[0.08] text-cyan-200 transition-all duration-150 ease-out hover:border-cyan-400 hover:bg-cyan-500/15 hover:scale-[1.02]
                        ${shouldShake ? "attention-shake" : ""}`}
           >
             <span className="relative flex h-2 w-2 shrink-0">
-              <span className="absolute inline-flex h-full w-full rounded-full bg-green-500/60 pulse-dot"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+              <span className="absolute inline-flex h-full w-full rounded-full bg-cyan-400/60 pulse-dot-cyan"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-400"></span>
             </span>
             
             <span className="text-foreground flex items-center gap-1.5 whitespace-nowrap">
