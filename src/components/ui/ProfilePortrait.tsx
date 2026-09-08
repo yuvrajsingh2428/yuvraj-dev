@@ -1,22 +1,15 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import Image from "next/image";
 
 export function ProfilePortrait() {
-  const [isColor, setIsColor] = useState(false);
-
   return (
     <div className="border border-neutral-800 bg-[#050505] p-2.5 sm:p-3 select-none group relative max-w-[240px] sm:max-w-[260px] mx-auto w-full">
       {/* Top terminal frame bar */}
       <div className="flex items-center justify-between text-[10px] text-neutral-500 border-b border-neutral-900 pb-1.5 mb-2 font-mono">
         <span className="text-neutral-400 font-bold">$ view profile.png</span>
-        <button
-          onClick={() => setIsColor(!isColor)}
-          className="text-neutral-500 hover:text-white transition-colors border border-neutral-800 px-1.5 py-0.2 bg-neutral-950 text-[9px]"
-        >
-          {isColor ? "[MONO]" : "[COLOR]"}
-        </button>
+        <span className="text-neutral-600 text-[9px]">img/24-bit</span>
       </div>
 
       {/* Portrait Image Frame */}
@@ -27,9 +20,7 @@ export function ProfilePortrait() {
           fill
           priority
           sizes="(max-width: 768px) 240px, 260px"
-          className={`object-cover object-top transition-all duration-300 ${
-            isColor ? "grayscale-0 contrast-100" : "grayscale contrast-115 brightness-95"
-          } group-hover:contrast-120`}
+          className="object-cover object-top transition-all duration-300 grayscale contrast-115 brightness-95 group-hover:contrast-120"
         />
         
         {/* Subtle monochrome scanlines overlay on hover */}

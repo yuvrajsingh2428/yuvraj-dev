@@ -85,7 +85,7 @@ export default function Home() {
             <span className="ml-2 text-neutral-300 font-bold">Terminal — zsh</span>
           </div>
           <div className="text-[11px] text-neutral-500 hidden sm:block">
-            git:(main) · Node.js & TypeScript
+            git:(main)
           </div>
         </div>
 
