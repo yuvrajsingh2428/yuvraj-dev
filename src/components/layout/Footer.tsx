@@ -1,80 +1,62 @@
 "use client";
+
 import Link from "next/link";
-import { TbBrandGithub, TbBrandLinkedin, TbFileCv, TbSend } from "react-icons/tb";
+import { CONTACT_INFO } from "@/data/portfolio";
 
 export function Footer() {
   return (
-    <footer className="border-t border-white/[0.08] bg-[#070913]/85 backdrop-blur-xl mt-24 py-12 px-6">
-      <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
-        
-        {/* Left: Branding & Status */}
-        <div className="flex flex-col gap-2 items-center md:items-start text-center md:text-left">
-          <Link href="/" className="flex items-center gap-2 text-foreground font-mono font-bold text-lg hover:text-[#00f2fe] transition-colors">
-            <span className="w-6 h-6 rounded-lg bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-xs text-[#00f2fe]">YS</span>
-            <span>Yuvraj Singh</span>
-          </Link>
-          <p className="text-xs text-muted-foreground max-w-sm">
-            Backend Systems, AI Platforms & Scalable Distributed Infrastructure.
+    <footer className="border-t border-neutral-800 bg-black mt-16 py-8 px-4 sm:px-6 font-mono text-xs text-neutral-400">
+      <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+        {/* Left: Terminal status & identity */}
+        <div className="space-y-1">
+          <div className="flex items-center gap-2 text-white">
+            <span className="text-neutral-500">dev:</span>
+            <span className="font-bold">yuvraj-singh</span>
+            <span className="text-neutral-600">|</span>
+            <span className="text-neutral-400">Software Engineer</span>
+          </div>
+          <p className="text-[11px] text-neutral-500">
+            Backend Systems • Legal RAG Platforms • Distributed Infra • Automation
           </p>
         </div>
 
-        {/* Center: Quick Page Links */}
-        <div className="flex items-center gap-6 text-xs font-mono text-muted-foreground">
-          <Link href="/" className="hover:text-[#00f2fe] transition-colors">/home</Link>
-          <Link href="/work" className="hover:text-[#00f2fe] transition-colors">/work</Link>
-          <Link href="/systems" className="hover:text-[#00f2fe] transition-colors">/systems</Link>
-          <Link href="/about" className="hover:text-[#00f2fe] transition-colors">/about</Link>
+        {/* Center: System Status */}
+        <div className="flex flex-wrap items-center gap-4 text-[11px]">
+          <span className="text-neutral-500">[STATUS: READY]</span>
+          <span className="text-neutral-500">[LOC: IST (UTC+5:30)]</span>
+          <span className="text-neutral-500">[OPEN TO REMOTE]</span>
         </div>
 
-        {/* Right: Social Icons & Timezone */}
-        <div className="flex flex-col items-center md:items-end gap-3">
-          <div className="flex items-center gap-3">
-            <a
-              href="https://github.com/yuvrajsingh2428"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-2 rounded-lg bg-secondary/40 hover:bg-secondary border border-border/50 text-muted-foreground hover:text-foreground transition-all"
-              aria-label="GitHub"
-            >
-              <TbBrandGithub className="w-4 h-4" />
-            </a>
-            <a
-              href="https://www.linkedin.com/in/yuvrajsingh024/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-2 rounded-lg bg-secondary/40 hover:bg-secondary border border-border/50 text-muted-foreground hover:text-foreground transition-all"
-              aria-label="LinkedIn"
-            >
-              <TbBrandLinkedin className="w-4 h-4" />
-            </a>
-            <a
-              href="https://drive.google.com/uc?export=download&id=18ozkViRciZPbM-1pCSg03Kc7b2eVIoXO"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-2 rounded-lg bg-secondary/40 hover:bg-secondary border border-border/50 text-muted-foreground hover:text-foreground transition-all"
-              aria-label="Resume"
-            >
-              <TbFileCv className="w-4 h-4" />
-            </a>
-            <a
-              href="mailto:yuvrajsingh.connect@gmail.com"
-              className="p-2 rounded-lg bg-secondary/40 hover:bg-secondary border border-border/50 text-muted-foreground hover:text-foreground transition-all"
-              aria-label="Email"
-            >
-              <TbSend className="w-4 h-4" />
-            </a>
-          </div>
-
-          <div className="flex items-center gap-2 text-[11px] font-mono text-muted-foreground/70">
-            <span className="w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_8px_#00f2fe] animate-pulse" />
-            <span>IST (UTC+5:30) · Open to Opportunities</span>
-          </div>
+        {/* Right: Quick CLI Links */}
+        <div className="flex items-center gap-3 text-xs">
+          <a
+            href={CONTACT_INFO.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-neutral-400 hover:text-white border border-neutral-800 px-2 py-0.5 hover:border-neutral-500 transition-colors"
+          >
+            [github]
+          </a>
+          <a
+            href={CONTACT_INFO.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-neutral-400 hover:text-white border border-neutral-800 px-2 py-0.5 hover:border-neutral-500 transition-colors"
+          >
+            [linkedin]
+          </a>
+          <a
+            href={`mailto:${CONTACT_INFO.email}`}
+            className="text-neutral-400 hover:text-white border border-neutral-800 px-2 py-0.5 hover:border-neutral-500 transition-colors"
+          >
+            [email]
+          </a>
         </div>
-
       </div>
 
-      <div className="max-w-5xl mx-auto mt-8 pt-6 border-t border-white/[0.04] text-center text-[11px] font-mono text-muted-foreground/60">
-        © {new Date().getFullYear()} Yuvraj Singh. Engineered with Next.js & Framer Motion.
+      <div className="max-w-5xl mx-auto mt-6 pt-4 border-t border-neutral-900 flex flex-col sm:flex-row justify-between items-center text-[10px] text-neutral-600 gap-2">
+        <span>© {new Date().getFullYear()} Yuvraj Singh. All systems operational.</span>
+        <span>Built with Next.js • Pure Monochrome Terminal Interface</span>
       </div>
     </footer>
   );

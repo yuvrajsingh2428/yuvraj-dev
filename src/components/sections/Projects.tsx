@@ -18,7 +18,7 @@ const HighlightChip = ({ children }: { children: React.ReactNode }) => (
 
 const projects = [
   {
-    title: "OpenForge ⚒️ — AI Open-Source Intelligence Platform",
+    title: "OpenForge — AI Open-Source Intelligence Platform",
     challenge: "The challenge: Contributing to open-source software has a steep learning curve. The challenge was building an intelligent platform that evaluates GitHub repositories, scores issues on a 5-factor scale, and provides hybrid local/cloud AI mentorship.",
     icon: <Hammer className="w-5 h-5 text-[#00FFC2]" />,
     tech: ["TypeScript", "Next.js 16", "Turborepo", "Ollama", "OpenRouter", "GitHub GraphQL", "Playwright"],

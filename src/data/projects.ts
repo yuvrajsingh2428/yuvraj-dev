@@ -15,7 +15,7 @@ export interface Project {
 export const PROJECTS: Project[] = [
   {
     id: "openforge",
-    title: "OpenForge ⚒️ — AI Open-Source Intelligence Platform",
+    title: "OpenForge — AI Open-Source Intelligence Platform",
     oneLiner: "Monorepo developer platform with 5-factor issue scoring & hybrid AI mentorship (Ollama + OpenRouter)",
     challenge: "Contributing to open-source software has a steep learning curve. The challenge was building an intelligent platform that evaluates GitHub repositories, scores issues on a 5-factor scale, and provides hybrid local/cloud AI mentorship.",
     tech: ["TypeScript", "Next.js 16", "Turborepo", "Ollama", "OpenRouter", "GitHub GraphQL", "Playwright", "Vitest"],
@@ -28,6 +28,7 @@ export const PROJECTS: Project[] = [
     ],
     engineeringNote: "Built a pluggable provider abstraction switching seamlessly between Ollama for offline zero-cost dev and OpenRouter for cloud inference with structured Zod runtime schema validation.",
     githubUrl: "https://github.com/yuvrajsingh2428",
+    liveUrl: "https://openforge-dev.vercel.app/",
     category: "ai",
     featured: true,
   },
