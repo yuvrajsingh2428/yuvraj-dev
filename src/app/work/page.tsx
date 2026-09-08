@@ -56,79 +56,81 @@ export default function WorkPage() {
       </div>
 
       {/* Projects List */}
-      <div className="space-y-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {filteredProjects.map((project, idx) => (
           <div
             key={project.id}
-            className="border border-neutral-800 bg-[#0a0a0a] p-6 sm:p-7 space-y-4 hover:border-neutral-600 transition-colors"
+            className="border border-neutral-800 bg-[#0a0a0a] p-5 space-y-3.5 hover:border-neutral-600 transition-colors flex flex-col justify-between"
           >
-            {/* Header row */}
-            <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2.5 border-b border-neutral-900 pb-3.5">
-              <div className="space-y-1">
+            <div className="space-y-2.5">
+              {/* Header row */}
+              <div className="flex items-center justify-between gap-2 border-b border-neutral-900 pb-2.5">
                 <div className="flex items-center gap-2 text-xs text-neutral-500">
                   <span className="text-neutral-400 font-bold">[{idx + 1 < 10 ? `0${idx + 1}` : idx + 1}]</span>
                   <span>|</span>
-                  <span className="text-neutral-300 uppercase font-semibold text-[11px]">{project.categoryTag}</span>
+                  <span className="text-neutral-300 uppercase font-semibold text-[10px]">{project.categoryTag}</span>
                 </div>
-                <h2 className="text-xl font-bold text-white tracking-tight">
-                  {project.title}
-                </h2>
+
+                <div className="flex items-center gap-1.5 shrink-0">
+                  {project.liveUrl && (
+                    <a
+                      href={project.liveUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="border border-white bg-white text-black px-2.5 py-0.5 text-xs font-bold hover:bg-neutral-200 transition-all"
+                    >
+                      [demo -&gt;]
+                    </a>
+                  )}
+                  {project.repoUrl ? (
+                    <a
+                      href={project.repoUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="border border-neutral-700 bg-neutral-900 px-2.5 py-0.5 text-xs text-neutral-200 hover:bg-white hover:text-black hover:border-white transition-all"
+                    >
+                      [repo]
+                    </a>
+                  ) : (
+                    !project.liveUrl && (
+                      <span className="border border-neutral-800 px-2 py-0.5 text-[10px] text-neutral-500 bg-neutral-950">
+                        [prod]
+                      </span>
+                    )
+                  )}
+                </div>
               </div>
 
-              <div className="flex items-center gap-2">
-                {project.liveUrl && (
-                  <a
-                    href={project.liveUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="border border-white bg-white text-black px-3.5 py-1.5 text-xs font-bold hover:bg-neutral-200 transition-all"
-                  >
-                    [live demo -&gt;]
-                  </a>
-                )}
-                {project.repoUrl ? (
-                  <a
-                    href={project.repoUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="border border-neutral-700 bg-neutral-900 px-3.5 py-1.5 text-xs text-neutral-200 hover:bg-white hover:text-black hover:border-white transition-all"
-                  >
-                    [git repo -&gt;]
-                  </a>
-                ) : (
-                  !project.liveUrl && (
-                    <span className="border border-neutral-800 px-3 py-1 text-xs text-neutral-500 bg-neutral-950">
-                      [production_system]
-                    </span>
-                  )
-                )}
-              </div>
-            </div>
+              <h2 className="text-base sm:text-lg font-bold text-white tracking-tight">
+                {project.title}
+              </h2>
 
-            {/* Tech Stack Stream */}
-            <div className="flex flex-wrap gap-1.5 text-xs">
-              {project.tech.map((t) => (
-                <span
-                  key={t}
-                  className="border border-neutral-800 bg-neutral-950 px-2.5 py-0.5 text-xs text-neutral-400"
-                >
-                  {t}
-                </span>
-              ))}
-            </div>
+              <p className="text-xs text-neutral-300 leading-relaxed">
+                {project.summary}
+              </p>
 
-            {/* Specifications & Bullet Points */}
-            <div className="space-y-2.5 pt-2">
-              <div className="text-xs text-neutral-500 font-bold tracking-wide">[ENGINEERING_SPECIFICATIONS]:</div>
-              <ul className="space-y-2.5 text-xs sm:text-sm text-neutral-300 leading-relaxed">
-                {project.bullets.map((bullet, bIdx) => (
-                  <li key={bIdx} className="flex items-start gap-2.5">
-                    <span className="text-neutral-500 font-bold mt-0.5">&gt;</span>
-                    <span>{bullet}</span>
-                  </li>
+              {/* Tech Stack Badges */}
+              <div className="flex flex-wrap gap-1 text-xs pt-1">
+                {project.tech.map((t) => (
+                  <span
+                    key={t}
+                    className="border border-neutral-800 bg-neutral-950 px-2 py-0.5 text-[11px] text-neutral-400"
+                  >
+                    {t}
+                  </span>
                 ))}
-              </ul>
+              </div>
             </div>
+
+            {/* Key Bullet Points */}
+            <ul className="space-y-1.5 text-xs text-neutral-400 pt-2.5 border-t border-neutral-900 leading-relaxed">
+              {project.bullets.map((bullet, bIdx) => (
+                <li key={bIdx} className="flex items-start gap-2">
+                  <span className="text-neutral-600 font-bold mt-0.5">&gt;</span>
+                  <span className="text-neutral-300">{bullet}</span>
+                </li>
+              ))}
+            </ul>
           </div>
         ))}
       </div>

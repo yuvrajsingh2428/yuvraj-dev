@@ -298,83 +298,85 @@ export default function Home() {
           </section>
 
           {/* ─── SECTION 1: PRODUCTION WORK & PROJECTS ──────────────────── */}
-          <section className="space-y-5">
-            <div className="flex items-center justify-between border-b border-neutral-800 pb-3">
+          <section className="space-y-4">
+            <div className="flex items-center justify-between border-b border-neutral-800 pb-2.5">
               <div className="flex items-center gap-2">
-                <span className="text-white font-bold text-base">$ ls -la ./projects/</span>
+                <span className="text-white font-bold text-sm sm:text-base">$ ls -la ./projects/</span>
                 <span className="text-xs text-neutral-500">({PROJECTS_DATA.length} systems)</span>
               </div>
-              <Link href="/work" className="text-xs text-neutral-400 hover:text-white">
+              <Link href="/work" className="text-xs text-neutral-400 hover:text-white transition-colors">
                 [view full specs -&gt;]
               </Link>
             </div>
 
-            <div className="space-y-5">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {PROJECTS_DATA.map((proj, idx) => (
                 <div
                   key={proj.id}
-                  className="border border-neutral-800 bg-[#0a0a0a] p-5 sm:p-6 space-y-4 hover:border-neutral-600 transition-colors"
+                  className="border border-neutral-800 bg-[#0a0a0a] p-4 sm:p-5 flex flex-col justify-between space-y-3 hover:border-neutral-600 transition-colors"
                 >
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
-                    <div className="space-y-1">
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between gap-2 border-b border-neutral-900 pb-2">
                       <div className="flex items-center gap-2 text-xs text-neutral-500">
                         <span className="text-neutral-400 font-bold">DIR_0{idx + 1}</span>
                         <span>|</span>
-                        <span className="text-neutral-300 uppercase font-semibold text-[11px]">{proj.categoryTag}</span>
+                        <span className="text-neutral-300 uppercase font-semibold text-[10px]">{proj.categoryTag}</span>
                       </div>
-                      <h3 className="text-lg font-bold text-white tracking-tight">
-                        {proj.title}
-                      </h3>
+
+                      <div className="flex items-center gap-1.5 shrink-0">
+                        {proj.liveUrl && (
+                          <a
+                            href={proj.liveUrl}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="border border-white bg-white text-black px-2 py-0.5 text-[11px] font-bold hover:bg-neutral-200 transition-all"
+                          >
+                            [demo -&gt;]
+                          </a>
+                        )}
+                        {proj.repoUrl ? (
+                          <a
+                            href={proj.repoUrl}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="border border-neutral-700 px-2 py-0.5 text-[11px] text-neutral-200 hover:bg-white hover:text-black transition-all"
+                          >
+                            [repo]
+                          </a>
+                        ) : (
+                          !proj.liveUrl && (
+                            <span className="border border-neutral-800 px-2 py-0.5 text-[10px] text-neutral-500 bg-neutral-950">
+                              [prod]
+                            </span>
+                          )
+                        )}
+                      </div>
                     </div>
 
-                    <div className="flex items-center gap-2">
-                      {proj.liveUrl && (
-                        <a
-                          href={proj.liveUrl}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="border border-white bg-white text-black px-3 py-1 text-xs font-bold hover:bg-neutral-200 transition-all"
-                        >
-                          [live demo -&gt;]
-                        </a>
-                      )}
-                      {proj.repoUrl ? (
-                        <a
-                          href={proj.repoUrl}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="border border-neutral-700 px-3 py-1 text-xs text-neutral-200 hover:bg-white hover:text-black hover:border-white transition-all"
-                        >
-                          [git clone]
-                        </a>
-                      ) : (
-                        !proj.liveUrl && (
-                          <span className="border border-neutral-800 px-2.5 py-1 text-[11px] text-neutral-500 bg-neutral-950">
-                            [production_system]
-                          </span>
-                        )
+                    <h3 className="text-sm sm:text-base font-bold text-white tracking-tight">
+                      {proj.title}
+                    </h3>
+
+                    <p className="text-xs text-neutral-300 leading-relaxed">
+                      {proj.summary}
+                    </p>
+                  </div>
+
+                  <div className="space-y-2 pt-2 border-t border-neutral-900">
+                    {/* Tech Badges */}
+                    <div className="flex flex-wrap gap-1 text-[11px]">
+                      {proj.tech.slice(0, 4).map((t) => (
+                        <span key={t} className="border border-neutral-800 bg-neutral-950 px-2 py-0.5 text-neutral-400">
+                          {t}
+                        </span>
+                      ))}
+                      {proj.tech.length > 4 && (
+                        <span className="text-[10px] text-neutral-600 px-1 py-0.5">
+                          +{proj.tech.length - 4}
+                        </span>
                       )}
                     </div>
                   </div>
-
-                  {/* Tech Badges */}
-                  <div className="flex flex-wrap gap-1.5 text-xs">
-                    {proj.tech.map((t) => (
-                      <span key={t} className="border border-neutral-800 bg-neutral-900/60 px-2.5 py-0.5 text-neutral-300 text-[11px]">
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-
-                  {/* Bullet Points */}
-                  <ul className="space-y-2 text-xs sm:text-sm text-neutral-300 pt-2.5 border-t border-neutral-900 leading-relaxed">
-                    {proj.bullets.map((b, bIdx) => (
-                      <li key={bIdx} className="flex items-start gap-2.5">
-                        <span className="text-neutral-500 font-bold mt-0.5">&gt;</span>
-                        <span>{b}</span>
-                      </li>
-                    ))}
-                  </ul>
                 </div>
               ))}
             </div>
