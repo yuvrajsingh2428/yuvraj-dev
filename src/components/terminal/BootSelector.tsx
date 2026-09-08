@@ -88,7 +88,7 @@ export function BootSelector({ isOpen, onSelectMode, onClose }: BootSelectorProp
                 <span className="text-[10px] text-neutral-400 group-hover:text-black">GAMIFIED</span>
               </div>
               <div className="text-sm font-bold text-white group-hover:text-black group-hover:underline">
-                🎮 Wanna Play?
+                [CLI] Wanna Play?
               </div>
               <p className="text-xs text-neutral-400 group-hover:text-neutral-800 leading-relaxed">
                 Launch interactive CLI shell with commands, quests &amp; live REPL.

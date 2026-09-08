@@ -11,7 +11,7 @@ export default function AboutPage() {
 
   const PILLARS = [
     {
-      icon: "⚙️",
+      code: "CAP_01",
       title: "Backend & Systems Infrastructure",
       org: "Revolt Motors",
       summary: "End-to-end platforms from schema design to production deployment.",
@@ -23,7 +23,7 @@ export default function AboutPage() {
       tag: "SYSTEMS",
     },
     {
-      icon: "🧠",
+      code: "CAP_02",
       title: "AI Platforms & Legal RAG",
       org: "Poshible.ai",
       summary: "Domain-specific Retrieval-Augmented Generation with vector databases.",
@@ -35,7 +35,7 @@ export default function AboutPage() {
       tag: "AI / RAG",
     },
     {
-      icon: "🧪",
+      code: "CAP_03",
       title: "Test Automation & SDET",
       org: "Revolt & TLE-Eliminators",
       summary: "Full-lifecycle test automation frameworks built on Page Object Models.",
@@ -47,7 +47,7 @@ export default function AboutPage() {
       tag: "AUTOMATION",
     },
     {
-      icon: "🌐",
+      code: "CAP_04",
       title: "Upstream Open Source",
       org: "Microsoft & Apify",
       summary: "Hardening production tools and libraries used by global developers.",
@@ -141,7 +141,7 @@ export default function AboutPage() {
               <div className="flex items-start justify-between gap-2 border-b border-neutral-900 pb-2.5">
                 <div className="space-y-0.5">
                   <div className="flex items-center gap-2">
-                    <span className="text-base">{pillar.icon}</span>
+                    <span className="text-[11px] text-neutral-500 font-bold">[{pillar.code}]</span>
                     <h3 className="text-sm sm:text-base font-bold text-white tracking-tight">
                       {pillar.title}
                     </h3>

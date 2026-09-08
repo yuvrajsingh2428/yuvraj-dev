@@ -57,10 +57,10 @@ export function SystemsCockpit() {
     setPacketStep(1);
 
     const steps = [
-      "⚡ [01/04] Ingesting legal PDF chunk → generating 1536-dim vector embedding",
-      "🔍 [02/04] K-NN Hybrid Search query executed across OpenSearch index (11.8ms)",
-      "🤖 [03/04] DeepSeek inference routed via OpenRouter (prompt token validation: PASS)",
-      "✅ [04/04] Runtime Zod schema validated → 0 infinite loops. Response emitted in 184ms",
+      "[INGEST] [01/04] Ingesting legal PDF chunk → generating 1536-dim vector embedding",
+      "[SEARCH] [02/04] K-NN Hybrid Search query executed across OpenSearch index (11.8ms)",
+      "[ROUTER] [03/04] DeepSeek inference routed via OpenRouter (prompt token validation: PASS)",
+      "[OK] [04/04] Runtime Zod schema validated → 0 infinite loops. Response emitted in 184ms",
     ];
 
     steps.forEach((log, index) => {
@@ -309,7 +309,7 @@ export function SystemsCockpit() {
                   {terminalOutput.map((line, i) => (
                     <div key={i} className="leading-relaxed">
                       <span className="text-slate-500 mr-2">&gt;</span>
-                      <span className={line.startsWith("✅") ? "text-emerald-400" : line.startsWith("⚡") ? "text-[#00f2fe]" : "text-slate-300"}>
+                      <span className={line.startsWith("[OK]") ? "text-emerald-400" : line.startsWith("[INGEST]") ? "text-[#00f2fe]" : "text-slate-300"}>
                         {line}
                       </span>
                     </div>

@@ -125,7 +125,7 @@ export default function Home() {
                 onClick={() => handleSelectMode("cli")}
                 className="border border-white bg-white text-black px-3 py-1 font-bold hover:bg-neutral-200 transition-colors text-xs"
               >
-                🎮 Wanna Play? Launch CLI
+                Wanna Play? Launch CLI
               </button>
               <button
                 onClick={() => setIsBootModalOpen(true)}

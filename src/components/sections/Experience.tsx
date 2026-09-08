@@ -14,7 +14,7 @@ const HighlightChip = ({ children }: { children: React.ReactNode }) => (
 const tracks = [
   {
     id: "swe",
-    label: "⚙ Backend Engineering",
+    label: "Backend Engineering",
     badge: <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">SWE</span>,
     bullets: [
       <>Built ITSM ticket management platform for operational issue tracking across internal teams</>,
@@ -25,7 +25,7 @@ const tracks = [
   },
   {
     id: "sdet",
-    label: "🧪 Test Infrastructure",
+    label: "Test Infrastructure",
     badge: <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-500/10 text-amber-500 border border-amber-500/20">SDET</span>,
     bullets: [
       <>Architected Playwright + TypeScript POM framework automating <HighlightChip>50+</HighlightChip> critical workflows and <HighlightChip>200+</HighlightChip> API test cases — <HighlightChip>60%</HighlightChip> reduction in manual regression</>,

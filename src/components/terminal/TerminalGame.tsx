@@ -271,7 +271,7 @@ export function TerminalGame({ onExitToGui }: { onExitToGui: () => void }) {
                     onClick={() => executeCommand(`cat projects/${p.id}.md`)}
                     className="flex items-center justify-between text-left p-2 border border-neutral-800 hover:border-neutral-500 bg-neutral-950 transition-colors cursor-pointer"
                   >
-                    <span className="text-white font-bold">📄 {p.id}.md</span>
+                    <span className="text-white font-bold">{p.id}.md</span>
                     <span className="text-[10px] text-neutral-400 uppercase">{p.categoryTag}</span>
                   </button>
                 ))}
@@ -289,25 +289,25 @@ export function TerminalGame({ onExitToGui }: { onExitToGui: () => void }) {
                   onClick={() => executeCommand("cat systems/01-poshible-rag-pipeline.arch")}
                   className="p-2 border border-neutral-800 hover:border-neutral-500 text-left bg-neutral-950 cursor-pointer"
                 >
-                  <span className="text-white font-bold">⚙️ 01-poshible-rag-pipeline.arch</span>
+                  <span className="text-white font-bold">01-poshible-rag-pipeline.arch</span>
                 </button>
                 <button
                   onClick={() => executeCommand("cat systems/02-openforge-dual-router.arch")}
                   className="p-2 border border-neutral-800 hover:border-neutral-500 text-left bg-neutral-950 cursor-pointer"
                 >
-                  <span className="text-white font-bold">⚙️ 02-openforge-dual-router.arch</span>
+                  <span className="text-white font-bold">02-openforge-dual-router.arch</span>
                 </button>
                 <button
                   onClick={() => executeCommand("cat systems/03-jobhermes-agent-loop.arch")}
                   className="p-2 border border-neutral-800 hover:border-neutral-500 text-left bg-neutral-950 cursor-pointer"
                 >
-                  <span className="text-white font-bold">⚙️ 03-jobhermes-agent-loop.arch</span>
+                  <span className="text-white font-bold">03-jobhermes-agent-loop.arch</span>
                 </button>
                 <button
                   onClick={() => executeCommand("cat systems/04-geospatial-routing.arch")}
                   className="p-2 border border-neutral-800 hover:border-neutral-500 text-left bg-neutral-950 cursor-pointer"
                 >
-                  <span className="text-white font-bold">⚙️ 04-geospatial-routing.arch</span>
+                  <span className="text-white font-bold">04-geospatial-routing.arch</span>
                 </button>
               </div>
             </div>
@@ -323,7 +323,7 @@ export function TerminalGame({ onExitToGui }: { onExitToGui: () => void }) {
                   onClick={() => executeCommand("cd projects")}
                   className="p-2.5 border border-neutral-800 bg-neutral-950 hover:border-neutral-500 text-left transition-colors space-y-1 cursor-pointer"
                 >
-                  <div className="text-white font-bold">📁 projects/</div>
+                  <div className="text-white font-bold">[dir] projects/</div>
                   <div className="text-[11px] text-neutral-400">6 production systems (cd projects | ls projects)</div>
                 </button>
 
@@ -331,7 +331,7 @@ export function TerminalGame({ onExitToGui }: { onExitToGui: () => void }) {
                   onClick={() => executeCommand("cd systems")}
                   className="p-2.5 border border-neutral-800 bg-neutral-950 hover:border-neutral-500 text-left transition-colors space-y-1 cursor-pointer"
                 >
-                  <div className="text-white font-bold">📁 systems/</div>
+                  <div className="text-white font-bold">[dir] systems/</div>
                   <div className="text-[11px] text-neutral-400">4 architecture pipelines (cd systems | ls systems)</div>
                 </button>
 
@@ -339,7 +339,7 @@ export function TerminalGame({ onExitToGui }: { onExitToGui: () => void }) {
                   onClick={() => executeCommand("cat experience.md")}
                   className="p-2.5 border border-neutral-800 bg-neutral-950 hover:border-neutral-500 text-left transition-colors space-y-1 cursor-pointer"
                 >
-                  <div className="text-white font-bold">📄 experience.md</div>
+                  <div className="text-white font-bold">[doc] experience.md</div>
                   <div className="text-[11px] text-neutral-400">Career progression (cat experience.md)</div>
                 </button>
 
@@ -347,7 +347,7 @@ export function TerminalGame({ onExitToGui }: { onExitToGui: () => void }) {
                   onClick={() => executeCommand("cat skills.json")}
                   className="p-2.5 border border-neutral-800 bg-neutral-950 hover:border-neutral-500 text-left transition-colors space-y-1 cursor-pointer"
                 >
-                  <div className="text-white font-bold">📄 skills.json</div>
+                  <div className="text-white font-bold">[data] skills.json</div>
                   <div className="text-[11px] text-neutral-400">5-stage competency matrix (cat skills.json)</div>
                 </button>
 
@@ -355,7 +355,7 @@ export function TerminalGame({ onExitToGui }: { onExitToGui: () => void }) {
                   onClick={() => executeCommand("cat bio.txt")}
                   className="p-2.5 border border-neutral-800 bg-neutral-950 hover:border-neutral-500 text-left transition-colors space-y-1 cursor-pointer"
                 >
-                  <div className="text-white font-bold">📄 bio.txt</div>
+                  <div className="text-white font-bold">[txt] bio.txt</div>
                   <div className="text-[11px] text-neutral-400">Developer background (cat bio.txt | whoami)</div>
                 </button>
 
@@ -363,7 +363,7 @@ export function TerminalGame({ onExitToGui }: { onExitToGui: () => void }) {
                   onClick={() => executeCommand("cat contact.sh")}
                   className="p-2.5 border border-neutral-800 bg-neutral-950 hover:border-neutral-500 text-left transition-colors space-y-1 cursor-pointer"
                 >
-                  <div className="text-white font-bold">⚙️ contact.sh</div>
+                  <div className="text-white font-bold">[sh] contact.sh</div>
                   <div className="text-[11px] text-neutral-400">Email &amp; LinkedIn (cat contact.sh | ./contact.sh)</div>
                 </button>
 
@@ -371,7 +371,7 @@ export function TerminalGame({ onExitToGui }: { onExitToGui: () => void }) {
                   onClick={() => executeCommand("cat resume.pdf")}
                   className="p-2.5 border border-neutral-800 bg-neutral-950 hover:border-neutral-500 text-left transition-colors space-y-1 cursor-pointer"
                 >
-                  <div className="text-white font-bold">📦 resume.pdf</div>
+                  <div className="text-white font-bold">[pdf] resume.pdf</div>
                   <div className="text-[11px] text-neutral-400">Official PDF resume download</div>
                 </button>
 
@@ -379,7 +379,7 @@ export function TerminalGame({ onExitToGui }: { onExitToGui: () => void }) {
                   onClick={() => executeCommand("play")}
                   className="p-2.5 border border-neutral-700 bg-neutral-950 hover:border-white text-left transition-colors space-y-1 cursor-pointer"
                 >
-                  <div className="text-white font-bold">🎮 quiz.exe</div>
+                  <div className="text-white font-bold">[bin] quiz.exe</div>
                   <div className="text-[11px] text-neutral-300">Systems architecture challenge game</div>
                 </button>
               </div>
@@ -504,7 +504,7 @@ export function TerminalGame({ onExitToGui }: { onExitToGui: () => void }) {
               <p className="text-neutral-300">Available for Systems Engineering, Backend Architecture &amp; AI Consulting:</p>
               <div className="flex flex-wrap gap-2.5 pt-2">
                 <a href={`mailto:${CONTACT_INFO.email}`} className="border border-white bg-white text-black px-3.5 py-1.5 font-bold hover:bg-neutral-200">
-                  ✉️ {CONTACT_INFO.email}
+                  {CONTACT_INFO.email}
                 </a>
                 <a href={CONTACT_INFO.github} target="_blank" rel="noreferrer" className="border border-neutral-700 bg-neutral-900 text-neutral-200 px-3.5 py-1.5 hover:border-neutral-400">
                   GitHub: yuvrajsingh2428
@@ -642,7 +642,7 @@ export function TerminalGame({ onExitToGui }: { onExitToGui: () => void }) {
         output = (
           <div className="border border-white/20 bg-[#0a0a0a] p-5 space-y-3.5 text-xs sm:text-sm">
             <div className="flex justify-between items-center border-b border-neutral-800 pb-2">
-              <span className="text-white font-bold">🎮 SYSTEMS ARCHITECTURE CHALLENGE</span>
+              <span className="text-white font-bold">[CHALLENGE] SYSTEMS ARCHITECTURE QUIZ</span>
               <span className="text-neutral-400 text-xs">[CHALLENGE MODE]</span>
             </div>
             <p className="text-neutral-200 font-bold">
@@ -676,13 +676,13 @@ export function TerminalGame({ onExitToGui }: { onExitToGui: () => void }) {
         if (arg.toUpperCase() === "A") {
           output = (
             <div className="border-l-2 border-white pl-3 py-1 text-xs text-white font-bold">
-              ✓ Correct! Multi-tier Redis in-memory distance matrix caching prevented repeat Google Maps API hits.
+              [CORRECT] Multi-tier Redis in-memory distance matrix caching prevented repeat Google Maps API hits.
             </div>
           );
         } else {
           output = (
             <div className="border-l-2 border-neutral-600 pl-3 py-1 text-xs text-neutral-400">
-              ✗ Incorrect. The optimization was achieved via Redis distance matrix caching.
+              [INCORRECT] The optimization was achieved via Redis distance matrix caching.
             </div>
           );
         }
