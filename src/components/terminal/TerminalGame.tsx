@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import Link from "next/link";
 import {
   PROJECTS_DATA,
   OSS_CONTRIBUTIONS,
@@ -11,58 +10,37 @@ import {
   BIO_TEXT,
 } from "@/data/portfolio";
 
-interface HistoryItem {
+interface HistoryEntry {
   id: string;
-  type: "command" | "response" | "system" | "project" | "systems" | "game";
-  command?: string;
-  content?: React.ReactNode;
+  cwd: string;
+  command: string;
+  output: React.ReactNode;
 }
 
-const COMMAND_LIST = [
-  { cmd: "help", desc: "Show available terminal commands" },
-  { cmd: "ls", desc: "List portfolio directories and files" },
-  { cmd: "whoami", desc: "Display developer bio & background" },
-  { cmd: "projects", desc: "List all production systems & projects" },
-  { cmd: "project <id>", desc: "Inspect a specific project (e.g. 'project openforge')" },
-  { cmd: "systems", desc: "Inspect interactive system architecture pipelines" },
-  { cmd: "experience", desc: "Display career timeline and employment history" },
-  { cmd: "skills", desc: "Display full technical competency stack" },
-  { cmd: "oss", desc: "List upstream open-source contributions" },
-  { cmd: "contact", desc: "Show contact channels & social links" },
-  { cmd: "resume", desc: "Download official PDF resume" },
-  { cmd: "play", desc: "Start the Systems Architecture mini-game / quiz" },
-  { cmd: "gui", desc: "Switch back to standard visual portfolio" },
-  { cmd: "clear", desc: "Clear terminal screen" },
-];
-
 export function TerminalGame({ onExitToGui }: { onExitToGui: () => void }) {
-  const [input, setInput] = useState("");
-  const [history, setHistory] = useState<HistoryItem[]>([]);
+  const [cwd, setCwd] = useState<string>("~");
+  const [input, setInput] = useState<string>("");
+  const [history, setHistory] = useState<HistoryEntry[]>([]);
   const [commandHistory, setCommandHistory] = useState<string[]>([]);
   const [historyIndex, setHistoryIndex] = useState<number>(-1);
-  const [gameScore, setGameScore] = useState<number>(0);
-  const [activeQuestion, setActiveQuestion] = useState<number | null>(null);
 
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // Initialize terminal on mount
+  // Initialize with a clean single-line welcome prompt
   useEffect(() => {
-    const welcomeId = Date.now().toString();
     setHistory([
       {
-        id: welcomeId,
-        type: "system",
-        content: (
-          <div className="space-y-3 border border-neutral-800 bg-[#050505] p-4 text-xs">
-            <div className="text-white font-bold text-sm">
-              🚀 YUVRAJ SINGH — INTERACTIVE TERMINAL SHELL v2.4.0
+        id: "init",
+        cwd: "~",
+        command: "init --session",
+        output: (
+          <div className="text-neutral-400 text-xs pb-1 space-y-1">
+            <div className="text-white font-bold">
+              Yuvraj Singh — Developer Terminal Workspace [v2.4.0]
             </div>
-            <p className="text-neutral-400 leading-relaxed">
-              Welcome to the gamified interactive developer terminal. Explore systems, run tests, inspect architecture pipelines, or launch developer challenges.
-            </p>
-            <div className="text-neutral-300">
-              Type <span className="text-white font-bold bg-neutral-900 px-1 border border-neutral-700">help</span> to view all commands, or click any quick command chip below.
+            <div>
+              Type <span className="text-white font-bold underline">ls</span> to browse contents, <span className="text-white font-bold underline">help</span> for commands, or <span className="text-white font-bold underline">exit</span> for visual portfolio.
             </div>
           </div>
         ),
@@ -70,214 +48,377 @@ export function TerminalGame({ onExitToGui }: { onExitToGui: () => void }) {
     ]);
   }, []);
 
-  // Auto-scroll to bottom on output update
+  // Auto-scroll to bottom as new commands are entered
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [history]);
 
-  // Keep input focused
   const handleContainerClick = () => {
     inputRef.current?.focus();
   };
 
-  const executeCommand = (rawCmd: string) => {
-    const trimmed = rawCmd.trim();
-    if (!trimmed) return;
+  // Grep helper: search across all portfolio content
+  const performGrep = (query: string): React.ReactNode => {
+    if (!query) {
+      return <div className="text-neutral-500 text-xs">Usage: grep &lt;keyword&gt; (e.g. grep redis, grep python, grep rag)</div>;
+    }
 
-    // Save to command history
-    setCommandHistory((prev) => [...prev, trimmed]);
+    const q = query.toLowerCase();
+    const results: { file: string; line: string }[] = [];
+
+    // Search in bio
+    BIO_TEXT.split("\n").forEach((line) => {
+      if (line.toLowerCase().includes(q)) {
+        results.push({ file: "bio.txt", line: line.trim() });
+      }
+    });
+
+    // Search in projects
+    PROJECTS_DATA.forEach((p) => {
+      if (p.title.toLowerCase().includes(q) || p.tech.some((t) => t.toLowerCase().includes(q))) {
+        results.push({ file: `projects/${p.id}.md`, line: `[${p.title}] Tech: ${p.tech.join(", ")}` });
+      }
+      p.bullets.forEach((b) => {
+        if (b.toLowerCase().includes(q)) {
+          results.push({ file: `projects/${p.id}.md`, line: b });
+        }
+      });
+    });
+
+    // Search in experience
+    EXPERIENCE_TIMELINE.forEach((e) => {
+      if (e.company.toLowerCase().includes(q) || e.role.toLowerCase().includes(q)) {
+        results.push({ file: "experience.md", line: `${e.company} (${e.role}, ${e.period})` });
+      }
+      e.bullets.forEach((b) => {
+        if (b.toLowerCase().includes(q)) {
+          results.push({ file: "experience.md", line: b });
+        }
+      });
+    });
+
+    // Search in skills
+    SKILL_STAGES.forEach((s) => {
+      s.skills.forEach((sk) => {
+        if (sk.toLowerCase().includes(q)) {
+          results.push({ file: "skills.json", line: `Category: ${s.title} -> ${sk}` });
+        }
+      });
+    });
+
+    if (results.length === 0) {
+      return <div className="text-neutral-500 text-xs">grep: '{query}': No matching lines found in portfolio files.</div>;
+    }
+
+    return (
+      <div className="space-y-1 text-xs">
+        <div className="text-neutral-400 font-bold border-b border-neutral-900 pb-1">
+          grep: Found {results.length} occurrences for '{query}':
+        </div>
+        {results.map((r, i) => (
+          <div key={i} className="flex items-start gap-2 leading-relaxed">
+            <span className="text-neutral-500 font-semibold shrink-0">{r.file}:</span>
+            <span className="text-neutral-300">{r.line}</span>
+          </div>
+        ))}
+      </div>
+    );
+  };
+
+  const executeCommand = (cmdText: string) => {
+    const raw = cmdText.trim();
+    if (!raw) return;
+
+    setCommandHistory((prev) => [...prev, raw]);
     setHistoryIndex(-1);
 
-    const parts = trimmed.split(" ");
-    const mainCmd = parts[0].toLowerCase();
-    const arg = parts.slice(1).join(" ").toLowerCase();
+    const parts = raw.split(/\s+/);
+    const cmd = parts[0].toLowerCase();
+    const arg = parts.slice(1).join(" ").trim();
+    const subArg = parts[1]?.toLowerCase() || "";
 
-    const cmdRecord: HistoryItem = {
-      id: Math.random().toString(),
-      type: "command",
-      command: trimmed,
-    };
+    let output: React.ReactNode = null;
+    let nextCwd = cwd;
 
-    let responseItem: HistoryItem | null = null;
-
-    switch (mainCmd) {
+    switch (cmd) {
       case "help":
       case "?":
       case "-h":
       case "--help":
-        responseItem = {
-          id: Math.random().toString(),
-          type: "response",
-          content: (
-            <div className="space-y-2 border-l-2 border-neutral-700 pl-3 py-1 text-xs">
-              <div className="text-white font-bold">[AVAILABLE COMMANDS]</div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1.5 pt-1">
-                {COMMAND_LIST.map((c) => (
-                  <div key={c.cmd} className="flex items-baseline gap-2">
-                    <button
-                      onClick={() => executeCommand(c.cmd.split(" ")[0])}
-                      className="text-white font-bold hover:underline cursor-pointer text-left shrink-0"
-                    >
-                      {c.cmd.padEnd(14, " ")}
-                    </button>
-                    <span className="text-neutral-400 text-[11px]">// {c.desc}</span>
-                  </div>
-                ))}
+        output = (
+          <div className="space-y-2.5 text-xs">
+            <div className="text-white font-bold border-b border-neutral-800 pb-1">
+              [SHELL COMMAND DIRECTORY]
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-1.5 leading-relaxed">
+              <div>
+                <span className="text-white font-bold">ls / dir</span>
+                <span className="text-neutral-400 text-[11px]"> : List directory contents &amp; files</span>
+              </div>
+              <div>
+                <span className="text-white font-bold">cd &lt;dir&gt;</span>
+                <span className="text-neutral-400 text-[11px]"> : Change directory (e.g. `cd projects`, `cd ..`)</span>
+              </div>
+              <div>
+                <span className="text-white font-bold">cat &lt;file&gt;</span>
+                <span className="text-neutral-400 text-[11px]"> : View file content (e.g. `cat bio.txt`)</span>
+              </div>
+              <div>
+                <span className="text-white font-bold">grep &lt;term&gt;</span>
+                <span className="text-neutral-400 text-[11px]"> : Search portfolio content (e.g. `grep redis`)</span>
+              </div>
+              <div>
+                <span className="text-white font-bold">tree</span>
+                <span className="text-neutral-400 text-[11px]"> : Display full portfolio hierarchy tree</span>
+              </div>
+              <div>
+                <span className="text-white font-bold">pwd</span>
+                <span className="text-neutral-400 text-[11px]"> : Print current working directory</span>
+              </div>
+              <div>
+                <span className="text-white font-bold">whoami</span>
+                <span className="text-neutral-400 text-[11px]"> : Display developer profile summary</span>
+              </div>
+              <div>
+                <span className="text-white font-bold">play</span>
+                <span className="text-neutral-400 text-[11px]"> : Launch systems architecture challenge quiz</span>
+              </div>
+              <div>
+                <span className="text-white font-bold">clear / cls</span>
+                <span className="text-neutral-400 text-[11px]"> : Clear terminal screen</span>
+              </div>
+              <div>
+                <span className="text-white font-bold">exit / gui</span>
+                <span className="text-neutral-400 text-[11px]"> : Return to standard visual portfolio</span>
               </div>
             </div>
-          ),
-        };
+          </div>
+        );
+        break;
+
+      case "pwd":
+        output = <div className="text-neutral-300 text-xs">/home/yuvraj{cwd === "~" ? "" : cwd.replace("~", "")}</div>;
+        break;
+
+      case "tree":
+        output = (
+          <pre className="text-neutral-300 text-xs font-mono leading-relaxed whitespace-pre">
+{`.
+├── projects/
+│   ├── openforge.md
+│   ├── poshible-rag.md
+│   ├── playwright-suite.md
+│   ├── jobhermes-agent.md
+│   ├── dealership-engine.md
+│   └── qr-campaign-platform.md
+├── systems/
+│   ├── 01-poshible-rag-pipeline.arch
+│   ├── 02-openforge-dual-router.arch
+│   ├── 03-jobhermes-agent-loop.arch
+│   └── 04-geospatial-routing.arch
+├── experience.md
+├── skills.json
+├── bio.txt
+├── oss_contributions.md
+├── contact.sh
+├── resume.pdf
+└── quiz.exe`}
+          </pre>
+        );
+        break;
+
+      case "cd":
+        if (!arg || arg === "~" || arg === "/") {
+          nextCwd = "~";
+          setCwd("~");
+        } else if (arg === ".." || arg === "../") {
+          nextCwd = "~";
+          setCwd("~");
+        } else if (arg === "projects" || arg === "./projects" || arg === "projects/") {
+          nextCwd = "~/projects";
+          setCwd("~/projects");
+        } else if (arg === "systems" || arg === "./systems" || arg === "systems/") {
+          nextCwd = "~/systems";
+          setCwd("~/systems");
+        } else {
+          output = <div className="text-neutral-400 text-xs">cd: no such directory: {arg}. Try 'ls' to see directories.</div>;
+        }
         break;
 
       case "ls":
       case "dir":
-        responseItem = {
-          id: Math.random().toString(),
-          type: "response",
-          content: (
+        if (cwd === "~/projects" || arg === "projects" || arg === "projects/") {
+          output = (
             <div className="space-y-2 text-xs">
-              <div className="text-neutral-500">Directory listing for ~/portfolio:</div>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1">
+              <div className="text-neutral-500 font-semibold border-b border-neutral-900 pb-1">
+                Contents of ~/projects: (use `cat &lt;file&gt;` to read)
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+                {PROJECTS_DATA.map((p) => (
+                  <button
+                    key={p.id}
+                    onClick={() => executeCommand(`cat projects/${p.id}.md`)}
+                    className="flex items-center justify-between text-left p-2 border border-neutral-800 hover:border-neutral-500 bg-neutral-950 transition-colors"
+                  >
+                    <span className="text-white font-bold">📄 {p.id}.md</span>
+                    <span className="text-[10px] text-neutral-400 uppercase">{p.categoryTag}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          );
+        } else if (cwd === "~/systems" || arg === "systems" || arg === "systems/") {
+          output = (
+            <div className="space-y-2 text-xs">
+              <div className="text-neutral-500 font-semibold border-b border-neutral-900 pb-1">
+                Contents of ~/systems: (use `cat &lt;file&gt;` to inspect architecture flow)
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
                 <button
-                  onClick={() => executeCommand("projects")}
-                  className="text-left text-neutral-300 hover:text-white font-bold"
+                  onClick={() => executeCommand("cat systems/01-poshible-rag-pipeline.arch")}
+                  className="p-2 border border-neutral-800 hover:border-neutral-500 text-left bg-neutral-950"
                 >
-                  📁 projects/
+                  <span className="text-white font-bold">⚙️ 01-poshible-rag-pipeline.arch</span>
                 </button>
                 <button
-                  onClick={() => executeCommand("systems")}
-                  className="text-left text-neutral-300 hover:text-white font-bold"
+                  onClick={() => executeCommand("cat systems/02-openforge-dual-router.arch")}
+                  className="p-2 border border-neutral-800 hover:border-neutral-500 text-left bg-neutral-950"
                 >
-                  📁 architecture/
+                  <span className="text-white font-bold">⚙️ 02-openforge-dual-router.arch</span>
                 </button>
                 <button
-                  onClick={() => executeCommand("experience")}
-                  className="text-left text-neutral-400 hover:text-white"
+                  onClick={() => executeCommand("cat systems/03-jobhermes-agent-loop.arch")}
+                  className="p-2 border border-neutral-800 hover:border-neutral-500 text-left bg-neutral-950"
                 >
-                  📄 experience.log
+                  <span className="text-white font-bold">⚙️ 03-jobhermes-agent-loop.arch</span>
                 </button>
                 <button
-                  onClick={() => executeCommand("skills")}
-                  className="text-left text-neutral-400 hover:text-white"
+                  onClick={() => executeCommand("cat systems/04-geospatial-routing.arch")}
+                  className="p-2 border border-neutral-800 hover:border-neutral-500 text-left bg-neutral-950"
                 >
-                  📄 skills.json
-                </button>
-                <button
-                  onClick={() => executeCommand("whoami")}
-                  className="text-left text-neutral-400 hover:text-white"
-                >
-                  📄 bio.txt
-                </button>
-                <button
-                  onClick={() => executeCommand("contact")}
-                  className="text-left text-neutral-400 hover:text-white"
-                >
-                  ⚙️ contact.sh
-                </button>
-                <button
-                  onClick={() => executeCommand("resume")}
-                  className="text-left text-neutral-400 hover:text-white"
-                >
-                  📦 resume.pdf
-                </button>
-                <button
-                  onClick={() => executeCommand("play")}
-                  className="text-left text-white font-bold hover:underline"
-                >
-                  🎮 sys_quiz.exe
+                  <span className="text-white font-bold">⚙️ 04-geospatial-routing.arch</span>
                 </button>
               </div>
             </div>
-          ),
-        };
-        break;
-
-      case "whoami":
-      case "bio":
-      case "about":
-      case "cat":
-        if (arg === "bio.txt" || !arg || mainCmd === "whoami" || mainCmd === "bio" || mainCmd === "about") {
-          responseItem = {
-            id: Math.random().toString(),
-            type: "response",
-            content: (
-              <div className="space-y-3 border border-neutral-800 bg-[#0a0a0a] p-4 text-xs sm:text-sm leading-relaxed">
-                <div className="text-white font-bold text-base border-b border-neutral-900 pb-2">
-                  Yuvraj Singh — Backend Systems & AI Platforms Engineer
-                </div>
-                <p className="text-neutral-300 whitespace-pre-line leading-relaxed">
-                  {BIO_TEXT}
-                </p>
-                <div className="text-neutral-400 text-xs pt-2 border-t border-neutral-900 flex flex-wrap gap-4">
-                  <span>Role: Software Engineer @ Revolt Motors</span>
-                  <span>Location: IST (UTC+5:30)</span>
-                  <span>Email: {CONTACT_INFO.email}</span>
-                </div>
-              </div>
-            ),
-          };
-        } else if (arg === "skills.json") {
-          executeCommand("skills");
-          return;
-        } else if (arg === "experience.log") {
-          executeCommand("experience");
-          return;
-        } else if (arg === "contact.sh") {
-          executeCommand("contact");
-          return;
-        } else if (arg === "resume.pdf") {
-          executeCommand("resume");
-          return;
+          );
         } else {
-          responseItem = {
-            id: Math.random().toString(),
-            type: "response",
-            content: <div className="text-neutral-400 text-xs">cat: {arg}: No such file. Try 'ls' to see files.</div>,
-          };
+          output = (
+            <div className="space-y-2 text-xs">
+              <div className="text-neutral-500 font-semibold border-b border-neutral-900 pb-1">
+                PORTFOLIO TABLE OF CONTENTS [~]:
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+                <button
+                  onClick={() => executeCommand("cd projects")}
+                  className="p-2.5 border border-neutral-800 bg-neutral-950 hover:border-neutral-500 text-left transition-colors space-y-1"
+                >
+                  <div className="text-white font-bold">📁 projects/</div>
+                  <div className="text-[11px] text-neutral-400">6 production systems (cd projects | ls projects)</div>
+                </button>
+
+                <button
+                  onClick={() => executeCommand("cd systems")}
+                  className="p-2.5 border border-neutral-800 bg-neutral-950 hover:border-neutral-500 text-left transition-colors space-y-1"
+                >
+                  <div className="text-white font-bold">📁 systems/</div>
+                  <div className="text-[11px] text-neutral-400">4 architecture pipelines (cd systems | ls systems)</div>
+                </button>
+
+                <button
+                  onClick={() => executeCommand("cat experience.md")}
+                  className="p-2.5 border border-neutral-800 bg-neutral-950 hover:border-neutral-500 text-left transition-colors space-y-1"
+                >
+                  <div className="text-white font-bold">📄 experience.md</div>
+                  <div className="text-[11px] text-neutral-400">Career progression (cat experience.md)</div>
+                </button>
+
+                <button
+                  onClick={() => executeCommand("cat skills.json")}
+                  className="p-2.5 border border-neutral-800 bg-neutral-950 hover:border-neutral-500 text-left transition-colors space-y-1"
+                >
+                  <div className="text-white font-bold">📄 skills.json</div>
+                  <div className="text-[11px] text-neutral-400">5-stage competency matrix (cat skills.json)</div>
+                </button>
+
+                <button
+                  onClick={() => executeCommand("cat bio.txt")}
+                  className="p-2.5 border border-neutral-800 bg-neutral-950 hover:border-neutral-500 text-left transition-colors space-y-1"
+                >
+                  <div className="text-white font-bold">📄 bio.txt</div>
+                  <div className="text-[11px] text-neutral-400">Developer background (cat bio.txt | whoami)</div>
+                </button>
+
+                <button
+                  onClick={() => executeCommand("cat contact.sh")}
+                  className="p-2.5 border border-neutral-800 bg-neutral-950 hover:border-neutral-500 text-left transition-colors space-y-1"
+                >
+                  <div className="text-white font-bold">⚙️ contact.sh</div>
+                  <div className="text-[11px] text-neutral-400">Email &amp; LinkedIn (cat contact.sh | ./contact.sh)</div>
+                </button>
+
+                <button
+                  onClick={() => executeCommand("cat resume.pdf")}
+                  className="p-2.5 border border-neutral-800 bg-neutral-950 hover:border-neutral-500 text-left transition-colors space-y-1"
+                >
+                  <div className="text-white font-bold">📦 resume.pdf</div>
+                  <div className="text-[11px] text-neutral-400">Official PDF resume download</div>
+                </button>
+
+                <button
+                  onClick={() => executeCommand("play")}
+                  className="p-2.5 border border-neutral-700 bg-neutral-950 hover:border-white text-left transition-colors space-y-1"
+                >
+                  <div className="text-white font-bold">🎮 quiz.exe</div>
+                  <div className="text-[11px] text-neutral-300">Systems architecture challenge game</div>
+                </button>
+              </div>
+            </div>
+          );
         }
         break;
 
-      case "projects":
-      case "project":
-        if (arg) {
-          const match = PROJECTS_DATA.find(
-            (p) => p.id.toLowerCase() === arg || p.title.toLowerCase().includes(arg)
+      case "grep":
+      case "search":
+      case "find":
+        // Handle flags like `grep -i <term>`
+        const cleanQuery = parts
+          .slice(1)
+          .filter((p) => !p.startsWith("-"))
+          .join(" ");
+        output = performGrep(cleanQuery);
+        break;
+
+      case "cat":
+      case "view":
+      case "open":
+      case "read":
+        const target = arg.toLowerCase().replace(/^\.\//, "");
+        
+        if (target === "bio.txt" || target === "bio") {
+          output = (
+            <div className="border border-neutral-800 bg-[#0a0a0a] p-4 space-y-3 text-xs sm:text-sm leading-relaxed">
+              <div className="text-white font-bold text-base border-b border-neutral-900 pb-2">
+                Yuvraj Singh — Engineering Philosophy &amp; Background
+              </div>
+              <p className="text-neutral-200 whitespace-pre-line leading-relaxed">
+                {BIO_TEXT}
+              </p>
+            </div>
           );
-          if (match) {
-            responseItem = {
-              id: Math.random().toString(),
-              type: "project",
-              content: (
-                <div className="border border-neutral-800 bg-[#0a0a0a] p-5 space-y-3 text-xs sm:text-sm">
-                  <div className="flex justify-between items-start border-b border-neutral-900 pb-2">
-                    <div>
-                      <div className="text-[11px] text-neutral-500 uppercase font-semibold">{match.categoryTag}</div>
-                      <div className="text-white font-bold text-base">{match.title}</div>
-                    </div>
-                    {match.repoUrl ? (
-                      <a
-                        href={match.repoUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="border border-neutral-700 bg-neutral-900 px-3 py-1 text-xs text-white hover:bg-white hover:text-black"
-                      >
-                        [repo]
-                      </a>
-                    ) : (
-                      <span className="text-[11px] text-neutral-500 border border-neutral-800 px-2 py-0.5">
-                        [internal_prod]
-                      </span>
-                    )}
+        } else if (target === "experience.md" || target === "experience" || target === "exp") {
+          output = (
+            <div className="space-y-3 text-xs sm:text-sm">
+              <div className="text-white font-bold border-b border-neutral-900 pb-1">
+                CAREER PROGRESSION TIMELINE
+              </div>
+              {EXPERIENCE_TIMELINE.map((e) => (
+                <div key={e.company} className="border border-neutral-800 bg-[#0a0a0a] p-4 space-y-2">
+                  <div className="flex justify-between items-baseline border-b border-neutral-900 pb-1.5">
+                    <span className="text-white font-bold text-sm">{e.company} <span className="text-neutral-400 text-xs font-normal">// {e.role}</span></span>
+                    <span className="text-neutral-500 text-xs">{e.period}</span>
                   </div>
-                  <div className="flex flex-wrap gap-1.5">
-                    {match.tech.map((t) => (
-                      <span key={t} className="border border-neutral-800 bg-neutral-950 px-2 py-0.5 text-xs text-neutral-400">
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-                  <ul className="space-y-2 text-neutral-300 pt-2 border-t border-neutral-900 leading-relaxed">
-                    {match.bullets.map((b, i) => (
+                  <ul className="space-y-1.5 text-neutral-300 leading-relaxed">
+                    {e.bullets.map((b, i) => (
                       <li key={i} className="flex items-start gap-2">
                         <span className="text-neutral-500 font-bold">&gt;</span>
                         <span>{b}</span>
@@ -285,168 +426,34 @@ export function TerminalGame({ onExitToGui }: { onExitToGui: () => void }) {
                     ))}
                   </ul>
                 </div>
-              ),
-            };
-          } else {
-            responseItem = {
-              id: Math.random().toString(),
-              type: "response",
-              content: (
-                <div className="text-neutral-400 text-xs">
-                  Project not found. Type <span className="text-white">projects</span> to view all valid names.
-                </div>
-              ),
-            };
-          }
-        } else {
-          responseItem = {
-            id: Math.random().toString(),
-            type: "response",
-            content: (
-              <div className="space-y-4">
-                <div className="text-neutral-400 text-xs">
-                  Found {PROJECTS_DATA.length} production systems. Click a project to inspect or type <span className="text-white font-bold">project &lt;id&gt;</span>:
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                  {PROJECTS_DATA.map((proj, idx) => (
-                    <button
-                      key={proj.id}
-                      onClick={() => executeCommand(`project ${proj.id}`)}
-                      className="border border-neutral-800 bg-[#0a0a0a] p-4 text-left hover:border-neutral-500 transition-colors space-y-2 group cursor-pointer"
-                    >
-                      <div className="flex justify-between text-xs">
-                        <span className="text-neutral-500 font-bold">[0{idx + 1}]</span>
-                        <span className="text-neutral-400 text-[10px] uppercase">{proj.categoryTag}</span>
-                      </div>
-                      <div className="text-white font-bold text-sm group-hover:underline">
-                        {proj.title}
-                      </div>
-                      <div className="flex flex-wrap gap-1 text-[10px] text-neutral-500">
-                        {proj.tech.slice(0, 4).join(" · ")}
-                      </div>
-                    </button>
-                  ))}
-                </div>
-              </div>
-            ),
-          };
-        }
-        break;
-
-      case "systems":
-      case "arch":
-      case "architecture":
-        responseItem = {
-          id: Math.random().toString(),
-          type: "systems",
-          content: (
-            <div className="space-y-4 text-xs sm:text-sm">
-              <div className="text-neutral-400">
-                System Architecture Diagrams &amp; Data Movement Specifications:
-              </div>
-              <div className="border border-neutral-800 bg-[#0a0a0a] p-4 space-y-3">
-                <div className="text-white font-bold text-sm">1. POSHIBLE.AI — LEGAL RAG RETRIEVAL PIPELINE</div>
-                <div className="p-3 bg-black border border-neutral-900 font-mono text-xs overflow-x-auto whitespace-pre">
-                  [PDF Docs: S3] ──&gt; [1536d Chunks] ──&gt; [OpenSearch Vector Index] ──&gt; [Hybrid K-NN Search] ──&gt; [GPT-4o] ──&gt; [Zod Schema]
-                </div>
-                <div className="text-neutral-400 text-xs">
-                  • Retrieval Precision: 90% across 100+ documents · Zero API loop bounds (-60% server load).
-                </div>
-              </div>
-              <div className="border border-neutral-800 bg-[#0a0a0a] p-4 space-y-3">
-                <div className="text-white font-bold text-sm">2. OPENFORGE — HYBRID DUAL-ENGINE AI ROUTER</div>
-                <div className="p-3 bg-black border border-neutral-900 font-mono text-xs overflow-x-auto whitespace-pre">
-                  [GitHub GraphQL] ──&gt; [Dependency Graph] ──&gt; [5-Factor Scorer 0-100] ──&gt; [Ollama (Local) / OpenRouter (Cloud)]
-                </div>
-                <div className="text-neutral-400 text-xs">
-                  • 9 Monorepo domain packages · Pluggable provider abstraction for zero-cost dev and DeepSeek-V3 prod inference.
-                </div>
-              </div>
-              <div className="border border-neutral-800 bg-[#0a0a0a] p-4 space-y-3">
-                <div className="text-white font-bold text-sm">3. DEALERSHIP RECOMMENDATION — GEOSPATIAL CACHE</div>
-                <div className="p-3 bg-black border border-neutral-900 font-mono text-xs overflow-x-auto whitespace-pre">
-                  [Customer Pin Code] ──&gt; [Redis Distance Matrix Cache Hit?] ──(Miss)──&gt; [Google Maps API + PostgreSQL PostGIS]
-                </div>
-                <div className="text-neutral-400 text-xs">
-                  • &gt;70% external Google Maps API savings · Sub-15ms cached response times.
-                </div>
-              </div>
+              ))}
             </div>
-          ),
-        };
-        break;
-
-      case "experience":
-      case "exp":
-      case "career":
-        responseItem = {
-          id: Math.random().toString(),
-          type: "response",
-          content: (
-            <div className="space-y-4">
-              <div className="text-white font-bold text-sm border-b border-neutral-900 pb-2">
-                [CAREER PROGRESSION TIMELINE]
+          );
+        } else if (target === "skills.json" || target === "skills" || target === "stack") {
+          output = (
+            <div className="space-y-3 text-xs">
+              <div className="text-white font-bold border-b border-neutral-900 pb-1">
+                TECHNICAL COMPETENCY MATRIX
               </div>
-              <div className="space-y-4">
-                {EXPERIENCE_TIMELINE.map((e) => (
-                  <div key={e.company} className="border border-neutral-800 bg-[#0a0a0a] p-4 space-y-2 text-xs sm:text-sm">
-                    <div className="flex justify-between items-baseline border-b border-neutral-900 pb-1.5">
-                      <div className="text-white font-bold">{e.company} <span className="text-neutral-400 text-xs font-normal">// {e.role}</span></div>
-                      <span className="text-neutral-500 text-xs">{e.period}</span>
-                    </div>
-                    <ul className="space-y-1.5 text-neutral-300 leading-relaxed">
-                      {e.bullets.map((b, i) => (
-                        <li key={i} className="flex items-start gap-2">
-                          <span className="text-neutral-500 font-bold">-&gt;</span>
-                          <span>{b}</span>
-                        </li>
-                      ))}
-                    </ul>
+              {SKILL_STAGES.map((st) => (
+                <div key={st.title} className="border border-neutral-800 bg-[#0a0a0a] p-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                  <span className="text-white font-bold">{st.title}</span>
+                  <div className="flex flex-wrap gap-1.5">
+                    {st.skills.map((sk) => (
+                      <span key={sk} className="border border-neutral-800 bg-neutral-950 px-2 py-0.5 text-neutral-300">
+                        {sk}
+                      </span>
+                    ))}
                   </div>
-                ))}
-              </div>
+                </div>
+              ))}
             </div>
-          ),
-        };
-        break;
-
-      case "skills":
-      case "stack":
-        responseItem = {
-          id: Math.random().toString(),
-          type: "response",
-          content: (
-            <div className="space-y-3">
-              <div className="text-white font-bold text-sm border-b border-neutral-900 pb-2">
-                [TECHNICAL COMPETENCIES MATRIX]
-              </div>
-              <div className="space-y-2">
-                {SKILL_STAGES.map((st) => (
-                  <div key={st.title} className="border border-neutral-800 bg-[#0a0a0a] p-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
-                    <span className="text-white font-bold shrink-0">{st.title}</span>
-                    <div className="flex flex-wrap gap-1.5">
-                      {st.skills.map((sk) => (
-                        <span key={sk} className="border border-neutral-800 bg-neutral-950 px-2 py-0.5 text-neutral-300 text-xs">
-                          {sk}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ),
-        };
-        break;
-
-      case "oss":
-        responseItem = {
-          id: Math.random().toString(),
-          type: "response",
-          content: (
+          );
+        } else if (target === "oss_contributions.md" || target === "oss") {
+          output = (
             <div className="space-y-3 text-xs sm:text-sm">
-              <div className="text-white font-bold border-b border-neutral-900 pb-2">
-                [UPSTREAM OPEN SOURCE MERGED CONTRIBUTIONS]
+              <div className="text-white font-bold border-b border-neutral-900 pb-1">
+                UPSTREAM OPEN SOURCE CONTRIBUTIONS
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 {OSS_CONTRIBUTIONS.map((oss) => (
@@ -467,140 +474,180 @@ export function TerminalGame({ onExitToGui }: { onExitToGui: () => void }) {
                 ))}
               </div>
             </div>
-          ),
-        };
-        break;
-
-      case "contact":
-      case "ping":
-        responseItem = {
-          id: Math.random().toString(),
-          type: "response",
-          content: (
+          );
+        } else if (target === "contact.sh" || target === "contact") {
+          output = (
             <div className="border border-neutral-800 bg-[#0a0a0a] p-5 space-y-3 text-xs sm:text-sm">
-              <div className="text-white font-bold text-base">[COMMUNICATION PROTOCOL]</div>
-              <p className="text-neutral-300">
-                Connect for full-time engineering roles, backend systems design, or AI consulting:
-              </p>
+              <div className="text-white font-bold text-base">[CONTACT PROTOCOL]</div>
+              <p className="text-neutral-300">Available for Systems Engineering, Backend Architecture &amp; AI Consulting:</p>
               <div className="flex flex-wrap gap-3 pt-2">
-                <a
-                  href={`mailto:${CONTACT_INFO.email}`}
-                  className="border border-white bg-white text-black px-3.5 py-1.5 font-bold hover:bg-neutral-200"
-                >
+                <a href={`mailto:${CONTACT_INFO.email}`} className="border border-white bg-white text-black px-3.5 py-1.5 font-bold hover:bg-neutral-200">
                   ✉️ {CONTACT_INFO.email}
                 </a>
-                <a
-                  href={CONTACT_INFO.github}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="border border-neutral-700 bg-neutral-900 text-neutral-200 px-3.5 py-1.5 hover:border-neutral-400"
-                >
+                <a href={CONTACT_INFO.github} target="_blank" rel="noreferrer" className="border border-neutral-700 bg-neutral-900 text-neutral-200 px-3.5 py-1.5 hover:border-neutral-400">
                   GitHub: yuvrajsingh2428
                 </a>
-                <a
-                  href={CONTACT_INFO.linkedin}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="border border-neutral-700 bg-neutral-900 text-neutral-200 px-3.5 py-1.5 hover:border-neutral-400"
-                >
+                <a href={CONTACT_INFO.linkedin} target="_blank" rel="noreferrer" className="border border-neutral-700 bg-neutral-900 text-neutral-200 px-3.5 py-1.5 hover:border-neutral-400">
                   LinkedIn: yuvrajsingh024
                 </a>
               </div>
             </div>
-          ),
-        };
+          );
+        } else if (target === "resume.pdf" || target === "resume") {
+          if (typeof window !== "undefined") {
+            window.open("https://drive.google.com/uc?export=download&id=18ozkViRciZPbM-1pCSg03Kc7b2eVIoXO", "_blank");
+          }
+          output = <div className="text-white font-bold text-xs">Opening resume download link...</div>;
+        } else {
+          // Check if it's a project
+          const cleanProjectKey = target.replace(/^projects\//, "").replace(/\.md$/, "");
+          const matchProj = PROJECTS_DATA.find((p) => p.id === cleanProjectKey || p.id.includes(cleanProjectKey));
+
+          if (matchProj) {
+            output = (
+              <div className="border border-neutral-800 bg-[#0a0a0a] p-5 space-y-3 text-xs sm:text-sm">
+                <div className="flex justify-between items-start border-b border-neutral-900 pb-2">
+                  <div>
+                    <div className="text-[11px] text-neutral-500 uppercase font-semibold">{matchProj.categoryTag}</div>
+                    <div className="text-white font-bold text-base">{matchProj.title}</div>
+                  </div>
+                  {matchProj.repoUrl ? (
+                    <a
+                      href={matchProj.repoUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="border border-neutral-700 bg-neutral-900 px-3 py-1 text-xs text-white hover:bg-white hover:text-black"
+                    >
+                      [repo]
+                    </a>
+                  ) : (
+                    <span className="text-[11px] text-neutral-500 border border-neutral-800 px-2 py-0.5">
+                      [internal_prod]
+                    </span>
+                  )}
+                </div>
+                <div className="flex flex-wrap gap-1.5">
+                  {matchProj.tech.map((t) => (
+                    <span key={t} className="border border-neutral-800 bg-neutral-950 px-2 py-0.5 text-xs text-neutral-400">
+                      {t}
+                    </span>
+                  ))}
+                </div>
+                <ul className="space-y-2 text-neutral-300 pt-2 border-t border-neutral-900 leading-relaxed">
+                  {matchProj.bullets.map((b, i) => (
+                    <li key={i} className="flex items-start gap-2">
+                      <span className="text-neutral-500 font-bold">&gt;</span>
+                      <span>{b}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            );
+          } else if (target.includes("poshible") || target.includes("01")) {
+            output = (
+              <div className="border border-neutral-800 bg-[#0a0a0a] p-4 space-y-2 text-xs sm:text-sm">
+                <div className="text-white font-bold">1. POSHIBLE.AI — LEGAL RAG RETRIEVAL PIPELINE</div>
+                <pre className="p-3 bg-black border border-neutral-900 font-mono text-xs overflow-x-auto whitespace-pre">
+[PDF Docs: AWS S3] ──&gt; [1536d Chunks] ──&gt; [OpenSearch Cluster] ──&gt; [Hybrid K-NN Search] ──&gt; [GPT-4o] ──&gt; [Zod Schema]
+                </pre>
+                <div className="text-neutral-400 text-xs">
+                  • 90% retrieval precision across 100+ legal documents · Resolved circular API loops (-60% server load).
+                </div>
+              </div>
+            );
+          } else if (target.includes("openforge") || target.includes("02")) {
+            output = (
+              <div className="border border-neutral-800 bg-[#0a0a0a] p-4 space-y-2 text-xs sm:text-sm">
+                <div className="text-white font-bold">2. OPENFORGE — HYBRID DUAL-ENGINE AI ROUTER</div>
+                <pre className="p-3 bg-black border border-neutral-900 font-mono text-xs overflow-x-auto whitespace-pre">
+[GitHub GraphQL] ──&gt; [Knowledge Graph] ──&gt; [5-Factor Scorer 0-100] ──&gt; [Ollama (Local) / OpenRouter (Cloud)]
+                </pre>
+                <div className="text-neutral-400 text-xs">
+                  • Pluggable provider abstraction for zero-cost dev and DeepSeek-V3 cloud production inference.
+                </div>
+              </div>
+            );
+          } else {
+            output = <div className="text-neutral-400 text-xs">cat: {target}: File not found. Type 'ls' to see all available files.</div>;
+          }
+        }
         break;
 
-      case "resume":
-      case "curl":
-        if (typeof window !== "undefined") {
-          window.open("https://drive.google.com/uc?export=download&id=18ozkViRciZPbM-1pCSg03Kc7b2eVIoXO", "_blank");
-        }
-        responseItem = {
-          id: Math.random().toString(),
-          type: "response",
-          content: <div className="text-white font-bold text-xs">Downloading official PDF resume from drive...</div>,
-        };
+      case "./contact.sh":
+        output = (
+          <div className="border border-neutral-800 bg-[#0a0a0a] p-4 space-y-2 text-xs sm:text-sm">
+            <div className="text-white font-bold">Executing ./contact.sh:</div>
+            <div>Email: <a href={`mailto:${CONTACT_INFO.email}`} className="text-white underline">{CONTACT_INFO.email}</a></div>
+            <div>GitHub: <a href={CONTACT_INFO.github} target="_blank" rel="noreferrer" className="text-white underline">{CONTACT_INFO.github}</a></div>
+            <div>LinkedIn: <a href={CONTACT_INFO.linkedin} target="_blank" rel="noreferrer" className="text-white underline">{CONTACT_INFO.linkedin}</a></div>
+          </div>
+        );
+        break;
+
+      case "whoami":
+        output = (
+          <div className="border border-neutral-800 bg-[#0a0a0a] p-4 space-y-2 text-xs sm:text-sm">
+            <div className="text-white font-bold text-base">Yuvraj Singh</div>
+            <div className="text-neutral-300">Backend Systems &amp; AI Platforms Engineer · Revolt Motors</div>
+            <p className="text-neutral-400 text-xs leading-relaxed pt-1">
+              Building scalable backend systems, Legal RAG platforms, and automation test infrastructure.
+            </p>
+          </div>
+        );
         break;
 
       case "play":
-      case "game":
+      case "./quiz.exe":
       case "quiz":
-        setActiveQuestion(0);
-        responseItem = {
-          id: Math.random().toString(),
-          type: "game",
-          content: (
-            <div className="border border-white/20 bg-[#0a0a0a] p-5 space-y-4 text-xs sm:text-sm">
-              <div className="flex justify-between items-center border-b border-neutral-800 pb-2">
-                <span className="text-white font-bold">🎮 SYSTEMS ARCHITECTURE CHALLENGE</span>
-                <span className="text-neutral-400">Score: {gameScore} pts</span>
-              </div>
-              <p className="text-neutral-200 font-bold">
-                Q1: How did Yuvraj reduce external Google Maps API costs by &gt;70% in the Dealership Engine?
-              </p>
-              <div className="space-y-2 pt-1">
-                <button
-                  onClick={() => {
-                    setGameScore((s) => s + 10);
-                    setHistory((prev) => [
-                      ...prev,
-                      {
-                        id: Math.random().toString(),
-                        type: "response",
-                        content: (
-                          <div className="text-white font-bold border-l-2 border-white pl-3 py-1">
-                            ✓ Correct! (+10 pts) Multi-tier Redis in-memory distance matrix caching prevented repeated coordinate queries.
-                          </div>
-                        ),
-                      },
-                    ]);
-                  }}
-                  className="block w-full text-left p-2.5 border border-neutral-800 hover:border-white hover:bg-neutral-900 transition-colors"
-                >
-                  A) Multi-tier Redis distance matrix caching with spatial query pre-filtering
-                </button>
-                <button
-                  onClick={() => {
-                    setHistory((prev) => [
-                      ...prev,
-                      {
-                        id: Math.random().toString(),
-                        type: "response",
-                        content: <div className="text-neutral-400 pl-3">✗ Incorrect. The optimization was built with Redis distance matrix caching.</div>,
-                      },
-                    ]);
-                  }}
-                  className="block w-full text-left p-2.5 border border-neutral-800 hover:border-neutral-600 hover:bg-neutral-900 transition-colors"
-                >
-                  B) Hardcoding all pin-code distances into client-side cookies
-                </button>
-                <button
-                  onClick={() => {
-                    setHistory((prev) => [
-                      ...prev,
-                      {
-                        id: Math.random().toString(),
-                        type: "response",
-                        content: <div className="text-neutral-400 pl-3">✗ Incorrect. Google Maps was preserved as a fallback behind Redis caching.</div>,
-                      },
-                    ]);
-                  }}
-                  className="block w-full text-left p-2.5 border border-neutral-800 hover:border-neutral-600 hover:bg-neutral-900 transition-colors"
-                >
-                  C) Switching to unverified free map scraping
-                </button>
-              </div>
+      case "game":
+        output = (
+          <div className="border border-white/20 bg-[#0a0a0a] p-5 space-y-3.5 text-xs sm:text-sm">
+            <div className="flex justify-between items-center border-b border-neutral-800 pb-2">
+              <span className="text-white font-bold">🎮 SYSTEMS ARCHITECTURE CHALLENGE</span>
+              <span className="text-neutral-400 text-xs">[CHALLENGE MODE]</span>
             </div>
-          ),
-        };
+            <p className="text-neutral-200 font-bold">
+              Q: How did Yuvraj reduce external Google Maps API costs by &gt;70% in the Dealership Engine?
+            </p>
+            <div className="space-y-2 pt-1">
+              <button
+                onClick={() => executeCommand("answer A")}
+                className="block w-full text-left p-2.5 border border-neutral-800 hover:border-white hover:bg-neutral-900 transition-colors cursor-pointer"
+              >
+                A) Multi-tier Redis distance matrix caching with PostgreSQL spatial queries
+              </button>
+              <button
+                onClick={() => executeCommand("answer B")}
+                className="block w-full text-left p-2.5 border border-neutral-800 hover:border-neutral-600 hover:bg-neutral-900 transition-colors cursor-pointer"
+              >
+                B) Client-side localStorage coordinate storage
+              </button>
+              <button
+                onClick={() => executeCommand("answer C")}
+                className="block w-full text-left p-2.5 border border-neutral-800 hover:border-neutral-600 hover:bg-neutral-900 transition-colors cursor-pointer"
+              >
+                C) Unlimited un-cached API calls
+              </button>
+            </div>
+          </div>
+        );
         break;
 
-      case "gui":
-      case "exit":
-      case "portfolio":
-        onExitToGui();
-        return;
+      case "answer":
+        if (arg.toUpperCase() === "A") {
+          output = (
+            <div className="border-l-2 border-white pl-3 py-1 text-xs text-white font-bold">
+              ✓ Correct! Multi-tier Redis in-memory distance matrix caching prevented repeat Google Maps API hits.
+            </div>
+          );
+        } else {
+          output = (
+            <div className="border-l-2 border-neutral-600 pl-3 py-1 text-xs text-neutral-400">
+              ✗ Incorrect. The optimization was achieved via Redis distance matrix caching.
+            </div>
+          );
+        }
+        break;
 
       case "clear":
       case "cls":
@@ -608,19 +655,30 @@ export function TerminalGame({ onExitToGui }: { onExitToGui: () => void }) {
         setInput("");
         return;
 
+      case "exit":
+      case "quit":
+      case "gui":
+      case "portfolio":
+        onExitToGui();
+        return;
+
       default:
-        responseItem = {
-          id: Math.random().toString(),
-          type: "response",
-          content: (
-            <div className="text-neutral-400 text-xs">
-              Command not recognized: <span className="text-white font-mono">{trimmed}</span>. Type <button onClick={() => executeCommand("help")} className="text-white underline cursor-pointer font-bold">help</button> for the command directory.
-            </div>
-          ),
-        };
+        output = (
+          <div className="text-neutral-400 text-xs">
+            zsh: command not found: <span className="text-white font-mono">{raw}</span>. Type <button onClick={() => executeCommand("help")} className="text-white underline font-bold cursor-pointer">help</button> or <button onClick={() => executeCommand("ls")} className="text-white underline font-bold cursor-pointer">ls</button>.
+          </div>
+        );
     }
 
-    setHistory((prev) => [...prev, cmdRecord, ...(responseItem ? [responseItem] : [])]);
+    setHistory((prev) => [
+      ...prev,
+      {
+        id: Math.random().toString(),
+        cwd,
+        command: raw,
+        output,
+      },
+    ]);
     setInput("");
   };
 
@@ -647,9 +705,10 @@ export function TerminalGame({ onExitToGui }: { onExitToGui: () => void }) {
       e.preventDefault();
       const current = input.toLowerCase().trim();
       if (!current) return;
-      const match = COMMAND_LIST.find((c) => c.cmd.startsWith(current));
+      const candidates = ["ls", "cd", "cat", "grep", "tree", "whoami", "pwd", "play", "clear", "exit", "bio.txt", "skills.json", "experience.md", "contact.sh", "resume.pdf"];
+      const match = candidates.find((c) => c.startsWith(current));
       if (match) {
-        setInput(match.cmd.split(" ")[0]);
+        setInput(match);
       }
     }
   };
@@ -657,68 +716,41 @@ export function TerminalGame({ onExitToGui }: { onExitToGui: () => void }) {
   return (
     <div
       onClick={handleContainerClick}
-      className="min-h-[85vh] flex flex-col justify-between border border-neutral-800 bg-black font-mono text-neutral-300 p-4 sm:p-6 select-text shadow-2xl relative"
+      className="min-h-[85vh] border border-neutral-800 bg-black font-mono text-neutral-300 p-4 sm:p-6 select-text flex flex-col justify-start"
     >
-      {/* Top Header Bar */}
-      <div className="flex items-center justify-between border-b border-neutral-800 pb-3 mb-4 text-xs select-none">
+      {/* Top clean terminal title bar */}
+      <div className="flex items-center justify-between border-b border-neutral-800 pb-2.5 mb-4 text-xs select-none">
         <div className="flex items-center gap-2">
           <span className="w-2.5 h-2.5 rounded-full bg-neutral-600"></span>
           <span className="w-2.5 h-2.5 rounded-full bg-neutral-700"></span>
           <span className="w-2.5 h-2.5 rounded-full bg-neutral-800"></span>
-          <span className="ml-2 text-white font-bold">TERMINAL REPL — GAMIFIED SHELL</span>
+          <span className="ml-2 text-white font-bold">yuvraj@dev: {cwd}</span>
         </div>
 
-        <div className="flex items-center gap-3">
-          <button
-            onClick={() => executeCommand("help")}
-            className="text-[11px] border border-neutral-800 px-2 py-0.5 hover:border-neutral-500 hover:text-white transition-colors bg-neutral-950"
-          >
-            [HELP]
-          </button>
-          <button
-            onClick={onExitToGui}
-            className="text-[11px] border border-white bg-white text-black px-2.5 py-0.5 font-bold hover:bg-neutral-200 transition-colors"
-          >
-            [EXIT TO GUI]
-          </button>
-        </div>
+        <button
+          onClick={onExitToGui}
+          className="text-xs border border-neutral-700 px-2.5 py-0.5 text-neutral-300 hover:text-white hover:border-white transition-colors bg-neutral-950"
+        >
+          [exit to portfolio]
+        </button>
       </div>
 
-      {/* Quick interactive command buttons */}
-      <div className="flex flex-wrap items-center gap-1.5 pb-4 border-b border-neutral-900 text-xs">
-        <span className="text-neutral-500 text-[11px] mr-1">QUICK CMDS:</span>
-        {["help", "whoami", "projects", "systems", "experience", "skills", "oss", "contact", "play", "clear"].map(
-          (cmd) => (
-            <button
-              key={cmd}
-              onClick={() => executeCommand(cmd)}
-              className="px-2 py-0.5 border border-neutral-800 hover:border-neutral-400 text-neutral-400 hover:text-white transition-colors bg-neutral-950 text-[11px]"
-            >
-              ${cmd}
-            </button>
-          )
-        )}
-      </div>
-
-      {/* Terminal History / Stream */}
-      <div className="flex-1 space-y-4 py-4 overflow-y-auto max-h-[62vh]">
-        {history.map((item) => (
-          <div key={item.id} className="space-y-1">
-            {item.type === "command" && (
-              <div className="flex items-center gap-2 text-xs sm:text-sm">
-                <span className="text-neutral-500 font-bold">yuvraj@dev:~$</span>
-                <span className="text-white font-bold">{item.command}</span>
-              </div>
-            )}
-            {item.content && <div className="pt-1">{item.content}</div>}
+      {/* Terminal History Log Stream (Flows naturally downward) */}
+      <div className="space-y-4 text-xs sm:text-sm">
+        {history.map((entry) => (
+          <div key={entry.id} className="space-y-1.5">
+            <div className="flex items-center gap-2">
+              <span className="text-neutral-500 font-bold">yuvraj@dev:{entry.cwd}$</span>
+              <span className="text-white font-bold">{entry.command}</span>
+            </div>
+            {entry.output && <div className="pl-0 pt-0.5">{entry.output}</div>}
           </div>
         ))}
-        <div ref={bottomRef} />
       </div>
 
-      {/* Terminal Input Line */}
-      <div className="pt-3 border-t border-neutral-800 flex items-center gap-2 text-xs sm:text-sm">
-        <span className="text-neutral-500 font-bold shrink-0">yuvraj@dev:~$</span>
+      {/* Active Input Prompt at the bottom of the log stream */}
+      <div className="pt-3 flex items-center gap-2 text-xs sm:text-sm">
+        <span className="text-neutral-500 font-bold shrink-0">yuvraj@dev:{cwd}$</span>
         <input
           ref={inputRef}
           type="text"
@@ -726,16 +758,11 @@ export function TerminalGame({ onExitToGui }: { onExitToGui: () => void }) {
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
           autoFocus
-          placeholder="Type 'help', 'projects', 'systems', 'play' or tab to complete..."
           className="flex-1 bg-transparent border-none outline-none text-white font-mono placeholder:text-neutral-700 caret-white"
         />
-        <button
-          onClick={() => executeCommand(input)}
-          className="border border-neutral-700 px-3 py-1 text-xs text-neutral-300 hover:text-white hover:border-neutral-400"
-        >
-          EXEC
-        </button>
       </div>
+
+      <div ref={bottomRef} className="h-4" />
     </div>
   );
 }
