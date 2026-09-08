@@ -72,17 +72,17 @@ export default function Home() {
   };
 
   return (
-    <div className="space-y-12 font-mono text-neutral-300">
+    <div className="space-y-14 font-mono text-neutral-300">
       
       {/* ─── TERMINAL HERO WINDOW ───────────────────────────────────────── */}
       <section className="border border-neutral-800 bg-[#0a0a0a]">
         {/* Terminal Title Bar */}
-        <div className="flex items-center justify-between px-3 py-2 border-b border-neutral-800 bg-[#121212] text-xs text-neutral-400 select-none">
+        <div className="flex items-center justify-between px-4 py-2.5 border-b border-neutral-800 bg-[#121212] text-xs text-neutral-400 select-none">
           <div className="flex items-center gap-2">
             <span className="inline-block w-2.5 h-2.5 rounded-full bg-neutral-600"></span>
             <span className="inline-block w-2.5 h-2.5 rounded-full bg-neutral-700"></span>
             <span className="inline-block w-2.5 h-2.5 rounded-full bg-neutral-800"></span>
-            <span className="ml-2 text-neutral-300 font-bold">Terminal — zsh</span>
+            <span className="ml-2 text-neutral-200 font-bold">Terminal — zsh</span>
           </div>
           <div className="text-[11px] text-neutral-500 hidden sm:block">
             git:(main)
@@ -90,32 +90,32 @@ export default function Home() {
         </div>
 
         {/* Terminal Body */}
-        <div className="p-4 sm:p-6">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        <div className="p-5 sm:p-7">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             
             {/* Left Column: CLI Spec & Telemetry */}
-            <div className="lg:col-span-8 space-y-5">
+            <div className="lg:col-span-8 space-y-6">
               {/* CLI Prompt Line 1 */}
-              <div className="space-y-1">
+              <div className="space-y-1.5">
                 <div className="text-neutral-500 flex items-center gap-2 text-xs">
                   <span className="text-white font-bold">yuvraj@dev:~$</span>
                   <span>whoami</span>
                 </div>
-                <div className="pl-3 text-white font-bold text-lg sm:text-xl">
+                <div className="pl-3 text-white font-bold text-xl sm:text-2xl tracking-tight">
                   Yuvraj Singh
                 </div>
-                <div className="pl-3 text-neutral-400 text-xs sm:text-sm">
+                <div className="pl-3 text-neutral-300 text-sm leading-relaxed">
                   Backend Systems & AI Platforms Engineer · Revolt Motors
                 </div>
               </div>
 
               {/* CLI Prompt Line 2: Tech Stack */}
-              <div className="space-y-2">
+              <div className="space-y-2.5">
                 <div className="text-neutral-500 flex items-center gap-2 text-xs">
                   <span className="text-white font-bold">yuvraj@dev:~$</span>
                   <span>cat tech_stack.json</span>
                 </div>
-                <div className="pl-3 grid grid-cols-1 gap-1.5 text-xs text-neutral-300 border-l border-neutral-800 ml-1 py-1">
+                <div className="pl-3 grid grid-cols-1 gap-2 text-xs sm:text-sm text-neutral-300 border-l border-neutral-800 ml-1 py-1 leading-relaxed">
                   <div><span className="text-neutral-500">• Systems:</span> Distributed Backends, RAG Architectures, Microservices</div>
                   <div><span className="text-neutral-500">• Languages:</span> TypeScript, Node.js, Python, Java, SQL</div>
                   <div><span className="text-neutral-500">• Databases:</span> PostgreSQL, Redis, OpenSearch Vector DB, SQLite WAL</div>
@@ -124,41 +124,41 @@ export default function Home() {
               </div>
 
               {/* Quick Metrics Matrix */}
-              <div className="border border-neutral-800 bg-black p-3 space-y-1 text-xs">
-                <div className="text-neutral-400 font-bold border-b border-neutral-900 pb-1 mb-2">
+              <div className="border border-neutral-800 bg-black p-4 space-y-2 text-xs">
+                <div className="text-neutral-400 font-bold border-b border-neutral-900 pb-1.5 mb-2">
                   [SYSTEM_METRICS]
                 </div>
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center sm:text-left">
-                  <div>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center sm:text-left">
+                  <div className="space-y-0.5">
                     <div className="text-[10px] text-neutral-500">QUERY PRECISION</div>
-                    <div className="text-white font-bold">90% RAG ACC</div>
+                    <div className="text-white font-bold text-sm">90% RAG ACC</div>
                   </div>
-                  <div>
+                  <div className="space-y-0.5">
                     <div className="text-[10px] text-neutral-500">TEST SUITE</div>
-                    <div className="text-white font-bold">83+ E2E/API</div>
+                    <div className="text-white font-bold text-sm">83+ E2E/API</div>
                   </div>
-                  <div>
+                  <div className="space-y-0.5">
                     <div className="text-[10px] text-neutral-500">SERVER LOAD</div>
-                    <div className="text-white font-bold">-60% OPTIMIZED</div>
+                    <div className="text-white font-bold text-sm">-60% OPTIMIZED</div>
                   </div>
-                  <div>
+                  <div className="space-y-0.5">
                     <div className="text-[10px] text-neutral-500">LATENCY PROFILE</div>
-                    <div className="text-white font-bold">&lt;15ms p99</div>
+                    <div className="text-white font-bold text-sm">&lt;15ms p99</div>
                   </div>
                 </div>
               </div>
 
               {/* Action Buttons */}
-              <div className="flex flex-wrap gap-2 pt-2 border-t border-neutral-900">
+              <div className="flex flex-wrap gap-2.5 pt-2 border-t border-neutral-900 text-xs">
                 <Link
                   href="/work"
-                  className="border border-white bg-white text-black px-3 py-1 text-xs font-bold hover:bg-neutral-200 transition-colors"
+                  className="border border-white bg-white text-black px-3.5 py-1.5 font-bold hover:bg-neutral-200 transition-colors"
                 >
                   $ view_projects
                 </Link>
                 <Link
                   href="/systems"
-                  className="border border-neutral-700 bg-neutral-900 text-white px-3 py-1 text-xs hover:border-neutral-400 transition-colors"
+                  className="border border-neutral-700 bg-neutral-900 text-white px-3.5 py-1.5 hover:border-neutral-400 transition-colors"
                 >
                   $ view_architecture
                 </Link>
@@ -166,7 +166,7 @@ export default function Home() {
                   href="https://drive.google.com/uc?export=download&id=18ozkViRciZPbM-1pCSg03Kc7b2eVIoXO"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="border border-neutral-700 bg-neutral-900 text-neutral-300 px-3 py-1 text-xs hover:border-neutral-400 transition-colors"
+                  className="border border-neutral-700 bg-neutral-900 text-neutral-300 px-3.5 py-1.5 hover:border-neutral-400 transition-colors"
                 >
                   $ curl -O resume.pdf
                 </a>
@@ -183,21 +183,21 @@ export default function Home() {
       </section>
 
       {/* ─── INTERACTIVE CLI REPL TERMINAL ──────────────────────────────── */}
-      <section className="border border-neutral-800 bg-black p-4 space-y-3">
+      <section className="border border-neutral-800 bg-black p-5 space-y-3.5">
         <div className="flex items-center justify-between text-xs text-neutral-500 border-b border-neutral-900 pb-2">
-          <span>[INTERACTIVE TERMINAL REPL]</span>
+          <span className="font-bold text-neutral-400">[INTERACTIVE TERMINAL REPL]</span>
           <span className="text-[10px]">Type commands or click quick helpers</span>
         </div>
 
         {/* Quick helper buttons */}
-        <div className="flex flex-wrap gap-1.5 text-[11px]">
+        <div className="flex flex-wrap gap-2 text-xs">
           {["help", "bio", "projects", "systems", "exp", "skills", "contact", "resume", "clear"].map((cmd) => (
             <button
               key={cmd}
               onClick={() => {
                 setCliInput(cmd);
               }}
-              className="px-2 py-0.5 border border-neutral-800 hover:border-neutral-500 text-neutral-400 hover:text-white transition-colors bg-neutral-950"
+              className="px-2.5 py-1 border border-neutral-800 hover:border-neutral-500 text-neutral-400 hover:text-white transition-colors bg-neutral-950 text-xs"
             >
               {cmd}
             </button>
@@ -206,11 +206,11 @@ export default function Home() {
 
         {/* Cli Output stream */}
         {cliOutput.length > 0 && (
-          <div className="space-y-2 max-h-48 overflow-y-auto border border-neutral-900 p-2 text-xs bg-[#050505]">
+          <div className="space-y-2.5 max-h-56 overflow-y-auto border border-neutral-900 p-3 text-xs bg-[#050505] leading-relaxed">
             {cliOutput.map((line, idx) => (
               <div
                 key={idx}
-                className={line.startsWith("yuvraj@dev") ? "text-white font-bold" : "text-neutral-400 whitespace-pre-line"}
+                className={line.startsWith("yuvraj@dev") ? "text-white font-bold" : "text-neutral-300 whitespace-pre-line"}
               >
                 {line}
               </div>
@@ -219,7 +219,7 @@ export default function Home() {
         )}
 
         {/* Cli input line */}
-        <form onSubmit={handleCommand} className="flex items-center gap-2 text-xs">
+        <form onSubmit={handleCommand} className="flex items-center gap-2 text-xs pt-1">
           <span className="text-white font-bold shrink-0">yuvraj@dev:~$</span>
           <input
             type="text"
@@ -228,17 +228,17 @@ export default function Home() {
             placeholder="Type 'help', 'bio', 'projects', 'contact'..."
             className="flex-1 bg-transparent border-none outline-none text-white font-mono placeholder:text-neutral-700"
           />
-          <button type="submit" className="border border-neutral-700 px-2 py-0.5 text-[10px] text-neutral-400 hover:text-white">
+          <button type="submit" className="border border-neutral-700 px-3 py-1 text-xs text-neutral-300 hover:text-white hover:border-neutral-400">
             RUN
           </button>
         </form>
       </section>
 
       {/* ─── SECTION 1: PRODUCTION WORK & PROJECTS ──────────────────────── */}
-      <section className="space-y-4">
-        <div className="flex items-center justify-between border-b border-neutral-800 pb-2">
+      <section className="space-y-5">
+        <div className="flex items-center justify-between border-b border-neutral-800 pb-3">
           <div className="flex items-center gap-2">
-            <span className="text-white font-bold text-sm">$ ls -la ./projects/</span>
+            <span className="text-white font-bold text-base">$ ls -la ./projects/</span>
             <span className="text-xs text-neutral-500">({PROJECTS_DATA.length} systems)</span>
           </div>
           <Link href="/work" className="text-xs text-neutral-400 hover:text-white">
@@ -246,20 +246,20 @@ export default function Home() {
           </Link>
         </div>
 
-        <div className="space-y-4">
+        <div className="space-y-5">
           {PROJECTS_DATA.map((proj, idx) => (
             <div
               key={proj.id}
-              className="border border-neutral-800 bg-[#0a0a0a] p-4 sm:p-5 space-y-3 hover:border-neutral-600 transition-colors"
+              className="border border-neutral-800 bg-[#0a0a0a] p-5 sm:p-6 space-y-4 hover:border-neutral-600 transition-colors"
             >
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
                 <div className="space-y-1">
-                  <div className="flex items-center gap-2 text-[11px] text-neutral-500">
-                    <span>DIR_0{idx + 1}</span>
+                  <div className="flex items-center gap-2 text-xs text-neutral-500">
+                    <span className="text-neutral-400 font-bold">DIR_0{idx + 1}</span>
                     <span>|</span>
-                    <span className="text-neutral-400 uppercase font-bold">{proj.categoryTag}</span>
+                    <span className="text-neutral-300 uppercase font-semibold text-[11px]">{proj.categoryTag}</span>
                   </div>
-                  <h3 className="text-base font-bold text-white">
+                  <h3 className="text-lg font-bold text-white tracking-tight">
                     {proj.title}
                   </h3>
                 </div>
@@ -269,32 +269,32 @@ export default function Home() {
                     href={proj.repoUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className="self-start sm:self-auto border border-neutral-700 px-2.5 py-1 text-xs text-neutral-300 hover:bg-white hover:text-black hover:border-white transition-all"
+                    className="self-start sm:self-auto border border-neutral-700 px-3 py-1 text-xs text-neutral-200 hover:bg-white hover:text-black hover:border-white transition-all"
                   >
                     [git clone]
                   </a>
                 ) : (
-                  <span className="self-start sm:self-auto border border-neutral-800 px-2 py-0.5 text-[11px] text-neutral-500">
+                  <span className="self-start sm:self-auto border border-neutral-800 px-2.5 py-1 text-[11px] text-neutral-500 bg-neutral-950">
                     [production_system]
                   </span>
                 )}
               </div>
 
               {/* Tech Badges */}
-              <div className="flex flex-wrap gap-1.5 text-[11px]">
+              <div className="flex flex-wrap gap-1.5 text-xs">
                 {proj.tech.map((t) => (
-                  <span key={t} className="border border-neutral-800 bg-neutral-900/60 px-2 py-0.5 text-neutral-400">
+                  <span key={t} className="border border-neutral-800 bg-neutral-900/60 px-2.5 py-0.5 text-neutral-300 text-[11px]">
                     {t}
                   </span>
                 ))}
               </div>
 
               {/* Bullet Points */}
-              <ul className="space-y-1.5 text-xs text-neutral-300 pt-2 border-t border-neutral-900">
+              <ul className="space-y-2 text-xs sm:text-sm text-neutral-300 pt-2.5 border-t border-neutral-900 leading-relaxed">
                 {proj.bullets.map((b, bIdx) => (
-                  <li key={bIdx} className="flex items-start gap-2">
-                    <span className="text-neutral-500 font-bold">&gt;</span>
-                    <span className="leading-relaxed">{b}</span>
+                  <li key={bIdx} className="flex items-start gap-2.5">
+                    <span className="text-neutral-500 font-bold mt-0.5">&gt;</span>
+                    <span>{b}</span>
                   </li>
                 ))}
               </ul>
@@ -304,34 +304,34 @@ export default function Home() {
       </section>
 
       {/* ─── SECTION 2: OPEN SOURCE CONTRIBUTIONS ───────────────────────── */}
-      <section className="space-y-4">
-        <div className="border-b border-neutral-800 pb-2">
-          <div className="text-white font-bold text-sm">$ git log --upstream-contributions</div>
-          <div className="text-xs text-neutral-500">Upstream pull requests merged into public repositories</div>
+      <section className="space-y-5">
+        <div className="border-b border-neutral-800 pb-3">
+          <div className="text-white font-bold text-base">$ git log --upstream-contributions</div>
+          <div className="text-xs text-neutral-500 mt-0.5">Upstream pull requests merged into public repositories</div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {OSS_CONTRIBUTIONS.map((oss) => (
             <div
               key={oss.id}
-              className="border border-neutral-800 bg-[#0a0a0a] p-4 space-y-2 hover:border-neutral-600 transition-colors text-xs"
+              className="border border-neutral-800 bg-[#0a0a0a] p-5 space-y-3 hover:border-neutral-600 transition-colors text-xs sm:text-sm leading-relaxed"
             >
               <div className="flex items-center justify-between">
                 <a
                   href={oss.repoUrl}
                   target="_blank"
                   rel="noreferrer"
-                  className="font-bold text-white hover:underline"
+                  className="font-bold text-white hover:underline text-sm"
                 >
                   {oss.repo}
                 </a>
-                <span className="text-[10px] text-neutral-400 border border-neutral-800 px-1.5 py-0.2 bg-neutral-950">
+                <span className="text-[10px] text-neutral-400 border border-neutral-800 px-2 py-0.5 bg-neutral-950">
                   MERGED
                 </span>
               </div>
               <p className="text-neutral-300">{oss.whatYouDid}</p>
-              <div className="text-[11px] text-neutral-500 pt-1 border-t border-neutral-900">
-                <span className="text-neutral-400">[Impact]:</span> {oss.whyItMattered}
+              <div className="text-xs text-neutral-400 pt-2 border-t border-neutral-900">
+                <span className="text-neutral-300 font-semibold">[Impact]:</span> {oss.whyItMattered}
               </div>
             </div>
           ))}
@@ -339,27 +339,27 @@ export default function Home() {
       </section>
 
       {/* ─── SECTION 3: CAREER LOGS ─────────────────────────────────────── */}
-      <section className="space-y-4">
-        <div className="border-b border-neutral-800 pb-2">
-          <div className="text-white font-bold text-sm">$ git log --career</div>
-          <div className="text-xs text-neutral-500">Professional experience and engineering timeline</div>
+      <section className="space-y-5">
+        <div className="border-b border-neutral-800 pb-3">
+          <div className="text-white font-bold text-base">$ git log --career</div>
+          <div className="text-xs text-neutral-500 mt-0.5">Professional experience and engineering timeline</div>
         </div>
 
         <div className="space-y-4">
           {EXPERIENCE_TIMELINE.map((exp) => (
-            <div key={exp.company} className="border border-neutral-800 bg-[#0a0a0a] p-4 space-y-2.5">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+            <div key={exp.company} className="border border-neutral-800 bg-[#0a0a0a] p-5 space-y-3">
+              <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1 border-b border-neutral-900 pb-2">
                 <div>
-                  <span className="text-white font-bold text-sm">{exp.company}</span>
-                  <span className="text-neutral-500 text-xs ml-2">// {exp.role}</span>
+                  <span className="text-white font-bold text-base">{exp.company}</span>
+                  <span className="text-neutral-400 text-xs ml-2">// {exp.role}</span>
                 </div>
                 <span className="text-neutral-500 text-xs">{exp.period}</span>
               </div>
 
-              <ul className="space-y-1.5 text-xs text-neutral-300">
+              <ul className="space-y-2 text-xs sm:text-sm text-neutral-300 leading-relaxed">
                 {exp.bullets.map((b, bIdx) => (
-                  <li key={bIdx} className="flex items-start gap-2">
-                    <span className="text-neutral-500 font-bold">-&gt;</span>
+                  <li key={bIdx} className="flex items-start gap-2.5">
+                    <span className="text-neutral-500 font-bold mt-0.5">-&gt;</span>
                     <span>{b}</span>
                   </li>
                 ))}
@@ -370,19 +370,19 @@ export default function Home() {
       </section>
 
       {/* ─── SECTION 4: CONTACT NODE ────────────────────────────────────── */}
-      <section className="border border-neutral-800 bg-[#0a0a0a] p-6 text-center space-y-4">
-        <div className="space-y-1">
-          <div className="text-neutral-500 text-xs">[CONNECT]</div>
-          <h2 className="text-xl font-bold text-white">$ npx contact-yuvraj</h2>
-          <p className="text-xs text-neutral-400 max-w-lg mx-auto">
+      <section className="border border-neutral-800 bg-[#0a0a0a] p-7 text-center space-y-4">
+        <div className="space-y-1.5">
+          <div className="text-xs text-neutral-500 font-semibold">[CONNECT]</div>
+          <h2 className="text-xl sm:text-2xl font-bold text-white">$ npx contact-yuvraj</h2>
+          <p className="text-xs sm:text-sm text-neutral-400 max-w-lg mx-auto leading-relaxed">
             Available for Systems Engineering, Backend Architecture, and Distributed AI Consulting.
           </p>
         </div>
 
-        <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+        <div className="flex flex-wrap items-center justify-center gap-3 pt-3">
           <a
             href={`mailto:${CONTACT_INFO.email}`}
-            className="border border-white bg-white text-black px-4 py-1.5 text-xs font-bold hover:bg-neutral-200 transition-all"
+            className="border border-white bg-white text-black px-4 py-2 text-xs font-bold hover:bg-neutral-200 transition-all"
           >
             [mail: {CONTACT_INFO.email}]
           </a>
@@ -390,7 +390,7 @@ export default function Home() {
             href={CONTACT_INFO.github}
             target="_blank"
             rel="noreferrer"
-            className="border border-neutral-700 bg-neutral-900 text-neutral-200 px-4 py-1.5 text-xs hover:border-neutral-400 transition-all"
+            className="border border-neutral-700 bg-neutral-900 text-neutral-200 px-4 py-2 text-xs hover:border-neutral-400 transition-all"
           >
             [github.com/yuvrajsingh2428]
           </a>
@@ -398,7 +398,7 @@ export default function Home() {
             href={CONTACT_INFO.linkedin}
             target="_blank"
             rel="noreferrer"
-            className="border border-neutral-700 bg-neutral-900 text-neutral-200 px-4 py-1.5 text-xs hover:border-neutral-400 transition-all"
+            className="border border-neutral-700 bg-neutral-900 text-neutral-200 px-4 py-2 text-xs hover:border-neutral-400 transition-all"
           >
             [linkedin/in/yuvrajsingh024]
           </a>

@@ -27,7 +27,7 @@ const DIAGRAMS: ArchitectureDiagram[] = [
     description: "Multi-stage vector ingestion and semantic retrieval pipeline serving 500+ daily queries at 95% response accuracy with strict schema validation.",
     tradeoffNote: "Self-hosted OpenSearch for vector embeddings instead of managed SaaS vector DBs, keeping infrastructure costs near zero while maintaining 90% retrieval precision.",
     flow: [
-      { id: "pdf", label: "PDF Documents", sublabel: "100+ Legal Specs", tech: "AWS S3", deepDive: "Ingests 100+ POSH Act legal PDF compliance documents into AWS S3 buckets with automated chunking." },
+      { id: "pdf", label: "PDF Ingestion", sublabel: "100+ Legal Specs", tech: "AWS S3", deepDive: "Ingests 100+ POSH Act legal PDF compliance documents into AWS S3 buckets with automated chunking." },
       { id: "embed", label: "Vector Embeddings", sublabel: "Chunks & Indexing", tech: "OpenSearch", deepDive: "Converts text chunks into dense 1536-dimensional embeddings indexed inside OpenSearch cluster." },
       { id: "search", label: "Hybrid Vector Search", sublabel: "K-NN Retrieval", tech: "REST API", deepDive: "Executes K-NN vector search + keyword scoring, achieving 90% retrieval precision." },
       { id: "llm", label: "LLM Completion", sublabel: "POSH Act Q&A", tech: "OpenAI GPT-4o", deepDive: "Context-bounded prompt injection generating legally accurate Q&A responses." },
@@ -91,16 +91,16 @@ export default function SystemsPage() {
   };
 
   return (
-    <div className="space-y-10 font-mono text-neutral-300">
+    <div className="space-y-12 font-mono text-neutral-300">
       {/* Header Banner */}
-      <div className="border border-neutral-800 bg-[#0a0a0a] p-4 sm:p-6 space-y-3">
+      <div className="border border-neutral-800 bg-[#0a0a0a] p-5 sm:p-7 space-y-3.5">
         <div className="text-xs text-neutral-500">
           yuvraj@dev:~$ node inspect_systems.js
         </div>
-        <h1 className="text-2xl sm:text-3xl font-bold text-white">
+        <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
           Interactive System Architecture Pipelines
         </h1>
-        <p className="text-xs sm:text-sm text-neutral-400 max-w-2xl leading-relaxed">
+        <p className="text-sm text-neutral-400 max-w-2xl leading-relaxed">
           Select any pipeline node below to inspect data movement specifications, runtime tech stacks,
           and engineering tradeoff rationales.
         </p>
@@ -115,26 +115,26 @@ export default function SystemsPage() {
           return (
             <div
               key={diag.id}
-              className="border border-neutral-800 bg-[#0a0a0a] p-5 sm:p-6 space-y-5 hover:border-neutral-700 transition-colors"
+              className="border border-neutral-800 bg-[#0a0a0a] p-6 sm:p-7 space-y-5 hover:border-neutral-700 transition-colors"
             >
               {/* Diagram Title & Badge */}
-              <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 border-b border-neutral-900 pb-3">
-                <div>
-                  <h2 className="text-lg sm:text-xl font-bold text-white">
+              <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2.5 border-b border-neutral-900 pb-3.5">
+                <div className="space-y-1">
+                  <h2 className="text-lg sm:text-xl font-bold text-white tracking-tight">
                     {diag.title}
                   </h2>
-                  <p className="text-xs text-neutral-400 mt-1">
+                  <p className="text-xs sm:text-sm text-neutral-400 leading-relaxed">
                     {diag.description}
                   </p>
                 </div>
-                <span className="self-start sm:self-auto border border-neutral-800 bg-neutral-950 px-2 py-0.5 text-[11px] text-neutral-400">
+                <span className="self-start sm:self-auto border border-neutral-800 bg-neutral-950 px-2.5 py-1 text-xs text-neutral-400">
                   {diag.badge}
                 </span>
               </div>
 
               {/* Step Chain Selector */}
               <div className="overflow-x-auto pb-2">
-                <div className="flex items-center gap-2 min-w-max">
+                <div className="flex items-center gap-2.5 min-w-max">
                   {diag.flow.map((node, nIdx) => {
                     const isLast = nIdx === diag.flow.length - 1;
                     const isSelected = selectedNodeId === node.id;
@@ -143,7 +143,7 @@ export default function SystemsPage() {
                       <React.Fragment key={node.id}>
                         <button
                           onClick={() => handleStepClick(diag.id, node.id)}
-                          className={`p-3 text-left border transition-all text-xs min-w-[150px] ${
+                          className={`p-3.5 text-left border transition-all text-xs min-w-[155px] ${
                             isSelected
                               ? "bg-white text-black border-white font-bold"
                               : "bg-neutral-950 text-neutral-400 border-neutral-800 hover:border-neutral-600 hover:text-white"
@@ -151,7 +151,7 @@ export default function SystemsPage() {
                         >
                           <div className="text-[10px] opacity-60">STEP 0{nIdx + 1}</div>
                           <div className="font-bold text-xs mt-0.5">{node.label}</div>
-                          <div className="text-[10px] opacity-80">{node.tech}</div>
+                          <div className="text-[10px] opacity-80 mt-0.5">{node.tech}</div>
                         </button>
 
                         {!isLast && (
@@ -166,20 +166,20 @@ export default function SystemsPage() {
               </div>
 
               {/* Active Step Details Terminal Box */}
-              <div className="border border-neutral-800 bg-black p-4 space-y-2 text-xs">
-                <div className="flex items-center justify-between text-[11px] border-b border-neutral-900 pb-1.5">
+              <div className="border border-neutral-800 bg-black p-4 sm:p-5 space-y-2 text-xs">
+                <div className="flex items-center justify-between text-xs border-b border-neutral-900 pb-2">
                   <span className="text-white font-bold">
                     [NODE SPEC]: {activeNodeData.label} ({activeNodeData.tech})
                   </span>
-                  <span className="text-neutral-500">{activeNodeData.sublabel}</span>
+                  <span className="text-neutral-500 text-[11px]">{activeNodeData.sublabel}</span>
                 </div>
-                <p className="text-neutral-300 leading-relaxed text-xs sm:text-sm pt-1">
+                <p className="text-neutral-200 leading-relaxed text-xs sm:text-sm pt-1">
                   {activeNodeData.deepDive}
                 </p>
               </div>
 
               {/* Tradeoff Rationale Note */}
-              <div className="border-l-2 border-neutral-700 pl-3 py-1 text-xs text-neutral-400">
+              <div className="border-l-2 border-neutral-700 pl-3.5 py-1 text-xs sm:text-sm text-neutral-400 leading-relaxed">
                 <span className="text-white font-bold">[Tradeoff & Rationale]:</span>{" "}
                 {diag.tradeoffNote}
               </div>
