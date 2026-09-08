@@ -32,7 +32,7 @@ export function PageLoader() {
     <div
       className="fixed inset-0 z-[9999] flex flex-col items-center justify-center pointer-events-none"
       style={{
-        backgroundColor: "#050505",
+        backgroundColor: "#070913",
         animation: "fadeOutOverlay 0.4s ease-out 1.8s forwards",
       }}
     >
@@ -55,13 +55,13 @@ export function PageLoader() {
       </div>
 
       <div
-        className="mt-6 bg-[#00FFC2]"
-        style={{ height: "1px", width: 0, animation: "expandLine 0.4s ease-out 0.6s forwards" }}
+        className="mt-6 bg-gradient-to-r from-[#00f2fe] via-[#38bdf8] to-[#8b5cf6] shadow-[0_0_12px_#00f2fe]"
+        style={{ height: "2px", width: 0, animation: "expandLine 0.4s ease-out 0.6s forwards" }}
       />
 
       <div
-        className="mt-6 text-[#666] font-mono uppercase opacity-0"
-        style={{ letterSpacing: "0.2em", fontSize: "12px", animation: "fadeInText 0.4s ease-out 1.2s forwards" }}
+        className="mt-6 text-cyan-300/80 font-mono uppercase opacity-0 tracking-widest text-[11px]"
+        style={{ letterSpacing: "0.25em", animation: "fadeInText 0.4s ease-out 1.2s forwards" }}
       >
         BACKEND ENGINEER · AI SYSTEMS
       </div>

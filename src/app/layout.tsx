@@ -22,6 +22,7 @@ export const metadata: Metadata = {
 };
 
 import { SmoothScrollProvider } from "@/components/ui/SmoothScroll";
+import { AuroraBackground } from "@/components/ui/AuroraBackground";
 
 export default function RootLayout({
   children,
@@ -30,7 +31,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`dark ${geistSans.variable} ${geistMono.variable} scroll-smooth antialiased`}>
-      <body className="min-h-screen bg-background text-foreground font-sans flex flex-col selection:bg-primary/30">
+      <body className="min-h-screen bg-background text-foreground font-sans flex flex-col selection:bg-cyan-500/30 selection:text-cyan-200">
+        <AuroraBackground />
         <PageLoader />
         <ElectricWire />
         <Navigation />

@@ -38,7 +38,7 @@ export function PipelineConnector({
           delay: delay,
           ease: "easeInOut",
         }}
-        className="absolute inset-0 bg-gradient-to-r from-emerald-500 to-emerald-400 shadow-[0_0_8px_rgba(16,185,129,0.5)]"
+        className="absolute inset-0 bg-gradient-to-r from-[#00f2fe] via-[#38bdf8] to-[#8b5cf6] shadow-[0_0_12px_rgba(0,242,254,0.6)]"
         style={{
           transformOrigin: isVertical ? "top center" : "left center",
           willChange: "transform, opacity",

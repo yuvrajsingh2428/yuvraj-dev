@@ -66,30 +66,30 @@ export function PipelineNode({
               }
             : { duration: 0.25, type: "spring", stiffness: 200 }
         }
-        className={`relative z-10 flex items-center justify-center rounded-xl border transition-colors duration-300 ${
+        className={`relative z-10 flex items-center justify-center rounded-2xl border transition-all duration-300 ${
           isVertical ? "w-10 h-10 md:w-12 md:h-12" : "w-11 h-11 md:w-14 md:h-14"
         }`}
         style={{
-          backgroundColor: isActive || isHovered ? "rgba(16, 185, 129, 0.15)" : "rgba(59, 130, 246, 0.08)",
-          borderColor: isActive || isHovered ? "rgba(16, 185, 129, 0.7)" : "rgba(59, 130, 246, 0.3)",
+          backgroundColor: isActive || isHovered ? "rgba(0, 242, 254, 0.12)" : "rgba(139, 92, 246, 0.06)",
+          borderColor: isActive || isHovered ? "rgba(0, 242, 254, 0.8)" : "rgba(139, 92, 246, 0.25)",
           boxShadow: isActive || isHovered
-            ? "0 0 20px rgba(16, 185, 129, 0.45), inset 0 0 10px rgba(16, 185, 129, 0.25)"
-            : "0 0 8px rgba(59, 130, 246, 0.15)",
+            ? "0 0 24px rgba(0, 242, 254, 0.4), inset 0 0 12px rgba(0, 242, 254, 0.2)"
+            : "0 0 10px rgba(139, 92, 246, 0.12)",
         }}
       >
-        {/* Subtle Ambient Breathing Glow for Active Green Nodes */}
+        {/* Subtle Ambient Breathing Glow for Active Aurora Nodes */}
         {isActive && !shouldReduceMotion && (
           <motion.div
-            animate={{ opacity: [0.3, 0.8, 0.3] }}
-            transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute inset-0 rounded-xl bg-emerald-500/25 blur-md pointer-events-none"
+            animate={{ opacity: [0.35, 0.85, 0.35], scale: [0.95, 1.1, 0.95] }}
+            transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute inset-0 rounded-2xl bg-gradient-to-br from-cyan-400/30 to-purple-600/30 blur-md pointer-events-none"
           />
         )}
 
         {Icon && (
           <Icon
             className={`w-5 h-5 md:w-6 md:h-6 transition-colors duration-300 ${
-              isActive || isHovered ? "text-emerald-400" : "text-blue-400"
+              isActive || isHovered ? "text-[#00f2fe]" : "text-violet-400/80"
             }`}
           />
         )}
@@ -99,13 +99,13 @@ export function PipelineNode({
       <div className={`flex flex-col ${isVertical ? "text-left" : "text-center"}`}>
         <span
           className={`font-mono text-xs md:text-sm font-semibold tracking-wide transition-colors duration-300 ${
-            isActive || isHovered ? "text-emerald-300 drop-shadow-[0_0_8px_rgba(16,185,129,0.4)]" : "text-slate-400"
+            isActive || isHovered ? "text-[#00f2fe] drop-shadow-[0_0_10px_rgba(0,242,254,0.5)]" : "text-slate-400"
           }`}
         >
           {node.label}
         </span>
         {node.sublabel && (
-          <span className="font-mono text-[10px] text-slate-500 mt-0.5">
+          <span className="font-mono text-[10px] text-slate-400/70 mt-0.5">
             {node.sublabel}
           </span>
         )}
@@ -117,11 +117,11 @@ export function PipelineNode({
           initial={{ opacity: 0, y: 6, scale: 0.95 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: 4 }}
-          className="absolute bottom-full mb-3 z-30 w-48 p-2.5 rounded-lg border border-emerald-500/40 bg-slate-950/90 backdrop-blur-md text-[11px] font-mono text-slate-200 text-center shadow-xl pointer-events-none"
+          className="absolute bottom-full mb-3 z-30 w-52 p-3 rounded-xl border border-cyan-500/40 bg-[#070913]/95 backdrop-blur-xl text-[11px] font-mono text-slate-200 text-center shadow-2xl pointer-events-none"
         >
-          <span className="text-emerald-400 font-bold block mb-0.5">[{node.label} Node Spec]</span>
-          <span>{node.specNote}</span>
-          <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-slate-950" />
+          <span className="text-[#00f2fe] font-bold block mb-1">[{node.label} Node Spec]</span>
+          <span className="text-slate-300 leading-tight block">{node.specNote}</span>
+          <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-[#070913]" />
         </motion.div>
       )}
     </div>

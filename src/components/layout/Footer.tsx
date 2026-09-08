@@ -4,13 +4,13 @@ import { TbBrandGithub, TbBrandLinkedin, TbFileCv, TbSend } from "react-icons/tb
 
 export function Footer() {
   return (
-    <footer className="border-t border-white/[0.08] bg-[#050505]/80 backdrop-blur-xl mt-24 py-12 px-6">
+    <footer className="border-t border-white/[0.08] bg-[#070913]/85 backdrop-blur-xl mt-24 py-12 px-6">
       <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
         
         {/* Left: Branding & Status */}
         <div className="flex flex-col gap-2 items-center md:items-start text-center md:text-left">
-          <Link href="/" className="flex items-center gap-2 text-foreground font-mono font-bold text-lg hover:text-[#00FFC2] transition-colors">
-            <span className="w-6 h-6 rounded bg-primary/10 border border-primary/30 flex items-center justify-center text-xs text-primary">YS</span>
+          <Link href="/" className="flex items-center gap-2 text-foreground font-mono font-bold text-lg hover:text-[#00f2fe] transition-colors">
+            <span className="w-6 h-6 rounded-lg bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-xs text-[#00f2fe]">YS</span>
             <span>Yuvraj Singh</span>
           </Link>
           <p className="text-xs text-muted-foreground max-w-sm">
@@ -20,9 +20,10 @@ export function Footer() {
 
         {/* Center: Quick Page Links */}
         <div className="flex items-center gap-6 text-xs font-mono text-muted-foreground">
-          <Link href="/" className="hover:text-foreground transition-colors">/home</Link>
-          <Link href="/projects" className="hover:text-foreground transition-colors">/projects</Link>
-          <Link href="/about" className="hover:text-foreground transition-colors">/about</Link>
+          <Link href="/" className="hover:text-[#00f2fe] transition-colors">/home</Link>
+          <Link href="/work" className="hover:text-[#00f2fe] transition-colors">/work</Link>
+          <Link href="/systems" className="hover:text-[#00f2fe] transition-colors">/systems</Link>
+          <Link href="/about" className="hover:text-[#00f2fe] transition-colors">/about</Link>
         </div>
 
         {/* Right: Social Icons & Timezone */}
@@ -65,7 +66,7 @@ export function Footer() {
           </div>
 
           <div className="flex items-center gap-2 text-[11px] font-mono text-muted-foreground/70">
-            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+            <span className="w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_8px_#00f2fe] animate-pulse" />
             <span>IST (UTC+5:30) · Open to Opportunities</span>
           </div>
         </div>
