@@ -32,7 +32,7 @@ export interface SkillStage {
 export const PROJECTS_DATA: ProjectItem[] = [
   {
     id: "openforge",
-    title: "OpenForge ⚒️ — AI Open-Source Intelligence Platform",
+    title: "OpenForge — AI Open-Source Intelligence Platform",
     categoryTag: "Monorepo & Hybrid AI",
     tech: ["TypeScript", "Next.js 16", "Turborepo", "Ollama", "OpenRouter", "GitHub GraphQL", "Vitest", "Playwright"],
     bullets: [

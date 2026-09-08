@@ -15,7 +15,7 @@ export interface Project {
 export const PROJECTS: Project[] = [
   {
     id: "openforge",
-    title: "OpenForge ⚒️ — AI Open-Source Intelligence Platform",
+    title: "OpenForge — AI Open-Source Intelligence Platform",
     oneLiner: "Monorepo developer platform with 5-factor issue scoring & hybrid AI mentorship (Ollama + OpenRouter)",
     challenge: "Contributing to open-source software has a steep learning curve. The challenge was building an intelligent platform that evaluates GitHub repositories, scores issues on a 5-factor scale, and provides hybrid local/cloud AI mentorship.",
     tech: ["TypeScript", "Next.js 16", "Turborepo", "Ollama", "OpenRouter", "GitHub GraphQL", "Playwright", "Vitest"],

@@ -36,7 +36,7 @@ const DIAGRAMS: ArchitectureDiagram[] = [
   },
   {
     id: "openforge-engine",
-    title: "2. OpenForge ⚒️ — 5-Factor Issue Scorer & Dual AI Engine",
+    title: "2. OpenForge — 5-Factor Issue Scorer & Dual AI Engine",
     badge: "9 Monorepo Packages • Local / Cloud Dual LLM",
     description: "Determines repository health signals, scores GitHub issues on a 5-factor scale (0-100), and routes AI inference seamlessly between offline Ollama and cloud OpenRouter.",
     tradeoffNote: "Pluggable provider abstraction allows zero-cost local development via Ollama (qwen3:8b) while supporting DeepSeek-V3 via OpenRouter in production.",
