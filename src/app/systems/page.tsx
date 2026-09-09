@@ -91,23 +91,23 @@ export default function SystemsPage() {
   };
 
   return (
-    <div className="space-y-12 font-mono text-neutral-300">
-      {/* Header Banner */}
-      <div className="border border-neutral-800 bg-[#0a0a0a] p-5 sm:p-7 space-y-3.5">
-        <div className="text-xs text-neutral-500">
-          yuvraj@dev:~$ node inspect_systems.js
+    <div className="space-y-8 font-mono text-neutral-300">
+      {/* Header - Clean open terminal layout without enclosing box */}
+      <div className="space-y-2 border-b border-neutral-800 pb-4">
+        <div className="flex items-center justify-between text-xs text-neutral-500">
+          <span>yuvraj@dev:~$ node inspect_systems.js</span>
+          <span className="text-[11px] text-neutral-400 font-bold">[4 PRODUCTION PIPELINES]</span>
         </div>
-        <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
-          Interactive System Architecture Pipelines
+        <h1 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
+          System Architecture &amp; Data Pipelines
         </h1>
-        <p className="text-sm text-neutral-400 max-w-2xl leading-relaxed">
-          Select any pipeline node below to inspect data movement specifications, runtime tech stacks,
-          and engineering tradeoff rationales.
+        <p className="text-xs sm:text-sm text-neutral-400 max-w-2xl leading-relaxed">
+          Click any step in the pipeline chains below to inspect data movement, runtime tech stacks, and engineering tradeoffs.
         </p>
       </div>
 
       {/* Diagrams */}
-      <div className="space-y-8">
+      <div className="space-y-5">
         {DIAGRAMS.map((diag) => {
           const selectedNodeId = selectedNodes[diag.id] || diag.flow[0].id;
           const activeNodeData = diag.flow.find((n) => n.id === selectedNodeId) || diag.flow[0];
@@ -115,26 +115,26 @@ export default function SystemsPage() {
           return (
             <div
               key={diag.id}
-              className="border border-neutral-800 bg-[#0a0a0a] p-6 sm:p-7 space-y-5 hover:border-neutral-700 transition-colors"
+              className="border border-neutral-800 bg-[#0a0a0a] p-4 sm:p-5 space-y-3.5 hover:border-neutral-700 transition-colors"
             >
               {/* Diagram Title & Badge */}
-              <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2.5 border-b border-neutral-900 pb-3.5">
-                <div className="space-y-1">
-                  <h2 className="text-lg sm:text-xl font-bold text-white tracking-tight">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-neutral-900 pb-2.5">
+                <div className="space-y-0.5">
+                  <h2 className="text-sm sm:text-base font-bold text-white tracking-tight">
                     {diag.title}
                   </h2>
-                  <p className="text-xs sm:text-sm text-neutral-400 leading-relaxed">
+                  <p className="text-xs text-neutral-400 leading-relaxed">
                     {diag.description}
                   </p>
                 </div>
-                <span className="self-start sm:self-auto border border-neutral-800 bg-neutral-950 px-2.5 py-1 text-xs text-neutral-400">
+                <span className="self-start sm:self-auto border border-neutral-800 bg-neutral-950 px-2 py-0.5 text-[11px] text-neutral-400 shrink-0">
                   {diag.badge}
                 </span>
               </div>
 
-              {/* Step Chain Selector */}
-              <div className="overflow-x-auto pb-2">
-                <div className="flex items-center gap-2.5 min-w-max">
+              {/* Step Chain Selector (Compact Pills) */}
+              <div className="overflow-x-auto pb-1">
+                <div className="flex items-center gap-1.5 min-w-max">
                   {diag.flow.map((node, nIdx) => {
                     const isLast = nIdx === diag.flow.length - 1;
                     const isSelected = selectedNodeId === node.id;
@@ -143,20 +143,22 @@ export default function SystemsPage() {
                       <React.Fragment key={node.id}>
                         <button
                           onClick={() => handleStepClick(diag.id, node.id)}
-                          className={`p-3.5 text-left border transition-all text-xs min-w-[155px] ${
+                          className={`px-2.5 py-1.5 text-left border transition-all text-xs min-w-[125px] cursor-pointer ${
                             isSelected
                               ? "bg-white text-black border-white font-bold"
-                              : "bg-neutral-950 text-neutral-400 border-neutral-800 hover:border-neutral-600 hover:text-white"
+                              : "bg-neutral-950 text-neutral-400 border-neutral-800 hover:border-neutral-500 hover:text-white"
                           }`}
                         >
-                          <div className="text-[10px] opacity-60">STEP 0{nIdx + 1}</div>
-                          <div className="font-bold text-xs mt-0.5">{node.label}</div>
-                          <div className="text-[10px] opacity-80 mt-0.5">{node.tech}</div>
+                          <div className="flex items-center justify-between text-[9px] opacity-70">
+                            <span>0{nIdx + 1}</span>
+                            <span>{node.tech}</span>
+                          </div>
+                          <div className="font-bold text-[11px] mt-0.5 truncate">{node.label}</div>
                         </button>
 
                         {!isLast && (
-                          <span className="text-neutral-600 text-xs px-1">
-                            ---&gt;
+                          <span className="text-neutral-600 text-xs px-0.5 select-none">
+                            →
                           </span>
                         )}
                       </React.Fragment>
@@ -166,21 +168,21 @@ export default function SystemsPage() {
               </div>
 
               {/* Active Step Details Terminal Box */}
-              <div className="border border-neutral-800 bg-black p-4 sm:p-5 space-y-2 text-xs">
-                <div className="flex items-center justify-between text-xs border-b border-neutral-900 pb-2">
-                  <span className="text-white font-bold">
-                    [NODE SPEC]: {activeNodeData.label} ({activeNodeData.tech})
+              <div className="border border-neutral-800 bg-black p-3 space-y-1.5 text-xs">
+                <div className="flex items-center justify-between border-b border-neutral-900 pb-1.5">
+                  <span className="text-white font-bold text-xs">
+                    [SPEC]: {activeNodeData.label} ({activeNodeData.tech})
                   </span>
-                  <span className="text-neutral-500 text-[11px]">{activeNodeData.sublabel}</span>
+                  <span className="text-neutral-500 text-[10px]">{activeNodeData.sublabel}</span>
                 </div>
-                <p className="text-neutral-200 leading-relaxed text-xs sm:text-sm pt-1">
+                <p className="text-neutral-200 leading-relaxed text-xs">
                   {activeNodeData.deepDive}
                 </p>
               </div>
 
               {/* Tradeoff Rationale Note */}
-              <div className="border-l-2 border-neutral-700 pl-3.5 py-1 text-xs sm:text-sm text-neutral-400 leading-relaxed">
-                <span className="text-white font-bold">[Tradeoff & Rationale]:</span>{" "}
+              <div className="border-l border-neutral-700 pl-3 py-0.5 text-xs text-neutral-400 leading-relaxed">
+                <span className="text-neutral-200 font-bold">[Tradeoff]:</span>{" "}
                 {diag.tradeoffNote}
               </div>
             </div>

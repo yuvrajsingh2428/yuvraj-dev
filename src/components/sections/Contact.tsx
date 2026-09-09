@@ -86,7 +86,7 @@ export function Contact() {
           className="mt-6"
         >
           <p className="text-sm font-mono text-muted-foreground inline-flex items-center gap-2 bg-secondary/20 px-4 py-1.5 rounded-full border border-border/30">
-            <span className="text-amber-400">⚡</span> Usually reply within 24 hours
+            <span className="text-neutral-400">[INFO]</span> Usually reply within 24 hours
           </p>
         </motion.div>
 

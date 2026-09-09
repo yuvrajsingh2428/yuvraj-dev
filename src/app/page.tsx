@@ -73,7 +73,7 @@ export default function Home() {
         response = SKILL_STAGES.map(s => `${s.title}: ${s.skills.join(", ")}`).join("\n");
         break;
       case "contact":
-        response = `Email: ${CONTACT_INFO.email} | GitHub: ${CONTACT_INFO.github} | LinkedIn: ${CONTACT_INFO.linkedin}`;
+        response = `Email: ${CONTACT_INFO.email} | GitHub: ${CONTACT_INFO.github} | LinkedIn: ${CONTACT_INFO.linkedin} | X: ${CONTACT_INFO.twitter}`;
         break;
       case "play":
       case "game":
@@ -114,8 +114,8 @@ export default function Home() {
         <div className="space-y-14 font-mono text-neutral-300">
           
           {/* Top Gamification Prompt Banner */}
-          <div className="border border-neutral-800 bg-[#080808] p-3 sm:p-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
-            <div className="flex items-center gap-2.5">
+          <div className="border border-neutral-800 bg-[#080808] p-2.5 sm:p-3 flex flex-col sm:flex-row items-center justify-between gap-2.5 text-xs">
+            <div className="flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-white"></span>
               <span className="text-white font-bold">GAMIFIED CLI MODE AVAILABLE</span>
               <span className="text-neutral-500 hidden md:inline">| Explore via terminal commands, live REPL &amp; quizzes</span>
@@ -125,7 +125,7 @@ export default function Home() {
                 onClick={() => handleSelectMode("cli")}
                 className="border border-white bg-white text-black px-3 py-1 font-bold hover:bg-neutral-200 transition-colors text-xs"
               >
-                🎮 Wanna Play? Launch CLI
+                Wanna Play? Launch CLI
               </button>
               <button
                 onClick={() => setIsBootModalOpen(true)}
@@ -137,10 +137,10 @@ export default function Home() {
             </div>
           </div>
 
-          {/* ─── TERMINAL HERO WINDOW ───────────────────────────────────── */}
+          {/* ─── TERMINAL HERO WINDOW (FIRST BOX - FITS CLEANLY ON SCREEN) ──── */}
           <section className="border border-neutral-800 bg-[#0a0a0a]">
             {/* Terminal Title Bar */}
-            <div className="flex items-center justify-between px-4 py-2.5 border-b border-neutral-800 bg-[#121212] text-xs text-neutral-400 select-none">
+            <div className="flex items-center justify-between px-3.5 py-2 border-b border-neutral-800 bg-[#121212] text-xs text-neutral-400 select-none">
               <div className="flex items-center gap-2">
                 <span className="inline-block w-2.5 h-2.5 rounded-full bg-neutral-600"></span>
                 <span className="inline-block w-2.5 h-2.5 rounded-full bg-neutral-700"></span>
@@ -153,75 +153,75 @@ export default function Home() {
             </div>
 
             {/* Terminal Body */}
-            <div className="p-5 sm:p-7">
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            <div className="p-4 sm:p-5">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
                 
                 {/* Left Column: CLI Spec & Telemetry */}
-                <div className="lg:col-span-8 space-y-6">
+                <div className="lg:col-span-8 space-y-3.5">
                   {/* CLI Prompt Line 1 */}
-                  <div className="space-y-1.5">
+                  <div className="space-y-1">
                     <div className="text-neutral-500 flex items-center gap-2 text-xs">
                       <span className="text-white font-bold">yuvraj@dev:~$</span>
                       <span>whoami</span>
                     </div>
-                    <div className="pl-3 text-white font-bold text-xl sm:text-2xl tracking-tight">
+                    <div className="pl-2.5 text-white font-bold text-xl sm:text-2xl tracking-tight">
                       Yuvraj Singh
                     </div>
-                    <div className="pl-3 text-neutral-300 text-sm leading-relaxed">
-                      Backend Systems & AI Platforms Engineer · Revolt Motors
+                    <div className="pl-2.5 text-neutral-300 text-xs sm:text-sm leading-relaxed">
+                      Backend Systems &amp; AI Platforms Engineer · Revolt Motors
                     </div>
                   </div>
 
                   {/* CLI Prompt Line 2: Tech Stack */}
-                  <div className="space-y-2.5">
+                  <div className="space-y-1.5">
                     <div className="text-neutral-500 flex items-center gap-2 text-xs">
                       <span className="text-white font-bold">yuvraj@dev:~$</span>
                       <span>cat tech_stack.json</span>
                     </div>
-                    <div className="pl-3 grid grid-cols-1 gap-2 text-xs sm:text-sm text-neutral-300 border-l border-neutral-800 ml-1 py-1 leading-relaxed">
+                    <div className="pl-2.5 grid grid-cols-1 gap-1 text-xs text-neutral-300 border-l border-neutral-800 ml-1 py-0.5 leading-relaxed">
                       <div><span className="text-neutral-500">• Systems:</span> Distributed Backends, RAG Architectures, Microservices</div>
                       <div><span className="text-neutral-500">• Languages:</span> TypeScript, Node.js, Python, Java, SQL</div>
                       <div><span className="text-neutral-500">• Databases:</span> PostgreSQL, Redis, OpenSearch Vector DB, SQLite WAL</div>
-                      <div><span className="text-neutral-500">• Testing & QA:</span> Playwright (POM), Selenium, GitHub Actions CI/CD</div>
+                      <div><span className="text-neutral-500">• Testing &amp; QA:</span> Playwright (POM), Selenium, GitHub Actions CI/CD</div>
                     </div>
                   </div>
 
                   {/* Quick Metrics Matrix */}
-                  <div className="border border-neutral-800 bg-black p-4 space-y-2 text-xs">
-                    <div className="text-neutral-400 font-bold border-b border-neutral-900 pb-1.5 mb-2">
+                  <div className="border border-neutral-800 bg-black p-3 space-y-1.5 text-xs">
+                    <div className="text-neutral-400 font-bold border-b border-neutral-900 pb-1 text-[11px]">
                       [SYSTEM_METRICS]
                     </div>
-                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center sm:text-left">
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center sm:text-left">
                       <div className="space-y-0.5">
                         <div className="text-[10px] text-neutral-500">QUERY PRECISION</div>
-                        <div className="text-white font-bold text-sm">90% RAG ACC</div>
+                        <div className="text-white font-bold text-xs sm:text-sm">90% RAG ACC</div>
                       </div>
                       <div className="space-y-0.5">
                         <div className="text-[10px] text-neutral-500">TEST SUITE</div>
-                        <div className="text-white font-bold text-sm">83+ E2E/API</div>
+                        <div className="text-white font-bold text-xs sm:text-sm">83+ E2E/API</div>
                       </div>
                       <div className="space-y-0.5">
                         <div className="text-[10px] text-neutral-500">SERVER LOAD</div>
-                        <div className="text-white font-bold text-sm">-60% OPTIMIZED</div>
+                        <div className="text-white font-bold text-xs sm:text-sm">-60% OPTIMIZED</div>
                       </div>
                       <div className="space-y-0.5">
                         <div className="text-[10px] text-neutral-500">LATENCY PROFILE</div>
-                        <div className="text-white font-bold text-sm">&lt;15ms p99</div>
+                        <div className="text-white font-bold text-xs sm:text-sm">&lt;15ms p99</div>
                       </div>
                     </div>
                   </div>
 
                   {/* Action Buttons */}
-                  <div className="flex flex-wrap gap-2.5 pt-2 border-t border-neutral-900 text-xs">
+                  <div className="flex flex-wrap gap-2 pt-1.5 border-t border-neutral-900 text-xs">
                     <Link
                       href="/work"
-                      className="border border-white bg-white text-black px-3.5 py-1.5 font-bold hover:bg-neutral-200 transition-colors"
+                      className="border border-white bg-white text-black px-3 py-1 font-bold hover:bg-neutral-200 transition-colors"
                     >
                       $ view_projects
                     </Link>
                     <Link
                       href="/systems"
-                      className="border border-neutral-700 bg-neutral-900 text-white px-3.5 py-1.5 hover:border-neutral-400 transition-colors"
+                      className="border border-neutral-700 bg-neutral-900 text-white px-3 py-1 hover:border-neutral-400 transition-colors"
                     >
                       $ view_architecture
                     </Link>
@@ -229,7 +229,7 @@ export default function Home() {
                       href="https://drive.google.com/uc?export=download&id=18ozkViRciZPbM-1pCSg03Kc7b2eVIoXO"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="border border-neutral-700 bg-neutral-900 text-neutral-300 px-3.5 py-1.5 hover:border-neutral-400 transition-colors"
+                      className="border border-neutral-700 bg-neutral-900 text-neutral-300 px-3 py-1 hover:border-neutral-400 transition-colors"
                     >
                       $ curl -O resume.pdf
                     </a>
@@ -298,83 +298,85 @@ export default function Home() {
           </section>
 
           {/* ─── SECTION 1: PRODUCTION WORK & PROJECTS ──────────────────── */}
-          <section className="space-y-5">
-            <div className="flex items-center justify-between border-b border-neutral-800 pb-3">
+          <section className="space-y-4">
+            <div className="flex items-center justify-between border-b border-neutral-800 pb-2.5">
               <div className="flex items-center gap-2">
-                <span className="text-white font-bold text-base">$ ls -la ./projects/</span>
+                <span className="text-white font-bold text-sm sm:text-base">$ ls -la ./projects/</span>
                 <span className="text-xs text-neutral-500">({PROJECTS_DATA.length} systems)</span>
               </div>
-              <Link href="/work" className="text-xs text-neutral-400 hover:text-white">
+              <Link href="/work" className="text-xs text-neutral-400 hover:text-white transition-colors">
                 [view full specs -&gt;]
               </Link>
             </div>
 
-            <div className="space-y-5">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {PROJECTS_DATA.map((proj, idx) => (
                 <div
                   key={proj.id}
-                  className="border border-neutral-800 bg-[#0a0a0a] p-5 sm:p-6 space-y-4 hover:border-neutral-600 transition-colors"
+                  className="border border-neutral-800 bg-[#0a0a0a] p-4 sm:p-5 flex flex-col justify-between space-y-3 hover:border-neutral-600 transition-colors"
                 >
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
-                    <div className="space-y-1">
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between gap-2 border-b border-neutral-900 pb-2">
                       <div className="flex items-center gap-2 text-xs text-neutral-500">
                         <span className="text-neutral-400 font-bold">DIR_0{idx + 1}</span>
                         <span>|</span>
-                        <span className="text-neutral-300 uppercase font-semibold text-[11px]">{proj.categoryTag}</span>
+                        <span className="text-neutral-300 uppercase font-semibold text-[10px]">{proj.categoryTag}</span>
                       </div>
-                      <h3 className="text-lg font-bold text-white tracking-tight">
-                        {proj.title}
-                      </h3>
+
+                      <div className="flex items-center gap-1.5 shrink-0">
+                        {proj.liveUrl && (
+                          <a
+                            href={proj.liveUrl}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="border border-white bg-white text-black px-2 py-0.5 text-[11px] font-bold hover:bg-neutral-200 transition-all"
+                          >
+                            [demo -&gt;]
+                          </a>
+                        )}
+                        {proj.repoUrl ? (
+                          <a
+                            href={proj.repoUrl}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="border border-neutral-700 px-2 py-0.5 text-[11px] text-neutral-200 hover:bg-white hover:text-black transition-all"
+                          >
+                            [repo]
+                          </a>
+                        ) : (
+                          !proj.liveUrl && (
+                            <span className="border border-neutral-800 px-2 py-0.5 text-[10px] text-neutral-500 bg-neutral-950">
+                              [prod]
+                            </span>
+                          )
+                        )}
+                      </div>
                     </div>
 
-                    <div className="flex items-center gap-2">
-                      {proj.liveUrl && (
-                        <a
-                          href={proj.liveUrl}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="border border-white bg-white text-black px-3 py-1 text-xs font-bold hover:bg-neutral-200 transition-all"
-                        >
-                          [live demo -&gt;]
-                        </a>
-                      )}
-                      {proj.repoUrl ? (
-                        <a
-                          href={proj.repoUrl}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="border border-neutral-700 px-3 py-1 text-xs text-neutral-200 hover:bg-white hover:text-black hover:border-white transition-all"
-                        >
-                          [git clone]
-                        </a>
-                      ) : (
-                        !proj.liveUrl && (
-                          <span className="border border-neutral-800 px-2.5 py-1 text-[11px] text-neutral-500 bg-neutral-950">
-                            [production_system]
-                          </span>
-                        )
+                    <h3 className="text-sm sm:text-base font-bold text-white tracking-tight">
+                      {proj.title}
+                    </h3>
+
+                    <p className="text-xs text-neutral-300 leading-relaxed">
+                      {proj.summary}
+                    </p>
+                  </div>
+
+                  <div className="space-y-2 pt-2 border-t border-neutral-900">
+                    {/* Tech Badges */}
+                    <div className="flex flex-wrap gap-1 text-[11px]">
+                      {proj.tech.slice(0, 4).map((t) => (
+                        <span key={t} className="border border-neutral-800 bg-neutral-950 px-2 py-0.5 text-neutral-400">
+                          {t}
+                        </span>
+                      ))}
+                      {proj.tech.length > 4 && (
+                        <span className="text-[10px] text-neutral-600 px-1 py-0.5">
+                          +{proj.tech.length - 4}
+                        </span>
                       )}
                     </div>
                   </div>
-
-                  {/* Tech Badges */}
-                  <div className="flex flex-wrap gap-1.5 text-xs">
-                    {proj.tech.map((t) => (
-                      <span key={t} className="border border-neutral-800 bg-neutral-900/60 px-2.5 py-0.5 text-neutral-300 text-[11px]">
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-
-                  {/* Bullet Points */}
-                  <ul className="space-y-2 text-xs sm:text-sm text-neutral-300 pt-2.5 border-t border-neutral-900 leading-relaxed">
-                    {proj.bullets.map((b, bIdx) => (
-                      <li key={bIdx} className="flex items-start gap-2.5">
-                        <span className="text-neutral-500 font-bold mt-0.5">&gt;</span>
-                        <span>{b}</span>
-                      </li>
-                    ))}
-                  </ul>
                 </div>
               ))}
             </div>
@@ -393,18 +395,30 @@ export default function Home() {
                   key={oss.id}
                   className="border border-neutral-800 bg-[#0a0a0a] p-5 space-y-3 hover:border-neutral-600 transition-colors text-xs sm:text-sm leading-relaxed"
                 >
-                  <div className="flex items-center justify-between">
+                  <div className="flex items-center justify-between gap-2">
                     <a
                       href={oss.repoUrl}
                       target="_blank"
                       rel="noreferrer"
-                      className="font-bold text-white hover:underline text-sm"
+                      className="font-bold text-white hover:underline text-sm truncate"
                     >
                       {oss.repo}
                     </a>
-                    <span className="text-[10px] text-neutral-400 border border-neutral-800 px-2 py-0.5 bg-neutral-950">
-                      MERGED
-                    </span>
+                    <div className="flex items-center gap-2 shrink-0">
+                      {oss.prUrl && (
+                        <a
+                          href={oss.prUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="border border-white bg-white text-black px-2.5 py-0.5 text-xs font-bold hover:bg-neutral-200 transition-all"
+                        >
+                          [view pr -&gt;]
+                        </a>
+                      )}
+                      <span className="text-[10px] text-neutral-400 border border-neutral-800 px-2 py-0.5 bg-neutral-950">
+                        MERGED
+                      </span>
+                    </div>
                   </div>
                   <p className="text-neutral-300">{oss.whatYouDid}</p>
                   <div className="text-xs text-neutral-400 pt-2 border-t border-neutral-900">
@@ -478,6 +492,14 @@ export default function Home() {
                 className="border border-neutral-700 bg-neutral-900 text-neutral-200 px-4 py-2 text-xs hover:border-neutral-400 transition-all"
               >
                 [linkedin/in/yuvrajsingh024]
+              </a>
+              <a
+                href={CONTACT_INFO.twitter}
+                target="_blank"
+                rel="noreferrer"
+                className="border border-neutral-700 bg-neutral-900 text-neutral-200 px-4 py-2 text-xs hover:border-neutral-400 transition-all"
+              >
+                [x.com/itsyuvrajx]
               </a>
             </div>
           </section>
