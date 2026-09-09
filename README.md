@@ -1,75 +1,136 @@
-# Finalizing High-Performance Portfolio Engineering
+# Yuvraj Singh — Systems & AI Platforms Engineer Portfolio
 
-A premium, production-grade, Next.js 15 developer portfolio engineered specifically for a high-impact **Backend Engineer & AI Systems Developer**. Featuring a custom design system, physics-driven interaction layers, and rich visual architecture panels.
+[![Live Production Site](https://img.shields.io/badge/Production%20Deployment-yuvrajsingh--dev.vercel.app-white?style=for-the-badge&logo=vercel&logoColor=black)](https://yuvrajsingh-dev.vercel.app/)
+[![Next.js 16](https://img.shields.io/badge/Framework-Next.js%2016%20(Turbopack)-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/Language-TypeScript%205-white?style=for-the-badge&logo=typescript&logoColor=black)](https://www.typescriptlang.org/)
+[![Tailwind CSS v4](https://img.shields.io/badge/Styling-Tailwind%20CSS%20v4-black?style=for-the-badge&logo=tailwindcss)](https://tailwindcss.com/)
 
-Live at: [yuvraj-dev.vercel.app](https://yuvraj-dev.vercel.app)
+> **Live Portfolio:** [https://yuvrajsingh-dev.vercel.app/](https://yuvrajsingh-dev.vercel.app/)
 
----
-
-## ⚙️ Core Engineering Pillars & Interactivity
-
-The frontend of this portfolio was built from the ground up to reflect the same level of care, telemetry, and robustness required for complex backend microservices.
-
-### 1. Electric Vertical Experience Timeline (`src/components/sections/Experience.tsx`)
-*   **Scroll-Driven Glow:** Replaced standard grids with a custom `ElectricTimeline` container. A **40px glowing gradient charge** (`transparent` → `#00FFC2` → `transparent`) travels along the timeline relative to scroll progress using Framer Motion `useScroll` and `useTransform`.
-*   **Active company Dot Pulsing:** Dot markers automatically transition from default status to scale-glow state. The current active role (**Revolt Motors**) indicator runs an organic, breathing CSS pulse keyframe at all times.
-*   **Revolt Motors (Dual SWE + SDET Track):** Stacks both the Backend SWE track and the Test Infrastructure track side-by-side on desktop, collapsing to an interactive mobile-tab layout.
-*   **TLE Eliminators (Terminal Log panel):** Redesigned the competitive programming achievements as a monospaced terminal logs stream (`qa-log.sh`) styled with scanlines and stagger-typed log lines (`[PASS]`, `[LOAD]`, `[AUTO]`).
-
-### 2. Physics-Driven "Skill Constellation" Graph (`src/components/sections/Skills.tsx`)
-*   **Node Graph Architecture:** Replaces standard grid lists on desktop with a node-graph-inspired layout mapping critical skills around a central **Yuvraj** node.
-*   **Dynamic Data Cables:** Solid SVG cables connect orbiting sub-clusters (Backend, Test Infra, AI & Tools) to the center, displaying animated **data-pulse particles** traveling along their SVG paths using `stroke-dashoffset`.
-*   **Interactive Spring Badges:** Hovering over individual skill pills triggers a 1.1x spring enlargement, active border glow, and dynamically illuminates the connection wire back to the sub-cluster node.
-
-### 3. Smooth Portal Preview System (`src/components/sections/Projects.tsx`)
-*   **Zero-Clipping Portals:** Employs React `createPortal` to render project hover previews directly at the root of `document.body` to avoid container clipping from parent `overflow: hidden` contexts.
-*   **RAF LERP Follower:** The preview panel tracks the mouse pointer smoothly using a LERP (Linear Interpolation) loop driven by `requestAnimationFrame` (`position += (target - position) * 0.1`) rather than heavy state re-renders.
-*   **Custom Preview cards:** Hovering over *JobHermes* dynamically types out mock system logs in real-time. Hovering over *Poshible.ai* renders a mock JSON REST API response card with active syntax highlighting.
-
-### 4. Typographic manifesto (`src/components/sections/EngineeringMindset.tsx`)
-*   Inspired by high-end editorial structures like *hashgraphvc.com*.
-*   Features a generous, high-contrast grid centered on typographic rows instead of cards or panels.
-*   **Visual Highlights:** Monospace labels, huge ghosted numbers, scroll-triggered horizontal separators that draw themselves from `width: 0% ➔ 100%` using an optimized `IntersectionObserver`, and word-by-word scroll fade animations.
+A high-performance, developer-first portfolio designed for a **Backend Systems & AI Platforms Engineer**. Built with a pure monochrome terminal design system, an interactive virtual Unix shell emulator, runtime pipeline architecture visualizers, and zero bloat.
 
 ---
 
-## 🛠️ The Tech Stack
+## 🖥️ Live Application & Architecture
 
-*   **Framework:** Next.js 15 (App Router, static site rendering)
-*   **Styling & UI:** Tailwind CSS v4, Lucide React, Tabler Icons (`react-icons/tb`)
-*   **Animation Engine:** Framer Motion (Spring-based transforms, Scroll Layouts, AnimatePresence)
-*   **Languages:** TypeScript, TSX, modern ESNext
-*   **Deployment:** Vercel (CI/CD pipeline integrated on push)
+- **Production URL:** [https://yuvrajsingh-dev.vercel.app/](https://yuvrajsingh-dev.vercel.app/)
+- **Core Focus:** Backend Systems, Legal RAG Pipelines, Autonomous Agents, Test Automation Infrastructure (SDET), and Upstream Open-Source Hardening.
 
 ---
 
-## 🚀 Getting Started
+## 📐 System Highlights & Features
 
-### Installation
+### 1. Dual-Boot Interface: GUI & Interactive Terminal Shell
+- **Terminal Shell Mode (`cli`):** Full-screen downward-flowing interactive pseudo-terminal environment featuring:
+  - Virtual Unix filesystem (`~`, `/work`, `/systems`, `/about`, `/core_capabilities`, `/oss`)
+  - Built-in command interpreter: `help`, `ls`, `cd`, `cat`, `grep`, `pwd`, `clear`, `contact`, `gui`, `exit`
+  - Up/Down arrow command history navigation, Tab-completion, and clickable inline file quick-actions
+- **Monochrome Web GUI Mode (`gui`):** Minimalist, high-density dashboard engineered for rapid scanning without unnecessary visual noise.
 
-Clone the repository:
+### 2. Interactive System Architecture Visualizer (`/systems`)
+- **Pipeline Flow Inspector:** Visualizes real-time data movement, components, and protocol handoffs across 4 production architectures:
+  1. **Poshible.ai:** Legal RAG vector retrieval pipeline (AWS S3 -> OpenSearch -> OpenAI GPT-4o -> Zod validation).
+  2. **OpenForge:** 5-factor issue scorer and dual AI inference engine (GitHub GraphQL -> Ollama / OpenRouter DeepSeek).
+  3. **JobHermes:** Autonomous headless job discovery agent (Rate-limited scraping -> GPT-4o scoring -> SQLite WAL -> node-cron).
+  4. **Geospatial Proximity Router:** Dealership search routing (Redis cache -> PostGIS radial queries -> Google Distance Matrix API fallback).
+- **Deep-Dive Drawer:** Clickable node states exposing runtime tech stacks, throughput metrics, and engineering tradeoffs.
+
+### 3. Production Work & Open-Source Engineering (`/work`)
+- **Engineered Systems:** Deep technical overviews of full-lifecycle implementations including challenges, architectural designs, and production metric impacts.
+- **Upstream Open-Source Hardening:** Highlights verified contributions to enterprise repositories including **Microsoft Agent Governance Toolkit** (audit trail capability) and **Apify Crawlee** (asynchronous scraping internals).
+
+### 4. Engineering Manifesto & Technical Matrix (`/about`)
+- **Philosophy:** Core principles governing software architecture (*Own Past "It Works"*, *Deterministic & Schema-Validated*, *Automate Before Scaling*).
+- **Competency Matrix (`skills.json`):** Categorized matrix spanning Languages, Systems & Infrastructure, AI/ML Tooling, and Test Automation.
+- **Git Career Log:** Chronological engineering timeline at **Revolt Motors** (Software Engineer) and **TLE-Eliminators** (Problem Setter & Tester).
+
+---
+
+## 🛠️ Technology Stack
+
+| Layer | Technology |
+| :--- | :--- |
+| **Framework** | Next.js 16 (App Router, Turbopack, React 19) |
+| **Language** | TypeScript 5 (Strict Mode) |
+| **Styling** | Tailwind CSS v4 (Pure Monochrome Dark Palette: `#000000`, `#0a0a0a`, `#ffffff`) |
+| **Animations** | Framer Motion (Boot Selector transitions & modal choreography) |
+| **Icons** | Lucide React |
+| **Deployment** | Vercel (Automated CI/CD Git integration) |
+
+---
+
+## 📁 Repository Structure
+
+```
+react-portfolio-yuvraj/
+├── public/                     # Static media assets & profile imagery
+│   ├── profile.jpg
+│   └── yuvraj_nobg.jpg
+├── src/
+│   ├── app/                    # Next.js App Router pages
+│   │   ├── about/page.tsx      # Engineering manifesto, tenets & skills matrix
+│   │   ├── projects/page.tsx   # Projects route alias
+│   │   ├── systems/page.tsx    # Interactive 4-pipeline architecture visualizer
+│   │   ├── work/page.tsx       # Production systems & open-source contributions
+│   │   ├── globals.css         # Global Tailwind CSS tokens
+│   │   ├── layout.tsx          # Root layout with persistent header & footer
+│   │   └── page.tsx            # Home page (Terminal Shell / GUI boot view)
+│   ├── components/
+│   │   ├── layout/
+│   │   │   ├── Footer.tsx      # Monochrome terminal status footer
+│   │   │   └── Navigation.tsx  # Header navigation & prompt indicator
+│   │   ├── terminal/
+│   │   │   ├── BootSelector.tsx# Mode switch modal (GUI / CLI)
+│   │   │   └── TerminalGame.tsx# Interactive virtual shell emulator
+│   │   └── ui/
+│   │       └── ProfilePortrait.tsx # Monochrome profile portrait frame
+│   ├── data/
+│   │   └── portfolio.ts        # Centralized single source of truth for portfolio data
+│   └── lib/
+│       └── utils.ts            # UI utility functions
+├── next.config.ts              # Next.js configuration
+├── package.json                # Project dependencies and npm scripts
+├── tsconfig.json               # TypeScript compiler configuration
+└── README.md                   # Project documentation
+```
+
+---
+
+## ⚡ Getting Started Locally
+
+### Prerequisites
+- Node.js 18.18.0 or higher
+- npm (or pnpm / yarn)
+
+### 1. Clone the repository
 ```bash
 git clone https://github.com/yuvrajsingh2428/yuvraj-dev.git
 cd yuvraj-dev
 ```
 
-Install production and developer dependencies:
+### 2. Install dependencies
 ```bash
 npm install
 ```
 
-### Local Development
-
-Launch the hot-reloading development server:
+### 3. Run development server
 ```bash
 npm run dev
 ```
-Open [http://localhost:3000](http://localhost:3000) in your browser to view the application.
+Open [http://localhost:3000](http://localhost:3000) in your browser to view the portfolio.
 
-### Build & Compilation
-
-Verify TypeScript typing, clean-code linting, and compile the optimized production bundle locally:
+### 4. Build for production
 ```bash
 npm run build
+npm run start
 ```
-The static compiler will create optimized HTML/CSS assets in the `.next/` directory ready for target deployments.
+
+---
+
+## 📬 Contact & Connect
+
+- **Live URL:** [https://yuvrajsingh-dev.vercel.app/](https://yuvrajsingh-dev.vercel.app/)
+- **Email:** [yuvrajsingh2428@gmail.com](mailto:yuvrajsingh2428@gmail.com)
+- **GitHub:** [@yuvrajsingh2428](https://github.com/yuvrajsingh2428)
+- **LinkedIn:** [yuvrajsingh024](https://www.linkedin.com/in/yuvrajsingh024/)
+- **X / Twitter:** [@itsyuvrajx](https://x.com/itsyuvrajx)
